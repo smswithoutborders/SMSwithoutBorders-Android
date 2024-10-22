@@ -67,7 +67,6 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val listView = view.findViewById<ListView>(R.id.gateway_clients_recycler_view)
 
         val linearProgressIndicator = view.findViewById<LinearProgressIndicator>(R.id.refresh_loader)
@@ -102,7 +101,6 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
         selectedOperatorText = view.findViewById(R.id.selected_operator_text)
         selectedOperatorCodeText = view.findViewById(R.id.selected_operator_code_text)
         selectedCountryText = view.findViewById(R.id.selected_country_text)
-        updateSelectedGatewayClientUI()
 
         val menuHost = requireActivity()
         menuHost.addMenuProvider(object: MenuProvider{
@@ -178,7 +176,6 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
                         Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     fun showModal(gatewayClient: GatewayClient) {
@@ -204,8 +201,6 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
         override fun getItemId(position: Int): Long {
             return gatewayClientsList[position].id
         }
-
-
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val defaultGatewayClientMsisdn = gatewayClientsCommunications.getDefaultGatewayClient()
@@ -303,7 +298,11 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
         }
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        updateSelectedGatewayClientUI()
+    }
 
 }
 
