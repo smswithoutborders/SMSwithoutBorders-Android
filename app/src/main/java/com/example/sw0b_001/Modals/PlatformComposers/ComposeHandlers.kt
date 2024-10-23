@@ -37,14 +37,8 @@ object ComposeHandlers {
         println("Final format: $encryptedContentBase64")
 
         val encryptedStates = Publisher.encryptStates(context, state.serializedStates)
-        val ratchetsStates : RatchetStates?
-        if(states.isNotEmpty()) {
-            ratchetsStates = RatchetStates(states[0].id, encryptedStates)
-            Datastore.getDatastore(context).ratchetStatesDAO().update(ratchetsStates)
-        } else {
-            ratchetsStates = RatchetStates(value = encryptedStates)
-            Datastore.getDatastore(context).ratchetStatesDAO().insert(ratchetsStates)
-        }
+        val  ratchetsStates = RatchetStates(value = encryptedStates)
+        Datastore.getDatastore(context).ratchetStatesDAO().update(ratchetsStates)
 
         val gatewayClientMSISDN = GatewayClientsCommunications(context)
             .getDefaultGatewayClient()
