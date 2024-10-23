@@ -87,7 +87,7 @@ class GatewayClientsCommunications(context: Context) {
         }
 
         fun fetchAndPopulateWithDefault(context: Context) {
-            populateDefaultGatewayClientsSetDefaults(context)
+//            populateDefaultGatewayClientsSetDefaults(context)
             val gatewayClientList = ArrayList<GatewayClient>()
             try {
                 val gatewayClients : ArrayList<GatewayClientJsonPayload> = fetchRemote(context)
