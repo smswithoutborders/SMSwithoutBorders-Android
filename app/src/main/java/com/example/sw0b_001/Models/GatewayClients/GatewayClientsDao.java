@@ -9,6 +9,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -31,8 +32,9 @@ public interface GatewayClientsDao {
     @Delete
     void delete(GatewayClient GatewayClient);
 
-    @Query("DELETE FROM GatewayClient WHERE type IS NOT 'custom'")
-    void clear();
+    @Query("DELETE FROM GatewayClient WHERE type IS NOT 'custom' AND type is NOT 'default' AND NOT " +
+            "EXISTS (SELECT * FROM GatewayClient WHERE mSISDN IN (:gatewayClients))")
+    void clear(List<String> gatewayClients);
 
     @Query("UPDATE GatewayClient SET `default` = :setDefault WHERE id=:id")
     void updateDefault(boolean setDefault, long id);
@@ -48,7 +50,11 @@ public interface GatewayClientsDao {
 
     @Transaction
     default void refresh(List<GatewayClient> gatewayClients) {
-        clear();
+        List<String> msisdns = new ArrayList<>();
+        for(GatewayClient gatewayClient : gatewayClients) {
+            msisdns.add(gatewayClient.getMSISDN());
+        }
+        clear(msisdns);
         insertAll(gatewayClients);
     }
 

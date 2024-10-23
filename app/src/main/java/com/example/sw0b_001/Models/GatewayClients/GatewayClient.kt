@@ -15,6 +15,11 @@ import java.net.URL
 
 @Entity(indices = [Index(value = ["MSISDN"], unique = true)])
 class GatewayClient {
+    enum class TYPE(val value: String) {
+        DEFAULT("default"),
+        CUSTOM("custom")
+    }
+
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 

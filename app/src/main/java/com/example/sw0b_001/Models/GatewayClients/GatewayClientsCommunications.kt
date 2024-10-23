@@ -44,25 +44,25 @@ class GatewayClientsCommunications(context: Context) {
             gatewayClient.mSISDN = context.getString(R.string.default_gateway_MSISDN_0)
             gatewayClient.operatorName = "MTN Cameroon"
             gatewayClient.operatorId = "62401"
-            gatewayClient.type = null
+            gatewayClient.type = GatewayClient.TYPE.DEFAULT.value
 
             val gatewayClient2 = GatewayClient()
             gatewayClient2.country = "Cameroon"
             gatewayClient2.mSISDN = context.getString(R.string.default_gateway_MSISDN_2)
             gatewayClient2.operatorName = "Orange Cameroon"
             gatewayClient2.operatorId = "62402"
-            gatewayClient2.type = null
-            if(GatewayClientsCommunications(context)
-                    .getDefaultGatewayClient().isNullOrEmpty())
-                GatewayClientsCommunications(context)
-                        .updateDefaultGatewayClient(gatewayClient2.mSISDN!!)
+            gatewayClient2.type = GatewayClient.TYPE.DEFAULT.value
 
             val gatewayClient3 = GatewayClient()
             gatewayClient3.country = "Nigeria"
             gatewayClient3.mSISDN = context.getString(R.string.default_gateway_MSISDN_3)
             gatewayClient3.operatorName = "MTN Nigeria"
             gatewayClient3.operatorId = "62130"
-            gatewayClient3.type = null
+            gatewayClient3.type = GatewayClient.TYPE.DEFAULT.value
+            if(GatewayClientsCommunications(context)
+                    .getDefaultGatewayClient().isNullOrEmpty())
+                GatewayClientsCommunications(context)
+                    .updateDefaultGatewayClient(gatewayClient3.mSISDN!!)
 
             gatewayClientList.add(gatewayClient)
             gatewayClientList.add(gatewayClient2)
@@ -70,6 +70,7 @@ class GatewayClientsCommunications(context: Context) {
 
             Datastore.getDatastore(context).gatewayClientsDao().refresh(gatewayClientList)
         }
+
         private fun fetchRemote(context: Context): ArrayList<GatewayClientJsonPayload> {
             val url = context.getString(R.string.smswithoutboarders_official_gateway_client_seeding_url)
             val networkResponseResults = Network.requestGet(url)
