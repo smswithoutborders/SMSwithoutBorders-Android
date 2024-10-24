@@ -18,9 +18,8 @@ import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.example.sw0b_001.HomepageActivity
 import com.example.sw0b_001.Modals.AvailablePlatformsModalFragment
-import com.example.sw0b_001.Modals.LoginModalFragment
 import com.example.sw0b_001.Modals.LogoutDeleteConfirmationModalFragment
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Modules.Security
 import com.example.sw0b_001.OnboardingActivity
 import com.example.sw0b_001.R
@@ -57,7 +56,7 @@ class SecurityPrivacyFragment : PreferenceFragmentCompat() {
         val logout = findPreference<Preference>("logout")
         logout?.setOnPreferenceClickListener {
             val onSuccessRunnable = Runnable {
-                Vault.logout(requireContext()) {
+                Vaults.logout(requireContext()) {
                     returnToHomepage()
                 }
             }
@@ -80,9 +79,9 @@ class SecurityPrivacyFragment : PreferenceFragmentCompat() {
                         progress?.visibility = View.VISIBLE
                     }
                     try {
-                        val llt = Vault.fetchLongLivedToken(requireContext())
-                        Vault.completeDelete(requireContext(), llt)
-                        Vault.logout(requireContext()) {
+                        val llt = Vaults.fetchLongLivedToken(requireContext())
+                        Vaults.completeDelete(requireContext(), llt)
+                        Vaults.logout(requireContext()) {
                             returnToStart()
                         }
                     } catch(e: StatusRuntimeException) {
@@ -111,7 +110,7 @@ class SecurityPrivacyFragment : PreferenceFragmentCompat() {
             true
         }
 
-        if(Vault.fetchLongLivedToken(requireContext()).isNullOrBlank()) {
+        if(Vaults.fetchLongLivedToken(requireContext()).isNullOrBlank()) {
             logout?.isEnabled = false
             logout?.summary = getString(R.string
                     .logout_you_have_no_accounts_logged_into_vaults_at_this_time)

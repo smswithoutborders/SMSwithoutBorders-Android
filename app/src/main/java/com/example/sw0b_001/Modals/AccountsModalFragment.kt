@@ -14,10 +14,9 @@ import com.example.sw0b_001.Modals.PlatformComposers.TextComposeModalFragment
 import com.example.sw0b_001.Models.Platforms.AccountsRecyclerAdapter
 import com.example.sw0b_001.Models.Platforms.AccountsViewModel
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
-import com.example.sw0b_001.Models.Platforms.PlatformsRecyclerAdapter
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Publishers
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -105,21 +104,21 @@ class AccountsModalFragment(val platformName: String, val type: AvailablePlatfor
     }
 
     private fun revokePlatformsClick(view: View, storedPlatformsEntity: StoredPlatformsEntity) {
-        val llt = Vault.fetchLongLivedToken(requireContext())
+        val llt = Vaults.fetchLongLivedToken(requireContext())
 
         CoroutineScope(Dispatchers.Default).launch {
             val availablePlatforms = Datastore.getDatastore(requireContext())
                 .availablePlatformsDao().fetch(storedPlatformsEntity.name!!)
 
-            val publisher = Publisher(requireContext())
+            val publishers = Publishers(requireContext())
             try {
                 when(availablePlatforms.protocol_type) {
                     "oauth2" -> {
-                        publisher.revokeOAuthPlatforms(llt, storedPlatformsEntity.name,
+                        publishers.revokeOAuthPlatforms(llt, storedPlatformsEntity.name,
                             storedPlatformsEntity.account!!)
                     }
                     "pnba" -> {
-                        publisher.revokePNBAPlatforms(llt, storedPlatformsEntity.name,
+                        publishers.revokePNBAPlatforms(llt, storedPlatformsEntity.name,
                             storedPlatformsEntity.account!!)
                     }
                     else -> {
@@ -144,7 +143,7 @@ class AccountsModalFragment(val platformName: String, val type: AvailablePlatfor
                     Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                 }
             } finally {
-                publisher.shutdown()
+                publishers.shutdown()
                 activity?.runOnUiThread {
                     view.findViewById<CircularProgressIndicator>(
                         R.id.account_progress_view).visibility = View.GONE

@@ -11,8 +11,6 @@ import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
 import com.example.sw0b_001.Modules.Crypto
 import com.example.sw0b_001.R
 import com.example.sw0b_001.Security.Cryptography
-import com.example.sw0b_001.Security.Cryptography.HYBRID_KEYS_FILE
-import com.google.common.primitives.Bytes
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +22,7 @@ import vault.v1.Vault
 import java.security.DigestException
 import java.security.MessageDigest
 
-class Vault(context: Context) {
+class Vaults(context: Context) {
     private val DEVICE_ID_KEYSTORE_ALIAS = "DEVICE_ID_KEYSTORE_ALIAS"
 
     private var channel: ManagedChannel = ManagedChannelBuilder
@@ -85,7 +83,7 @@ class Vault(context: Context) {
         println("Device msisdn: $phoneNumber")
 
         storeArtifacts(context, llt, deviceId, clientDeviceIDPubKey)
-        Publisher.storeArtifacts(context, publisherPubKey)
+        Publishers.storeArtifacts(context, publisherPubKey)
     }
 
     fun createEntity(context: Context,
@@ -95,7 +93,7 @@ class Vault(context: Context) {
                      ownershipResponse: String = "") : Vault.CreateEntityResponse {
 
         val deviceIdPubKey = Cryptography.generateKey(context, DEVICE_ID_KEYSTORE_ALIAS)
-        val publishPubKey = Cryptography.generateKey(context, Publisher.PUBLISHER_ID_KEYSTORE_ALIAS)
+        val publishPubKey = Cryptography.generateKey(context, Publishers.PUBLISHER_ID_KEYSTORE_ALIAS)
 
         val createEntityRequest1 = Vault.CreateEntityRequest.newBuilder().apply {
             if(ownershipResponse.isNotBlank()) {
@@ -128,7 +126,7 @@ class Vault(context: Context) {
                            ownershipResponse: String = "") : Vault.AuthenticateEntityResponse {
 
         val deviceIdPubKey = Cryptography.generateKey(context, DEVICE_ID_KEYSTORE_ALIAS)
-        val publishPubKey = Cryptography.generateKey(context, Publisher.PUBLISHER_ID_KEYSTORE_ALIAS)
+        val publishPubKey = Cryptography.generateKey(context, Publishers.PUBLISHER_ID_KEYSTORE_ALIAS)
 
         val authenticateEntityRequest = Vault.AuthenticateEntityRequest.newBuilder().apply {
             setPhoneNumber(phoneNumber)
@@ -159,7 +157,7 @@ class Vault(context: Context) {
                               ownershipResponse: String? = null) : Vault.ResetPasswordResponse {
 
         val deviceIdPubKey = Cryptography.generateKey(context, DEVICE_ID_KEYSTORE_ALIAS)
-        val publishPubKey = Cryptography.generateKey(context, Publisher.PUBLISHER_ID_KEYSTORE_ALIAS)
+        val publishPubKey = Cryptography.generateKey(context, Publishers.PUBLISHER_ID_KEYSTORE_ALIAS)
 
         val resetPasswordRequest = Vault.ResetPasswordRequest.newBuilder().apply {
             setPhoneNumber(phoneNumber)
@@ -218,18 +216,18 @@ class Vault(context: Context) {
 
 
         fun completeDelete(context: Context, llt: String) {
-            val publisher = Publisher(context)
+            val publishers = Publishers(context)
             Datastore.getDatastore(context).storedPlatformsDao().fetchAllList().forEach {
-                publisher.revokeOAuthPlatforms(llt, it.name!!, it.account!!)
+                publishers.revokeOAuthPlatforms(llt, it.name!!, it.account!!)
             }
-            publisher.shutdown()
+            publishers.shutdown()
 
-            val vault = Vault(context)
-            val response = vault.deleteEntity(llt)
+            val vaults = Vaults(context)
+            val response = vaults.deleteEntity(llt)
             if(response.success) {
                 Datastore.getDatastore(context).clearAllTables()
             }
-            vault.shutdown()
+            vaults.shutdown()
         }
 
         fun logout(context: Context, successRunnable: Runnable) {
@@ -238,7 +236,7 @@ class Vault(context: Context) {
                 .build()
             sharedPreferences.edit().clear().apply()
 
-            sharedPreferences = Armadillo.create(context, Publisher.PUBLISHER_ATTRIBUTE_FILES)
+            sharedPreferences = Armadillo.create(context, Publishers.PUBLISHER_ATTRIBUTE_FILES)
                 .encryptionFingerprint(context)
                 .build()
             sharedPreferences.edit().clear().apply()
@@ -288,14 +286,6 @@ class Vault(context: Context) {
                 .putString(DEVICE_ID_PUB_KEY,
                     Base64.encodeToString(clientDeviceIDPubKey, Base64.DEFAULT))
                 .apply()
-        }
-
-        fun fetchDeviceIDPublicKey(context: Context) : ByteArray {
-            val sharedPreferences = Armadillo.create(context, VAULT_ATTRIBUTE_FILES)
-                .encryptionFingerprint(context)
-                .build()
-            return Base64.decode(sharedPreferences.getString(DEVICE_ID_PUB_KEY, ""),
-                Base64.DEFAULT)
         }
 
         fun fetchLongLivedToken(context: Context) : String {

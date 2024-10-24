@@ -2,9 +2,6 @@ package com.example.sw0b_001.Modals.PlatformComposers
 
 import android.content.Context
 import android.content.Intent
-import android.util.Base64
-import android.util.Log
-import android.widget.Toast
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
 import com.example.sw0b_001.Database.Datastore
 import com.example.sw0b_001.Models.Messages.EncryptedContent
@@ -14,7 +11,7 @@ import com.example.sw0b_001.Models.Messages.RatchetStates
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
-import com.example.sw0b_001.Models.Publisher
+import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.Models.SMSHandler
 
 object ComposeHandlers {
@@ -30,13 +27,13 @@ object ComposeHandlers {
         }
 
         val state = if(states.isNotEmpty())
-            States(String(Publisher.getEncryptedStates(context, states[0].value),
+            States(String(Publishers.getEncryptedStates(context, states[0].value),
                 Charsets.UTF_8)) else States()
         val messageComposer = MessageComposer(context, state)
         val encryptedContentBase64 = messageComposer.compose(platforms, formattedContent)
         println("Final format: $encryptedContentBase64")
 
-        val encryptedStates = Publisher.encryptStates(context, state.serializedStates)
+        val encryptedStates = Publishers.encryptStates(context, state.serializedStates)
         val  ratchetsStates = RatchetStates(value = encryptedStates)
         Datastore.getDatastore(context).ratchetStatesDAO().update(ratchetsStates)
 

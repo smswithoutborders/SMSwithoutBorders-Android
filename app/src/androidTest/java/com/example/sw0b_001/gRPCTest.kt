@@ -1,20 +1,12 @@
 package com.example.sw0b_001
 
-import android.util.Base64
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
-import com.example.sw0b_001.Modules.Network
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Security.Cryptography
-import io.grpc.ManagedChannel
 import io.grpc.StatusRuntimeException
-import kotlinx.serialization.json.Json
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import publisher.v1.PublisherGrpc.PublisherBlockingStub
-import vault.v1.EntityGrpc.EntityBlockingStub
 
 /**
  * Flow from https://github.com/smswithoutborders/SMSwithoutborders-BE/blob/feature/grpc_api/docs/grpc.md
@@ -48,37 +40,29 @@ class gRPCTest {
 
     private var context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private lateinit var vault: Vault
+    private lateinit var vaults: Vaults
     private val device_id_keystoreAlias = "device_id_keystoreAlias"
     private val publisher_keystoreAlias = "publisher_keystoreAlias"
 
     @Before
     fun init() {
-        vault = Vault(context)
+        vaults = Vaults(context)
         deviceIdPubKey = Cryptography.generateKey(context, device_id_keystoreAlias)
         publishPubKey = Cryptography.generateKey(context, publisher_keystoreAlias)
-    }
-
-    @Test
-    fun getPlatformsTest() {
-        val response = Publisher.getAvailablePlatforms(context) {
-
-        }
-        assertTrue(response.isNotEmpty())
     }
 
     @Test
     fun endToEndCompleteTest() {
         try {
             println("Starting")
-            val response = vault.createEntity(context,
+            val response = vaults.createEntity(context,
                 globalPhoneNumber,
                 globalCountryCode,
                 globalPassword)
 
             assertTrue(response.requiresOwnershipProof)
 
-            var response1 = vault.createEntity(context,
+            var response1 = vaults.createEntity(context,
                 globalPhoneNumber,
                 globalCountryCode,
                 globalPassword,
@@ -99,30 +83,30 @@ class gRPCTest {
         }
 
         try {
-            val response4 = vault.recoverEntityPassword(context,
+            val response4 = vaults.recoverEntityPassword(context,
                 globalPhoneNumber,
                 globalPassword)
 
             assertTrue(response4.requiresOwnershipProof)
 
-            val response5 = vault.recoverEntityPassword(context,
+            val response5 = vaults.recoverEntityPassword(context,
                 globalPhoneNumber,
                 globalPassword,
                 "123456")
 
-            val response2 = vault.authenticateEntity(context,
+            val response2 = vaults.authenticateEntity(context,
                 globalPhoneNumber,
                 globalPassword)
 
             assertTrue(response2.requiresOwnershipProof)
 
-            val response3 = vault.authenticateEntity(context,
+            val response3 = vaults.authenticateEntity(context,
                 globalPhoneNumber,
                 globalPassword,
                 "123456")
 
-            val llt = Vault.fetchLongLivedToken(context)
-            var response6 = vault.deleteEntity(llt)
+            val llt = Vaults.fetchLongLivedToken(context)
+            var response6 = vaults.deleteEntity(llt)
         } catch(e: StatusRuntimeException) {
             println("Exception code: ${e.status.code.value()}")
             println("Exception code: ${e.status.description}")

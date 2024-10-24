@@ -13,8 +13,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.registerReceiver
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Publishers
+import com.example.sw0b_001.Models.Vaults
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
@@ -46,7 +46,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
     private var countryCode : String? = null
     private var nextAttemptTimestamp : String? = null
 
-    private lateinit var vault: Vault
+    private lateinit var vaults: Vaults
     private lateinit var type: Type
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,7 +118,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     finish()
                 }
 
-        vault = Vault(applicationContext)
+        vaults = Vaults(applicationContext)
     }
 
     private fun startCountdownTimer(nextAttemptTimestamp: Long, onTick: (Long) -> Unit, onFinish: () -> Unit) {
@@ -193,33 +193,33 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                 when(type) {
                     Type.CREATE -> {
                         password?.let {
-                            vault.createEntity(applicationContext, phoneNumber, countryCode!!,
+                            vaults.createEntity(applicationContext, phoneNumber, countryCode!!,
                                 password!!, code)
                         }
                     }
                     Type.AUTHENTICATE -> {
                         password?.let {
-                            vault.authenticateEntity(applicationContext, phoneNumber, password!!,
+                            vaults.authenticateEntity(applicationContext, phoneNumber, password!!,
                                 code)
                         }
                     }
                     Type.RECOVER -> {
                         password?.let {
-                            vault.recoverEntityPassword(applicationContext, phoneNumber, password!!,
+                            vaults.recoverEntityPassword(applicationContext, phoneNumber, password!!,
                                 code)
                         }
                     }
                     Type.PNBA -> {
                         platform?.let {
-                            val llt = Vault.fetchLongLivedToken(applicationContext)
-                            val publisher = Publisher(applicationContext)
-                            publisher.phoneNumberBaseAuthenticationExchange(code,
+                            val llt = Vaults.fetchLongLivedToken(applicationContext)
+                            val publishers = Publishers(applicationContext)
+                            publishers.phoneNumberBaseAuthenticationExchange(code,
                                 llt, phoneNumber, platform!!)
                         }
                     }
                 }
 
-                vault.refreshStoredTokens(applicationContext)
+                vaults.refreshStoredTokens(applicationContext)
                 runOnUiThread {
                     setResult(Activity.RESULT_OK)
                     finish()
@@ -263,6 +263,6 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
 
     override fun onDestroy() {
         super.onDestroy()
-        vault.shutdown()
+        vaults.shutdown()
     }
 }

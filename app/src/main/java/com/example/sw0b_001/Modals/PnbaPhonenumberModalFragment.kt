@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
-import com.example.sw0b_001.Models.Publisher
+import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.OTPVerificationActivity
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -71,9 +71,9 @@ class PnbaPhonenumberModalFragment(val platforms: AvailablePlatforms,
                 val phoneNumber = countryCodePicker.selectedCountryCodeWithPlus +
                         view.findViewById<EditText>(R.id.pnba_phonenumber_input).text.toString()
 
-                val publisher = Publisher(requireContext())
+                val publishers = Publishers(requireContext())
                 try {
-                    val response = publisher.phoneNumberBaseAuthenticationRequest(phoneNumber,
+                    val response = publishers.phoneNumberBaseAuthenticationRequest(phoneNumber,
                         platforms.name)
 
                     if(response.success) {
@@ -91,7 +91,7 @@ class PnbaPhonenumberModalFragment(val platforms: AvailablePlatforms,
                 } catch(e: Exception) {
                     e.printStackTrace()
                 } finally {
-                    publisher.shutdown()
+                    publishers.shutdown()
                     activity?.runOnUiThread {
                         view.findViewById<LinearProgressIndicator>(R.id.pnba_linear_progress).visibility =
                             View.GONE

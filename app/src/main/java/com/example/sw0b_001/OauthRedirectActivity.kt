@@ -6,8 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Publishers
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Modules.Helpers
 import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.CoroutineScope
@@ -45,19 +45,19 @@ class OauthRedirectActivity : AppCompatActivity() {
 
         val scope = CoroutineScope(Dispatchers.Default)
         scope.launch {
-            val publisher = Publisher(applicationContext)
+            val publishers = Publishers(applicationContext)
             try {
-                val llt = Vault.fetchLongLivedToken(applicationContext)
-                val codeVerifier = Publisher.fetchOauthRequestVerifier(applicationContext)
-                publisher.sendOAuthAuthorizationCode(llt,
+                val llt = Vaults.fetchLongLivedToken(applicationContext)
+                val codeVerifier = Publishers.fetchOauthRequestVerifier(applicationContext)
+                publishers.sendOAuthAuthorizationCode(llt,
                     platform,
                     code,
                     codeVerifier,
                     supportsUrlScheme)
 
-                val vault = Vault(applicationContext)
-                vault.refreshStoredTokens(applicationContext)
-                vault.shutdown()
+                val vaults = Vaults(applicationContext)
+                vaults.refreshStoredTokens(applicationContext)
+                vaults.shutdown()
             } catch(e: StatusRuntimeException) {
                 e.printStackTrace()
                 runOnUiThread {
@@ -70,7 +70,7 @@ class OauthRedirectActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
                 }
             } finally {
-                publisher.shutdown()
+                publishers.shutdown()
             }
             runOnUiThread {
                 finish()
