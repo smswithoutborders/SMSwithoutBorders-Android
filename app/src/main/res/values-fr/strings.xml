@@ -89,6 +89,8 @@
     <string name="language_english">Anglaise</string>
     <string name="language_french">Français</string>
     <string name="language_farsi">Farsi</string>
+    <string name="language_spanish">Espagnol</string>
+    <string name="language_turkish">Turc</string>
     <string name="settings_security_and_privacy_account">Votre compte</string>
     <string name="settings_security_and_privacy_account_logout">Se déconnecter</string>
     <string name="settings_security_and_privacy_account_logout_summary">Déconnexion de votre compte. Vous pouvez toujours vous reconnecter, mais vos messages actuels seront supprimés.</string>
@@ -108,7 +110,10 @@
     <string name="signup_please_re_enter_your_password">Veuillez saisir à nouveau votre mot de passe</string>
     <string name="signup_your_passwords_do_not_match">Vos mots de passe ne correspondent pas !</string>
     <string name="owernship_otp_please_enter_a_valid_code">Veuillez saisir un code valide</string>
-    <string name="ownership_resend_code_by_sms">Renvoyer le code par SMS</string>
+    <string name="ownership_resend_code_by_sms">Temps restant avant expiration du code envoyé par SMS : %1$d</string>
+    <string name="resend_code">Renvoyer le code</string>
+    <string name="sms_code_expired">Le code SMS a expiré. Veuillez réessayer.</string>
+    <string name="copy_code_telegram">En cas de Telegram, veuillez saisir le code sans le copier depuis Telegram. Copier le code est un risque de sécurité et Telegram peut prendre certaines mesures pour protéger votre compte.</string>
     <string name="login_password_empty_please_provide_a_password">Veuillez fournir un mot de passe</string>
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_finish">Terminer</string>
@@ -153,5 +158,15 @@
     <string name="validate_with_phone_number">Valider avec le numéro de téléphone</string>
     <string name="selected_gateway_client_text">Client de passerelle SMS sélectionné</string>
     <string name="the_code_can_be_automatically_detected_in_some_cases">Le code peut être détecté automatiquement dans certains cas</string>
+    <string name="delete_gateway_client_title">Supprimer le client passerelle</string>
+    <string name="delete_gateway_client_message">Êtes-vous sûr de vouloir supprimer ce client passerelle ?</string>
+    <string name="cannot_delete_selected_title">Impossible de supprimer le client passerelle sélectionné</string>
+    <string name="cannot_delete_selected_message">Veuillez passer à un autre client passerelle avant de supprimer celui-ci.</string>
+    <string name="delete">Supprimer</string>
+    <string name="ok">OK</string>
+    <string name="edit">Modifier</string>
+    <string name="make_default">Définir par défaut</string>
+    <string name="gateway_client_options">Options du client passerelle</string>
+    <string name="select_account_to_revoke_access">Sélectionnez le compte pour révoquer l\'accès</string>
 
 </resources>

@@ -2,9 +2,11 @@ package com.example.sw0b_001.Models.GatewayClients
 
 import android.content.Context
 import android.util.Log
+import androidx.activity.result.launch
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sw0b_001.Database.Datastore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,15 +20,13 @@ class GatewayClientViewModel() : ViewModel() {
 
     fun get(context: Context, successRunnable: Runnable?): LiveData<List<GatewayClient>> {
         if(liveData.value.isNullOrEmpty()) {
-            loadRemote(context, successRunnable, successRunnable)
             liveData = Datastore.getDatastore(context).gatewayClientsDao().all
+            loadRemote(context, successRunnable, successRunnable)
         }
         return liveData
     }
 
-    fun loadRemote(context: Context,
-                   successRunnable: Runnable?,
-                   failureRunnable: Runnable?){
+    fun loadRemote(context: Context, successRunnable: Runnable?, failureRunnable: Runnable?){
         CoroutineScope(Dispatchers.Default).launch{
             try {
                 GatewayClientsCommunications.fetchAndPopulateWithDefault(context)
@@ -40,5 +40,15 @@ class GatewayClientViewModel() : ViewModel() {
 
     fun getGatewayClientByMsisdn(context: Context, msisdn: String): GatewayClient? {
         return Datastore.getDatastore(context).gatewayClientsDao().getByMsisdn(msisdn)
+    }
+
+    fun delete(context: Context, gatewayClient: GatewayClient) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Datastore.getDatastore(context).gatewayClientsDao().delete(gatewayClient)
+            } catch (e: Exception) {
+                Log.e(javaClass.name, "Error deleting Gateway client", e)
+            }
+        }
     }
 }
