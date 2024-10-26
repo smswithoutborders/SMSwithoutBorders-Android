@@ -21,7 +21,7 @@ class BridgesTest {
         val authRequest = android.util.Base64.encodeToString(Bridges.authRequest(context),
             android.util.Base64.DEFAULT)
         val payload = Json.encodeToString(GatewayClientRequest("+237123456789", authRequest))
-        print("Publishing: $payload")
+        println("Publishing: $payload")
 
         // TODO: checks if user already auth, then proceeds to use that information
         // TODO: if not auth, then request for auth sessions to begin
@@ -29,7 +29,7 @@ class BridgesTest {
          * Simulating Gateway clients here, since cannot send the SMS
          */
         val response = Network.jsonRequestPost(gatewayServerUrl, payload)
-        print(response.response.responseMessage)
+        println(response.response.responseMessage)
         print(String(response.response.data))
     }
 }
