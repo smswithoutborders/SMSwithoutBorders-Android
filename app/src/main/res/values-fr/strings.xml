@@ -174,5 +174,6 @@
     <string name="ok_button_text">OK</string>
     <string name="telegram_auth_error">Une erreur s\'est produite lors de l\'authentification Telegram.</string>
     <string name="two_factor_auth_enabled">L\'authentification à deux facteurs est activée. Saisissez votre mot de passe.</string>
+    <string name="telegram_two_factor_auth_enabled">Vous avez activé l\'authentification à deux facteurs dans votre compte Telegram. Saisissez votre mot de passe.</string>
 
 </resources>

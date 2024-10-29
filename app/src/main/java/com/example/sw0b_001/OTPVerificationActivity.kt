@@ -63,6 +63,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
 
         phoneNumber = intent.getStringExtra("phone_number")!!
         platform = intent.getStringExtra("platform")
+        Log.d("OTPVerificationActivity", "platform: $platform")
         password = intent.getStringExtra("password")
         countryCode = intent.getStringExtra("country_code")
         nextAttemptTimestamp = intent.getStringExtra("next_attempt_timestamp")
@@ -231,8 +232,8 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
 
                             if (r.twoStepVerificationEnabled) {
                                 isTwoStepVerificationEnabled = true
-                                Toast.makeText(applicationContext, getString(R.string.two_factor_auth_enabled), Toast.LENGTH_SHORT).show()
                                 runOnUiThread {
+                                    Toast.makeText(applicationContext, getString(R.string.two_factor_auth_enabled), Toast.LENGTH_SHORT).show()
                                     twoFaPasswordLayout.visibility = View.VISIBLE
                                     codeInput.isEnabled = false
                                     findViewById<MaterialButton>(R.id.ownership_verification_btn).setOnClickListener {
@@ -247,7 +248,9 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                 vault.refreshStoredTokens(applicationContext)
                 runOnUiThread {
                     setResult(Activity.RESULT_OK)
-//                    finish()
+                    if (platform != "telegram") {
+                        finish()
+                    }
                 }
             } catch(e: StatusRuntimeException) {
                 e.printStackTrace()
@@ -304,7 +307,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                         .setMessage(getString(R.string.telegram_auth_error))
                         .setPositiveButton(getString(R.string.ok_button_text), null)
                         .show()
-                    finish()
+//                    finish()
                 }
             } finally {
                 runOnUiThread {

@@ -174,5 +174,6 @@
     <string name="ok_button_text">باشه</string>
     <string name="telegram_auth_error">خطایی در حین احراز هویت تلگرام رخ داده است.</string>
     <string name="two_factor_auth_enabled">احراز هویت دو عاملی فعال شده است. رمز عبور خود را وارد کنید.</string>
+    <string name="telegram_two_factor_auth_enabled">شما احراز هویت دو عاملی را در حساب تلگرام خود فعال کرده اید. رمز عبور خود را وارد کنید.</string>
 
 </resources>

@@ -226,4 +226,5 @@
     <string name="ok_button_text">Tamam</string>
     <string name="telegram_auth_error">Telegram kimlik doğrulaması sırasında bir hata oluştu.</string>
     <string name="two_factor_auth_enabled">İki faktörlü kimlik doğrulama etkinleştirildi. Şifrenizi girin.</string>
+    <string name="telegram_two_factor_auth_enabled">Telegram hesabınızda iki faktörlü kimlik doğrulamayı etkinleştirdiniz. Şifrenizi girin.</string>
 </resources>
