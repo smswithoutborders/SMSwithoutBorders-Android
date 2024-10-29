@@ -63,7 +63,6 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
 
         phoneNumber = intent.getStringExtra("phone_number")!!
         platform = intent.getStringExtra("platform")
-        Log.d("OTPVerificationActivity", "platform: $platform")
         password = intent.getStringExtra("password")
         countryCode = intent.getStringExtra("country_code")
         nextAttemptTimestamp = intent.getStringExtra("next_attempt_timestamp")
@@ -228,7 +227,6 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                             val publisher = Publisher(applicationContext)
                             val r = publisher.phoneNumberBaseAuthenticationExchange(code,
                                 llt, phoneNumber, platform!!)
-                            Log.d("PNBA", r.toString())
 
                             if (r.twoStepVerificationEnabled) {
                                 isTwoStepVerificationEnabled = true
