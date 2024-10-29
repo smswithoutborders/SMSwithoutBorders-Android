@@ -169,5 +169,10 @@
     <string name="gateway_client_options">گزینه‌های کلاینت دروازه</string>
     <string name="select_account_to_revoke_access">انتخاب حساب برای لغو دسترسی</string>
     <string name="two_fa_password_hint_text">رمز عبور احراز هویت دو عاملی خود را وارد کنید</string>
+    <string name="error_title">خطا</string>
+    <string name="incorrect_password_message">رمز عبور نادرست است. لطفا دوباره امتحان کنید.</string>
+    <string name="ok_button_text">باشه</string>
+    <string name="telegram_auth_error">خطایی در حین احراز هویت تلگرام رخ داده است.</string>
+    <string name="two_factor_auth_enabled">احراز هویت دو عاملی فعال شده است. رمز عبور خود را وارد کنید.</string>
 
 </resources>

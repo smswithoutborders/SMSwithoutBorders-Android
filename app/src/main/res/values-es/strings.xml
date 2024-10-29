@@ -169,4 +169,9 @@
     <string name="select_account_to_revoke_access">Selecciona una cuenta para revocar el acceso</string>
     <string name="smswithoutborders_official_privacy_policy">https://smswithoutborders.com/privacy-policy</string>
     <string name="two_fa_password_hint_text">Ingrese su contraseña de autenticación de dos factores</string>
+    <string name="error_title">Error</string>
+    <string name="incorrect_password_message">Contraseña incorrecta. Por favor, inténtelo de nuevo.</string>
+    <string name="ok_button_text">Aceptar</string>
+    <string name="telegram_auth_error">Se produjo un error durante la autenticación de Telegram.</string>
+    <string name="two_factor_auth_enabled">La autenticación de dos factores está habilitada. Ingrese su contraseña.</string>
 </resources>

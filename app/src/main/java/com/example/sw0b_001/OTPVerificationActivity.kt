@@ -231,6 +231,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
 
                             if (r.twoStepVerificationEnabled) {
                                 isTwoStepVerificationEnabled = true
+                                Toast.makeText(applicationContext, getString(R.string.two_factor_auth_enabled), Toast.LENGTH_SHORT).show()
                                 runOnUiThread {
                                     twoFaPasswordLayout.visibility = View.VISIBLE
                                     codeInput.isEnabled = false
@@ -289,9 +290,9 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     } else {
                         runOnUiThread {
                             AlertDialog.Builder(this@OTPVerificationActivity)
-                                .setTitle("Error")
-                                .setMessage("Incorrect password. Please try again.")
-                                .setPositiveButton("OK", null)
+                                .setTitle(getString(R.string.error_title))
+                                .setMessage(getString(R.string.incorrect_password_message))
+                                .setPositiveButton(getString(R.string.ok_button_text), null)
                                 .show()
                         }
                     }
@@ -299,10 +300,11 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
             } catch (e: Exception) {
                 runOnUiThread {
                     AlertDialog.Builder(this@OTPVerificationActivity)
-                        .setTitle("Error")
-                        .setMessage("Error occurred during authentication.")
-                        .setPositiveButton("OK", null)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.telegram_auth_error))
+                        .setPositiveButton(getString(R.string.ok_button_text), null)
                         .show()
+                    finish()
                 }
             } finally {
                 runOnUiThread {

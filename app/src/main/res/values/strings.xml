@@ -251,5 +251,10 @@
     <string name="gateway_client_options">Gateway Client Options</string>
     <string name="select_account_to_revoke_access">Select account to revoke access</string>
     <string name="two_fa_password_hint_text">Enter your two-factor authentication password</string>
+    <string name="error_title">Error</string>
+    <string name="incorrect_password_message">Incorrect password. Please try again.</string>
+    <string name="ok_button_text">OK</string>
+    <string name="telegram_auth_error">Error occurred during Telegram authentication.</string>
+    <string name="two_factor_auth_enabled">Two factor authentication is enabled. Input your password.</string>
 
 </resources>

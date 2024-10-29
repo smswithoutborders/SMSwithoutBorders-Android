@@ -221,4 +221,9 @@
     <string name="gateway_client_options">Ağ Geçidi İstemcisi Seçenekleri</string>
     <string name="select_account_to_revoke_access">Erişimi iptal etmek için hesap seçin</string>
     <string name="two_fa_password_hint_text">İki faktörlü kimlik doğrulama şifrenizi girin</string>
+    <string name="error_title">Hata</string>
+    <string name="incorrect_password_message">Yanlış şifre. Lütfen tekrar deneyin.</string>
+    <string name="ok_button_text">Tamam</string>
+    <string name="telegram_auth_error">Telegram kimlik doğrulaması sırasında bir hata oluştu.</string>
+    <string name="two_factor_auth_enabled">İki faktörlü kimlik doğrulama etkinleştirildi. Şifrenizi girin.</string>
 </resources>
