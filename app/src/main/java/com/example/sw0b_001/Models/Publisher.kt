@@ -104,13 +104,14 @@ class Publisher(val context: Context) {
     fun phoneNumberBaseAuthenticationExchange(authorizationCode: String,
                                               llt: String,
                                               phoneNumber: String,
-                                              platform: String) :
+                                              platform: String,
+                                              password: String = "") :
             PublisherOuterClass.ExchangePNBACodeAndStoreResponse {
         val request = PublisherOuterClass.ExchangePNBACodeAndStoreRequest.newBuilder().apply {
             setPlatform(platform)
             setLongLivedToken(llt)
             setAuthorizationCode(authorizationCode)
-            setPassword("")
+            setPassword(password)
             setPhoneNumber(phoneNumber)
         }.build()
 

@@ -71,16 +71,41 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/two_fa_password_hint_text"
+        app:layout_constraintEnd_toEndOf="@+id/ownership_verification_layout"
+        app:layout_constraintStart_toStartOf="@+id/ownership_verification_layout"
+        app:layout_constraintTop_toBottomOf="@+id/ownership_verification_layout"
+        app:passwordToggleEnabled="true"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/two_fa_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/ownership_verification_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="104dp"
         android:layout_marginEnd="8dp"
         android:padding="16dp"
         android:text="@string/submit"
         app:layout_constraintEnd_toEndOf="@+id/ownership_verification_layout"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/ownership_verification_layout"
         app:layout_constraintTop_toBottomOf="@+id/ownership_verification_layout" />
 
@@ -91,6 +116,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/ownership_resend_code_by_sms"
         app:layout_constraintEnd_toEndOf="@+id/ownership_verification_btn"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/ownership_verification_btn"
         app:layout_constraintTop_toBottomOf="@+id/ownership_verification_btn" />
 
