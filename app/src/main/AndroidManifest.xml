@@ -31,6 +31,9 @@
         android:versionName="2.5.8"
         tools:replace="android:label">
         <activity
+            android:name=".BridgesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MessageViewActivity"
             android:exported="false"
             android:parentActivityName=".HomepageActivity" />
@@ -117,11 +120,12 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
+
             <!-- This entry makes ExampleLoggerInitializer discoverable. -->
-            <meta-data  android:name="com.example.sw0b_001.StartupActivity"
+            <meta-data
+                android:name="com.example.sw0b_001.StartupActivity"
                 android:value="androidx.startup" />
         </provider>
-
     </application>
 
 </manifest>
