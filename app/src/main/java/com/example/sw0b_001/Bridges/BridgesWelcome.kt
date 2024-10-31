@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.sw0b_001.R
+
 
 class BridgesWelcomeFragment : Fragment(R.layout.fragment_bridges_welcome) {
 
@@ -18,17 +22,19 @@ class BridgesWelcomeFragment : Fragment(R.layout.fragment_bridges_welcome) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get references to the buttons
         val authenticateButton = view.findViewById<Button>(R.id.authenticate_button)
         val submitCodeButton = view.findViewById<Button>(R.id.submit_code_button)
 
-        // Set click listeners for the buttons
         authenticateButton.setOnClickListener {
             showAuthRequestDialog()
         }
 
         submitCodeButton.setOnClickListener {
-            // Handle code submission logic here
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+
+            transaction.replace(R.id.bridges_fragment_container, BridgesSubmitCodeFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
 
     }

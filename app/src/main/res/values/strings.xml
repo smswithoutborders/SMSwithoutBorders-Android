@@ -254,5 +254,11 @@
     <string name="welcome_to_bridges" translatable="false">Welcome to Bridges</string>
     <string name="authenticate_with_bridges" translatable="false">Authenticate with Bridges</string>
     <string name="submit_code" translatable="false">Submit Code</string>
+    <string name="code_expires_in_2hrs" translatable="false">The code expires in 2hrs</string>
+    <string name="input_sms_code" translatable="false">Input SMS code</string>
+    <string name="send_now" translatable="false">Send now</string>
+    <string name="send_now_info" translatable="false">Send only the authentication code via SMS</string>
+    <string name="compose_and_send" translatable="false">Compose and send</string>
+    <string name="compose_and_send_info" translatable="false">Compose your first message alongside sending your auth code to save SMS cost</string>
 
 </resources>
