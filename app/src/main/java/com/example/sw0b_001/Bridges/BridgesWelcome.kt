@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.sw0b_001.R
 
@@ -23,12 +24,20 @@ class BridgesWelcomeFragment : Fragment(R.layout.fragment_bridges_welcome) {
 
         // Set click listeners for the buttons
         authenticateButton.setOnClickListener {
-            // Handle authentication logic here
+            showAuthRequestDialog()
         }
 
         submitCodeButton.setOnClickListener {
             // Handle code submission logic here
         }
 
+    }
+
+    private fun showAuthRequestDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Authentication Request")
+            .setMessage("Your auth request would be forwarded to your default messaging app. When you receive your code, hit the \"Submit code\" button and paste it there to complete your authentication.")
+            .setPositiveButton("OK", null)
+            .show()
     }
 }
