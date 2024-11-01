@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.R
 
 
@@ -26,7 +27,8 @@ class BridgesWelcomeFragment : Fragment(R.layout.fragment_bridges_welcome) {
         val submitCodeButton = view.findViewById<Button>(R.id.submit_code_button)
 
         authenticateButton.setOnClickListener {
-            showAuthRequestDialog()
+            val modalBottomSheet = BridgesAuthRequestModalFragment()
+            modalBottomSheet.show(parentFragmentManager, modalBottomSheet.tag)
         }
 
         submitCodeButton.setOnClickListener {
@@ -39,11 +41,4 @@ class BridgesWelcomeFragment : Fragment(R.layout.fragment_bridges_welcome) {
 
     }
 
-    private fun showAuthRequestDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Authentication Request")
-            .setMessage("Your auth request would be forwarded to your default messaging app. When you receive your code, hit the \"Submit code\" button and paste it there to complete your authentication.")
-            .setPositiveButton("OK", null)
-            .show()
-    }
 }
