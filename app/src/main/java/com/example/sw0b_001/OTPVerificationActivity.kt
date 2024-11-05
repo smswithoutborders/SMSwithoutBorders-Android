@@ -1,6 +1,7 @@
 package com.example.sw0b_001
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -28,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.os.CountDownTimer
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.TextInputLayout
 
 
 class OTPVerificationActivity : AppCompactActivityCustomized() {
@@ -46,8 +48,14 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
     private var countryCode : String? = null
     private var nextAttemptTimestamp : String? = null
 
+    private lateinit var twoFaPasswordLayout: TextInputLayout
+    private lateinit var twoFaPasswordInput: TextInputEditText
+    private lateinit var codeInput: TextInputEditText
+
     private lateinit var vault: Vault
     private lateinit var type: Type
+
+    private var isTwoStepVerificationEnabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +66,10 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
         password = intent.getStringExtra("password")
         countryCode = intent.getStringExtra("country_code")
         nextAttemptTimestamp = intent.getStringExtra("next_attempt_timestamp")
+
+        twoFaPasswordLayout = findViewById(R.id.password_layout)
+        twoFaPasswordInput = findViewById(R.id.two_fa_password_input)
+        codeInput = findViewById(R.id.ownership_verification_input)
 
         val resendCodeTextView = findViewById<MaterialTextView>(R.id.ownership_resend_code_by_sms_btn)
         val telegramInfoBox = findViewById<MaterialCardView>(R.id.telegram_info_box)
@@ -213,8 +225,20 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                         platform?.let {
                             val llt = Vault.fetchLongLivedToken(applicationContext)
                             val publisher = Publisher(applicationContext)
-                            publisher.phoneNumberBaseAuthenticationExchange(code,
+                            val r = publisher.phoneNumberBaseAuthenticationExchange(code,
                                 llt, phoneNumber, platform!!)
+
+                            if (r.twoStepVerificationEnabled) {
+                                isTwoStepVerificationEnabled = true
+                                runOnUiThread {
+                                    Toast.makeText(applicationContext, getString(R.string.two_factor_auth_enabled), Toast.LENGTH_SHORT).show()
+                                    twoFaPasswordLayout.visibility = View.VISIBLE
+                                    codeInput.isEnabled = false
+                                    findViewById<MaterialButton>(R.id.ownership_verification_btn).setOnClickListener {
+                                        submitPassword(it)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -222,7 +246,9 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                 vault.refreshStoredTokens(applicationContext)
                 runOnUiThread {
                     setResult(Activity.RESULT_OK)
-                    finish()
+                    if (platform != "telegram") {
+                        finish()
+                    }
                 }
             } catch(e: StatusRuntimeException) {
                 e.printStackTrace()
@@ -234,6 +260,52 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                 e.printStackTrace()
                 runOnUiThread {
                     Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+                }
+            } finally {
+                runOnUiThread {
+                    linearProgressIndicator.visibility = View.GONE
+                    submitBtnView.isEnabled = true
+                }
+            }
+        }
+    }
+
+    private fun submitPassword(submitBtnView: View) {
+        val password = twoFaPasswordInput.text.toString()
+        val code = codeInput.text.toString()
+
+        val linearProgressIndicator = findViewById<LinearProgressIndicator>(R.id.ownership_progress_bar)
+        linearProgressIndicator.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.Default).launch {
+            try {
+                platform?.let {
+                    val llt = Vault.fetchLongLivedToken(applicationContext)
+                    val publisher = Publisher(applicationContext)
+                    val r = publisher.phoneNumberBaseAuthenticationExchange(code, llt, phoneNumber, platform!!, password)
+                    if (r.success) {
+                        vault.refreshStoredTokens(applicationContext)
+                        runOnUiThread {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                    } else {
+                        runOnUiThread {
+                            AlertDialog.Builder(this@OTPVerificationActivity)
+                                .setTitle(getString(R.string.error_title))
+                                .setMessage(getString(R.string.incorrect_password_message))
+                                .setPositiveButton(getString(R.string.ok_button_text), null)
+                                .show()
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    AlertDialog.Builder(this@OTPVerificationActivity)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.telegram_auth_error))
+                        .setPositiveButton(getString(R.string.ok_button_text), null)
+                        .show()
+//                    finish()
                 }
             } finally {
                 runOnUiThread {
