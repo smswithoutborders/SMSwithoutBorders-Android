@@ -20,15 +20,13 @@ class GatewayClientViewModel() : ViewModel() {
 
     fun get(context: Context, successRunnable: Runnable?): LiveData<List<GatewayClient>> {
         if(liveData.value.isNullOrEmpty()) {
-            loadRemote(context, successRunnable, successRunnable)
             liveData = Datastore.getDatastore(context).gatewayClientsDao().all
+            loadRemote(context, successRunnable, successRunnable)
         }
         return liveData
     }
 
-    fun loadRemote(context: Context,
-                   successRunnable: Runnable?,
-                   failureRunnable: Runnable?){
+    fun loadRemote(context: Context, successRunnable: Runnable?, failureRunnable: Runnable?){
         CoroutineScope(Dispatchers.Default).launch{
             try {
                 GatewayClientsCommunications.fetchAndPopulateWithDefault(context)
