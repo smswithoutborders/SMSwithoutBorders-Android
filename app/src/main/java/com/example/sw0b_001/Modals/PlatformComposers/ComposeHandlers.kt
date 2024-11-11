@@ -15,12 +15,11 @@ import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.Models.SMSHandler
 
 object ComposeHandlers {
-
     fun compose(context: Context,
                 formattedContent: String,
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
-                onSuccessRunnable: Runnable) {
+                onSuccessRunnable: Runnable) : String {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
             throw Exception("More than 1 states exist")
@@ -57,6 +56,8 @@ object ComposeHandlers {
         Datastore.getDatastore(context).encryptedContentDAO()
             .insert(encryptedContent)
         onSuccessRunnable.run()
+
+        return encryptedContentBase64
     }
 
     data class DecomposedMessages(val body: String,
