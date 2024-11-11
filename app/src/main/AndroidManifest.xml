@@ -30,9 +30,7 @@
         android:versionCode="48"
         android:versionName="2.5.8"
         tools:replace="android:label">
-        <activity
-            android:name=".BridgesActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MessageViewActivity"
             android:exported="false"

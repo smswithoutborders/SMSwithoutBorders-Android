@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import com.example.sw0b_001.Bridges.BridgesWelcomeFragment
 import com.example.sw0b_001.Homepage.HomepageLoggedIn
 import com.example.sw0b_001.Homepage.HomepageNotLoggedIn
 import com.example.sw0b_001.Models.Vault
@@ -91,11 +90,7 @@ class HomepageActivity : AppCompactActivityCustomized() {
                     }
                     true
                 }
-                R.id.bridges_navbar -> {
-                    val intent = Intent(this, BridgesActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
+
                 else -> false
             }
         }

@@ -11,7 +11,7 @@
     style="@style/Widget.Material3.BottomSheet.Modal">
 
     <LinearLayout
-        android:id="@+id/login_constraint"
+        android:id="@+id/bridges_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -32,8 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Authentication Request"
-            android:textSize="30sp"
+            android:text="Alias Authentication Request"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -43,7 +43,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Your auth request would be forwarded to your default messaging app. When you receive your code, hit the 'Submit code' button and paste it there to complete your authentication."
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="Clicking 'Okay' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containung the code. Once you get the message copy it an return here to verify your account."
             android:textAlignment="center"
             android:textColor="@color/md_theme_outline" />
 
@@ -52,7 +54,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
@@ -70,6 +73,17 @@
                 style="?attr/materialButtonStyle" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/bridges_verify_now_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Already got the code? Verify now."
+            android:textColor="@color/md_theme_primary"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true" />
 
     </LinearLayout>
 
