@@ -8,6 +8,8 @@ import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
 import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.Modules.Network
+import junit.framework.TestCase.assertEquals
+import junit.framework.TestCase.assertTrue
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -28,7 +30,7 @@ class BridgesTest {
     @Serializable
     data class GatewayClientResponse(val publisher_response: String)
 
-    val phoneNumber = "+2371234567896"
+    val phoneNumber = "+23712345678111"
 
     val storedPlatforms = StoredPlatformsEntity(
         id = "0",
@@ -54,15 +56,17 @@ class BridgesTest {
         val responsePayload = Json.decodeFromString<GatewayClientResponse>(text).publisher_response
         val split = responsePayload.split(":")
         val authCode = split[1].split('.')[0].trim()
-        val publicKey: String = split[2].trim().trim('.').let {
+        val publicKey: ByteArray = split[2].trim().trim('.').let {
             val encoded = Base64.decode(it, Base64.DEFAULT)
+            println("$it -> len(${encoded.size}")
             val lenPubKey = encoded[0].toInt()
             val lenOTP = encoded[1].toInt()
-            String(encoded.copyOfRange(2, lenPubKey))
+            encoded.copyOfRange(2, lenPubKey+2)
         }
+        assertEquals(32, publicKey.size)
         println("AuthCode: $authCode, PublicKey: $publicKey")
 
-        Publishers.storeArtifacts(context, publicKey)
+        Publishers.storeArtifacts(context, Base64.encodeToString(publicKey, Base64.DEFAULT))
 
         // Send back auth code
         authRequest = Base64.encodeToString(Bridges.authRequest1(authCode), Base64.DEFAULT)
@@ -92,7 +96,9 @@ class BridgesTest {
             subject = "Introduction to bridges",
             body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
         ).let {
-            return@let ComposeHandlers.compose(context, it, platforms, storedPlatforms){ }
+            val encryptedContent = ComposeHandlers
+                .compose(context, it, platforms, storedPlatforms){ }
+            Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)
         }
 
         println("Formatted content: $formattedContent")

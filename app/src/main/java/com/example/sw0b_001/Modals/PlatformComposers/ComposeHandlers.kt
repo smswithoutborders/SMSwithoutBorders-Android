@@ -2,6 +2,7 @@ package com.example.sw0b_001.Modals.PlatformComposers
 
 import android.content.Context
 import android.content.Intent
+import android.util.Base64
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
 import com.example.sw0b_001.Database.Datastore
 import com.example.sw0b_001.Models.Messages.EncryptedContent
@@ -19,7 +20,7 @@ object ComposeHandlers {
                 formattedContent: String,
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
-                onSuccessRunnable: Runnable) : String {
+                onSuccessRunnable: Runnable) : ByteArray {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
             throw Exception("More than 1 states exist")
@@ -57,7 +58,7 @@ object ComposeHandlers {
             .insert(encryptedContent)
         onSuccessRunnable.run()
 
-        return encryptedContentBase64
+        return Base64.decode(encryptedContentBase64, Base64.DEFAULT)
     }
 
     data class DecomposedMessages(val body: String,

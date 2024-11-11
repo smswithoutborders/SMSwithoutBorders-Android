@@ -73,18 +73,14 @@ object Bridges {
 //        Publishers.storeArtifacts(context, pubKey)
 //    }
 
-    fun publish(payload: ByteArray, bridgeLetter: Byte): ByteArray{
+    fun publish(payload: ByteArray): ByteArray{
         val bridgeFlag = ByteArray(1)
         bridgeFlag[0] = BRIDGE_VALUE
 
         val switchValue = ByteArray(1)
         switchValue[0] = SWITCH_TYPE.PAYLOAD_ONLY.value
 
-        val lenPayload = ByteArray(4)
-        ByteBuffer.wrap(lenPayload).order(ByteOrder.LITTLE_ENDIAN)
-            .putInt(payload.size)
-
-        return bridgeFlag + switchValue + bridgeLetter + lenPayload + payload
+        return bridgeFlag + switchValue + payload
     }
 
     fun formatEmailBridge(to:String, cc:String, bcc:String, subject: String, body: String): String {
