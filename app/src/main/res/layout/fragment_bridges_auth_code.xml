@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="25dp">
 
                 <Button
                     android:id="@+id/compose_and_send_button"

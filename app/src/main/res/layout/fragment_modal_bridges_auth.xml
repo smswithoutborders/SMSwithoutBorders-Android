@@ -45,31 +45,31 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="Clicking 'Okay' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containung the code. Once you get the message copy it an return here to verify your account."
+            android:text="@string/bridges_auth_info"
             android:textAlignment="center"
             android:textColor="@color/md_theme_outline" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 style="?attr/materialButtonStyle" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/okay_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Okay"
+                android:layout_marginTop="8dp"
+                android:text="@string/ok"
                 style="?attr/materialButtonStyle" />
 
         </LinearLayout>
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Already got the code? Verify now."
+            android:text="@string/already_got_the_code_verify_now"
             android:textColor="@color/md_theme_primary"
             android:layout_marginBottom="16dp"
             android:clickable="true"
