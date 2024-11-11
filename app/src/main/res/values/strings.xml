@@ -76,7 +76,7 @@
     <string name="language_french">"French  "</string>
     <string name="language_farsi">Farsi</string>
     <string name="language_spanish">"Spanish     "</string>
-    <string name="language_turkish">
+    <string name="language_turkish" >
         Turkish
     </string>
     <string name="language_english_value" translatable="false">
@@ -250,6 +250,13 @@
     <string name="make_default">Make Default</string>
     <string name="gateway_client_options">Gateway Client Options</string>
     <string name="select_account_to_revoke_access">Select account to revoke access</string>
+    <string name="two_fa_password_hint_text">Enter your two-factor authentication password</string>
+    <string name="error_title">Error</string>
+    <string name="incorrect_password_message">Incorrect password. Please try again.</string>
+    <string name="ok_button_text">OK</string>
+    <string name="telegram_auth_error">Error occurred during Telegram authentication.</string>
+    <string name="two_factor_auth_enabled">Two factor authentication is enabled. Input your password.</string>
+    <string name="telegram_two_factor_auth_enabled">You enabled two-factor authentication in your Telegram account. Input your password.</string>
     <string name="bridges">Bridges</string>
     <string name="welcome_to_bridges">Welcome to Bridges</string>
     <string name="authenticate_with_bridges">Authenticate with Bridges</string>
@@ -262,6 +269,6 @@
     <string name="compose_and_send_info">Compose your first message alongside sending your auth code to save SMS cost</string>
     <string name="bridges_submit_code_info">Once you send an authentication request via SMS, you will receive a message containing the code. Copy the entire SMS without adding or removing anything from it and paste it here.</string>
     <string name="already_got_the_code_verify_now">Already got the code? Verify now.</string>
-    <string name="bridges_auth_info">Clicking \'Okay\' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containung the code. Once you get the message copy it an return here to verify your account.</string>
+    <string name="bridges_auth_info">Clicking \'OK\' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containing the code. Once you get the message copy it and return here to verify your account.</string>
 
 </resources>

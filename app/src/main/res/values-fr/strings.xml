@@ -168,6 +168,13 @@
     <string name="make_default">Définir par défaut</string>
     <string name="gateway_client_options">Options du client passerelle</string>
     <string name="select_account_to_revoke_access">Sélectionnez le compte pour révoquer l\'accès</string>
+    <string name="two_fa_password_hint_text">Saisissez votre mot de passe d\'authentification à deux facteurs</string>
+    <string name="error_title">Erreur</string>
+    <string name="incorrect_password_message">Mot de passe incorrect. Veuillez réessayer.</string>
+    <string name="ok_button_text">OK</string>
+    <string name="telegram_auth_error">Une erreur s\'est produite lors de l\'authentification Telegram.</string>
+    <string name="two_factor_auth_enabled">L\'authentification à deux facteurs est activée. Saisissez votre mot de passe.</string>
+    <string name="telegram_two_factor_auth_enabled">Vous avez activé l\'authentification à deux facteurs dans votre compte Telegram. Saisissez votre mot de passe.</string>
     <string name="bridges">Ponts</string>
     <string name="welcome_to_bridges">Bienvenue sur Bridges</string>
     <string name="authenticate_with_bridges">Authentifiez-vous avec Bridges</string>
