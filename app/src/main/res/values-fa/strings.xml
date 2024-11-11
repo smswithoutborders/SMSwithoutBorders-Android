@@ -175,5 +175,18 @@
     <string name="telegram_auth_error">خطایی در حین احراز هویت تلگرام رخ داده است.</string>
     <string name="two_factor_auth_enabled">احراز هویت دو عاملی فعال شده است. رمز عبور خود را وارد کنید.</string>
     <string name="telegram_two_factor_auth_enabled">شما احراز هویت دو عاملی را در حساب تلگرام خود فعال کرده اید. رمز عبور خود را وارد کنید.</string>
+    <string name="bridges">پل‌ها</string>
+    <string name="welcome_to_bridges">به Bridges خوش آمدید</string>
+    <string name="authenticate_with_bridges">با Bridges احراز هویت کنید</string>
+    <string name="submit_code">ارسال کد</string>
+    <string name="code_expires_in_2hrs">کد در 2 ساعت منpires می‌شود</string>
+    <string name="input_sms_code">کد SMS را وارد کنید</string>
+    <string name="send_now">همین حالا ارسال کنید</string>
+    <string name="send_now_info">فقط کد احراز هویت را از طریق SMS ارسال کنید</string>
+    <string name="compose_and_send">نوشتن و ارسال</string>
+    <string name="compose_and_send_info">برای صرفه‌جویی در هزینه SMS، اولین پیام خود را همراه با ارسال کد احراز هویت خود بنویسید</string>
+    <string name="bridges_submit_code_info">پس از ارسال درخواست احراز هویت از طریق پیامک، پیامی حاوی کد دریافت خواهید کرد. کل پیامک را بدون اضافه یا حذف چیزی کپی کرده و در اینجا جای‌گذاری کنید.</string>
+    <string name="already_got_the_code_verify_now">کد را دریافت کرده‌اید؟ اکنون تأیید کنید.</string>
+    <string name="bridges_auth_info">با کلیک بر روی "تأیید" برنامه پیام‌رسانی پیش‌فرض شما باز می‌شود که در آن درخواست احراز هویت خود را به عنوان یک پیامک ارسال خواهید کرد. پس از ارسال درخواست احراز هویت، پاسخی حاوی کد دریافت خواهید کرد. پس از دریافت پیام، آن را کپی کرده و برای تأیید حساب خود به اینجا برگردید.</string>
 
 </resources>

@@ -90,6 +90,7 @@ class HomepageActivity : AppCompactActivityCustomized() {
                     }
                     true
                 }
+
                 else -> false
             }
         }

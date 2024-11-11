@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
+import com.example.sw0b_001.Bridges.BridgesSubmitCodeFragment
+import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.Modals.LoginModalFragment
 import com.example.sw0b_001.Modals.SignupModalFragment
 import com.example.sw0b_001.R
@@ -22,6 +26,14 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
             activity?.recreate()
         }
 
+        val verifyCodeRunnable = Runnable {
+            activity?.supportFragmentManager?.commit {
+                replace<BridgesSubmitCodeFragment>(R.id.homepage_fragment_container)
+                addToBackStack(null)
+            }
+        }
+
+
         view.findViewById<MaterialButton>(R.id.homepage_vault_signup_btn).setOnClickListener {
             val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
             val signupModalFragment = SignupModalFragment(loginSuccessRunnable)
@@ -37,7 +49,10 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
             fragmentTransaction?.show(loginModalFragment)
             fragmentTransaction?.commit()
         }
+
+        view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).setOnClickListener {
+            val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(verifyCodeRunnable)
+            bridgesAuthModalFragment.show(parentFragmentManager, "bridges_auth_tag")
+        }
     }
-
-
 }

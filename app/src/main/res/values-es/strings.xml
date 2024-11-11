@@ -175,4 +175,18 @@
     <string name="telegram_auth_error">Se produjo un error durante la autenticación de Telegram.</string>
     <string name="two_factor_auth_enabled">La autenticación de dos factores está habilitada. Ingrese su contraseña.</string>
     <string name="telegram_two_factor_auth_enabled">Habilitaste la autenticación de dos factores en tu cuenta de Telegram. Ingresa tu contraseña.</string>
+    <string name="bridges">Puentes</string>
+    <string name="welcome_to_bridges">Bienvenido a Bridges</string>
+    <string name="authenticate_with_bridges">Autenticarse con Bridges</string>
+    <string name="submit_code">Enviar código</string>
+    <string name="code_expires_in_2hrs">El código expira en 2 horas</string>
+    <string name="input_sms_code">Introducir código SMS</string>
+    <string name="send_now">Enviar ahora</string>
+    <string name="send_now_info">Enviar solo el código de autenticación por SMS</string>
+    <string name="compose_and_send">Redactar y enviar</string>
+    <string name="compose_and_send_info">Redacte su primer mensaje junto con el envío de su código de autenticación para ahorrar costes de SMS</string>
+    <string name="bridges_submit_code_info">Una vez que envíe una solicitud de autenticación por SMS, recibirá un mensaje que contiene el código. Copie el SMS completo sin agregar ni eliminar nada y péguelo aquí.</string>
+    <string name="already_got_the_code_verify_now">¿Ya tienes el código? Verifícalo ahora.</string>
+    <string name="bridges_auth_info">Al hacer clic en "Aceptar", se abrirá su aplicación de mensajería predeterminada, donde enviará su solicitud de autenticación como un SMS. Una vez que envíe la solicitud de autenticación, recibirá una respuesta que contiene el código. Una vez que reciba el mensaje, cópielo y regrese aquí para verificar su cuenta.</string>
+
 </resources>
