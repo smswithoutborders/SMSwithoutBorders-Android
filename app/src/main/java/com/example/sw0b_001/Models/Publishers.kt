@@ -2,12 +2,10 @@ package com.example.sw0b_001.Models
 
 import android.content.Context
 import android.util.Base64
-import android.widget.Toast
 import at.favre.lib.armadillo.Armadillo
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.KeystoreHelpers
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.SecurityAES
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.SecurityRSA
-import com.example.sw0b_001.Models.Messages.RatchetStates
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
 import com.example.sw0b_001.Modules.Network
 import com.example.sw0b_001.R
@@ -17,12 +15,8 @@ import io.grpc.ManagedChannelBuilder
 import kotlinx.serialization.json.Json
 import publisher.v1.PublisherGrpc
 import publisher.v1.PublisherOuterClass
-import publisher.v1.PublisherGrpc.PublisherBlockingStub
-import publisher.v1.PublisherGrpc.PublisherStub
-import vault.v1.Vault
-import java.net.UnknownHostException
 
-class Publisher(val context: Context) {
+class Publishers(val context: Context) {
 
      private var REDIRECT_URL_SCHEME = "relaysms://oauth.afkanerd.com/android/"
 

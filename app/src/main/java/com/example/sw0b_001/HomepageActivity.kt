@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import com.example.sw0b_001.Homepage.HomepageLoggedIn
 import com.example.sw0b_001.Homepage.HomepageNotLoggedIn
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Homepage.GatewayClientListingFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +47,7 @@ class HomepageActivity : AppCompactActivityCustomized() {
         window.navigationBarColor = getResources().getColor(R.color.md_theme_surfaceContainer, theme);
 
         supportFragmentManager.commit {
-            if(Vault.fetchLongLivedToken(applicationContext).isNotBlank()) {
+            if(Vaults.fetchLongLivedToken(applicationContext).isNotBlank()) {
                 if(supportFragmentManager.findFragmentByTag("homepage_not_fragment") != null) {
                     replace(R.id.homepage_fragment_container, homepageLoggedIn,
                         "homepage_fragment")
@@ -71,7 +71,7 @@ class HomepageActivity : AppCompactActivityCustomized() {
                 R.id.recents_navbar -> {
                     supportFragmentManager.commit {
                         supportActionBar?.title = getString(R.string.recents)
-                        if(Vault.fetchLongLivedToken(applicationContext).isNotBlank()) {
+                        if(Vaults.fetchLongLivedToken(applicationContext).isNotBlank()) {
                             replace(R.id.homepage_fragment_container, HomepageLoggedIn(),
                                 "homepage_fragment" )
                         }

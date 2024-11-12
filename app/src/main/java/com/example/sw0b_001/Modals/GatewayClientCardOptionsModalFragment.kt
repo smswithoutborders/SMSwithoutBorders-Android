@@ -53,7 +53,7 @@ class GatewayClientCardOptionsModalFragment(val gatewayClient: GatewayClient) : 
 
         editButton.setOnClickListener {
             val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-            val gatewayClientAddFragment = GatewayClientAddModalFragment.newInstance(gatewayClient.id)
+            val gatewayClientAddFragment = GatewayClientAddModalFragment(gatewayClient.id)
             fragmentTransaction.add(gatewayClientAddFragment, "gateway_client_add_tag")
             fragmentTransaction.show(gatewayClientAddFragment)
             fragmentTransaction.commit()
