@@ -20,6 +20,7 @@ object ComposeHandlers {
                 formattedContent: String,
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
+                isBridge: Boolean = false,
                 onSuccessRunnable: Runnable) : ByteArray {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
@@ -30,7 +31,11 @@ object ComposeHandlers {
             States(String(Publishers.getEncryptedStates(context, states[0].value),
                 Charsets.UTF_8)) else States()
         val messageComposer = MessageComposer(context, state)
-        val encryptedContentBase64 = messageComposer.compose(platforms, formattedContent)
+        val encryptedContentBase64 = messageComposer.compose(
+            platforms,
+            formattedContent,
+            isBridge=isBridge
+        )
         println("Final format: $encryptedContentBase64")
 
         val encryptedStates = Publishers.encryptStates(context, state.serializedStates)

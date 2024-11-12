@@ -21,7 +21,8 @@ class MessageComposer(val context: Context, val state: States) {
         }
     }
 
-    fun compose(availablePlatforms: AvailablePlatforms, content: String): String {
+    fun compose(availablePlatforms: AvailablePlatforms, content: String, isBridge: Boolean = false):
+            String {
         val (header, cipherMk) = Ratchets.ratchetEncrypt(state, content.encodeToByteArray(), AD)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -29,19 +30,27 @@ class MessageComposer(val context: Context, val state: States) {
 
         val deviceID = if(!usePhoneNumber) Vaults.fetchDeviceId(context) else null
         return formatTransmission(header,  cipherMk,
-            availablePlatforms.shortcode!!.encodeToByteArray()[0], deviceID)
+            availablePlatforms.shortcode!!.encodeToByteArray()[0], deviceID, isBridge = isBridge)
     }
 
     companion object {
         fun formatTransmission(headers: Headers,
                                cipherText: ByteArray,
-                               platformLetter: Byte, deviceID: ByteArray? = null): String {
+                               platformLetter: Byte,
+                               deviceID: ByteArray? = null,
+                               isBridge: Boolean = false
+        ): String {
             val sHeader = headers.serialized
 
             val bytesLen = sHeader.size.toBytes()
             val encryptedContentPayload = bytesLen + sHeader + cipherText
             val payloadBytesLen = encryptedContentPayload.size.toBytes()
-            var data = payloadBytesLen + platformLetter + encryptedContentPayload
+            var data = if(isBridge) {
+                val platformLetterByteArray = ByteArray(1)
+                platformLetterByteArray[0] = platformLetter
+                platformLetterByteArray + payloadBytesLen + encryptedContentPayload
+            }
+            else payloadBytesLen + platformLetter + encryptedContentPayload
 
             deviceID?.let {
                 println("DeviceID: $it")

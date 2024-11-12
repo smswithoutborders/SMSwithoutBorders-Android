@@ -50,28 +50,17 @@ object Bridges {
 
     fun parseAuthResponse(payload: String): Pair<String?, ByteArray?> {
         var authCode = ""
-        var responseDetails = ""
+        var pubKey: ByteArray? = null
         payload.split("\n").apply {
             if(this.size > 1) {
                 authCode = this[1].substring(0, 6)
-                responseDetails = this[1].substring(6)
+                val response = Base64.decode(this[1].substring(6), Base64.DEFAULT)
+                val len = response[0].toInt()
+                pubKey = response.copyOfRange(1, len+1)
             }
         }
-        return Pair(authCode, Base64.decode(responseDetails, Base64.DEFAULT))
+        return Pair(authCode, pubKey)
     }
-
-//    fun processBridgeAuthPayload(context: Context, payload: ByteArray) {
-//        val switchType = payload[0].toInt()
-//
-//        // TODO: validate switchtype
-//        val lenPubKey = payload[1].toInt()
-//
-//        // TODO: validate len against actual payload
-//        val pubKey = payload.copyOfRange(2, payload.size)
-//        println("Processing payload: $pubKey")
-//
-//        Publishers.storeArtifacts(context, pubKey)
-//    }
 
     fun publish(payload: ByteArray): ByteArray{
         val bridgeFlag = ByteArray(1)

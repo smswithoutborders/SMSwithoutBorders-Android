@@ -16,6 +16,7 @@ import kotlinx.serialization.json.Json
 import org.junit.Test
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.nio.charset.Charset
 
 class BridgesTest {
     var context = InstrumentationRegistry.getInstrumentation().targetContext
@@ -30,7 +31,7 @@ class BridgesTest {
     @Serializable
     data class GatewayClientResponse(val publisher_response: String)
 
-    val phoneNumber = "+23712345678111"
+    val phoneNumber = "+23712345678114"
 
     val storedPlatforms = StoredPlatformsEntity(
         id = "0",
@@ -54,16 +55,10 @@ class BridgesTest {
         println("Response message: $text")
 
         val responsePayload = Json.decodeFromString<GatewayClientResponse>(text).publisher_response
-        val split = responsePayload.split(":")
-        val authCode = split[1].split('.')[0].trim()
-        val publicKey: ByteArray = split[2].trim().trim('.').let {
-            val encoded = Base64.decode(it, Base64.DEFAULT)
-            println("$it -> len(${encoded.size}")
-            val lenPubKey = encoded[0].toInt()
-            val lenOTP = encoded[1].toInt()
-            encoded.copyOfRange(2, lenPubKey+2)
-        }
-        assertEquals(32, publicKey.size)
+        val values = Bridges.parseAuthResponse(responsePayload)
+        val authCode = values.first!!
+        val publicKey = values.second
+        assertEquals(32, publicKey!!.size)
         println("AuthCode: $authCode, PublicKey: $publicKey")
 
         Publishers.storeArtifacts(context, Base64.encodeToString(publicKey, Base64.DEFAULT))
@@ -89,6 +84,7 @@ class BridgesTest {
             logo = null
         )
 
+        println("shortcode: ${platforms.shortcode!!.toByteArray(Charset.forName("US-ASCII"))[0]}")
         val formattedContent: String = Bridges.formatEmailBridge(
             to = "developers@smswithoutborders.com",
             cc = "",
@@ -97,12 +93,13 @@ class BridgesTest {
             body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
         ).let {
             val encryptedContent = ComposeHandlers
-                .compose(context, it, platforms, storedPlatforms){ }
-            Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)
+                .compose(context, it, platforms, storedPlatforms, isBridge = true){ }
+            Json.encodeToString(
+                GatewayClientRequest(phoneNumber,
+                    Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)))
         }
 
         println("Formatted content: $formattedContent")
-
         response = Network.jsonRequestPost(gatewayServerUrl, formattedContent)
         text = response.result.get()
         println("Publishing response: $text")
