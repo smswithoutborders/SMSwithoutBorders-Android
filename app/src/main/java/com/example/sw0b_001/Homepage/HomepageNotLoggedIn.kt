@@ -1,13 +1,10 @@
 package com.example.sw0b_001.Homepage
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import com.example.sw0b_001.Bridges.BridgesSubmitCodeFragment
+import com.example.sw0b_001.Bridges.BridgesSubmitCodeActivity
 import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.Modals.LoginModalFragment
 import com.example.sw0b_001.Modals.SignupModalFragment
@@ -27,10 +24,7 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
         }
 
         val verifyCodeRunnable = Runnable {
-            activity?.supportFragmentManager?.commit {
-                replace<BridgesSubmitCodeFragment>(R.id.homepage_fragment_container)
-                addToBackStack(null)
-            }
+            startActivity(Intent(requireContext(), BridgesSubmitCodeActivity::class.java))
         }
 
 

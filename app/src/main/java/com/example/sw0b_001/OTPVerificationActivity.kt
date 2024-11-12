@@ -113,18 +113,16 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
         configureVerificationListener()
 
         if(BuildConfig.DEBUG) {
-            findViewById<TextInputEditText>(R.id.ownership_verification_input).text =
-                Editable.Factory().newEditable("123456")
+           codeInput.text = Editable.Factory().newEditable("123456")
         }
 
         findViewById<MaterialButton>(R.id.ownership_verification_btn).setOnClickListener {
-            val codeTextView = findViewById<TextInputEditText>(R.id.ownership_verification_input)
-            if(codeTextView.text.isNullOrEmpty()) {
-                codeTextView.error = getString(R.string.owernship_otp_please_enter_a_valid_code)
+            if(codeInput.text.isNullOrEmpty()) {
+                codeInput.error = getString(R.string.owernship_otp_please_enter_a_valid_code)
                 return@setOnClickListener
             }
             it.isEnabled = false
-            submitOTPCode(it, codeTextView.text.toString())
+            submitOTPCode(it, codeInput.text.toString())
         }
 
         findViewById<MaterialTextView>(R.id.ownership_resend_code_by_sms_btn)
@@ -328,7 +326,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     val smsTemplate = getString(R.string.otp_verification_code_template);
 
                     val code = message?.split(smsTemplate.toRegex())
-                    if(code != null && code.size!! > 1)
+                    if(code != null && code.size > 1)
                         findViewById<TextInputEditText>(R.id.ownership_verification_input)
                                 ?.setText(code[1].replace(" ".toRegex(), ""))
                 }

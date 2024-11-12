@@ -245,7 +245,7 @@
     <string name="cannot_delete_selected_title">Cannot Delete Selected Gateway Client</string>
     <string name="cannot_delete_selected_message">Please switch to another gateway client before deleting this one.</string>
     <string name="delete">Delete</string>
-    <string name="ok">OK</string>
+    <string name="ok">Request authentication</string>
     <string name="edit">Edit</string>
     <string name="make_default">Make Default</string>
     <string name="gateway_client_options">Gateway Client Options</string>
@@ -269,8 +269,15 @@
     <string name="compose_and_send_info">Compose your first message alongside sending your auth code to save SMS cost</string>
     <string name="bridges_submit_code_info">Once you send an authentication request via SMS, you will receive a message containing the code. Copy the entire SMS without adding or removing anything from it and paste it here.</string>
     <string name="already_got_the_code_verify_now">Already got the code? Verify now.</string>
-    <string name="bridges_auth_info">Clicking \'OK\' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containing the code. Once you get the message copy it and return here to verify your account.</string>
+    <string name="bridges_auth_info">An alias uses your phone number to communicate on your behalf. An example alias would be 12345@example.com.</string>
     <string name="enter_phone_number_with_country_code">Enter phone number with country code</string>
-    <string name="continue_without_an_account">Continue without an account</string>
+    <string name="continue_without_an_account">Continue without an internet connection</string>
+    <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Send an authentication request and paste the SMS message sent back to begin communicating with your Alias</string>
+    <string name="authenticate_your_alias">Alias authentication</string>
+    <string name="the_code_would_be_automatically_detected_sometimes_n_nin_case_it_is_not_automatically_received_please_copy_the_entire_sms_message_and_paste_in_the_box_below">The code would be automatically detected sometimes.\n\nIn case it is not automatically received, please copy the entire SMS message and paste in the box below</string>
+    <string name="paste_entire_sms_message_in_here">Paste Entire SMS message in here...</string>
+    <string name="authenticate_code">Verify and save code</string>
+    <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">The code would be attached to the first message you send from the app</string>
+    <string name="please_set_a_default_gateway_client">Please set a default Gateway Client</string>
 
 </resources>

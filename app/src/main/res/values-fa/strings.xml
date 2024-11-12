@@ -171,7 +171,7 @@
     <string name="two_fa_password_hint_text">رمز عبور احراز هویت دو عاملی خود را وارد کنید</string>
     <string name="error_title">خطا</string>
     <string name="incorrect_password_message">رمز عبور نادرست است. لطفا دوباره امتحان کنید.</string>
-    <string name="ok_button_text">باشه</string>
+    <string name="ok_button_text">درخواست احراز هویت</string>
     <string name="telegram_auth_error">خطایی در حین احراز هویت تلگرام رخ داده است.</string>
     <string name="two_factor_auth_enabled">احراز هویت دو عاملی فعال شده است. رمز عبور خود را وارد کنید.</string>
     <string name="telegram_two_factor_auth_enabled">شما احراز هویت دو عاملی را در حساب تلگرام خود فعال کرده اید. رمز عبور خود را وارد کنید.</string>
@@ -187,7 +187,9 @@
     <string name="compose_and_send_info">برای صرفه‌جویی در هزینه SMS، اولین پیام خود را همراه با ارسال کد احراز هویت خود بنویسید</string>
     <string name="bridges_submit_code_info">پس از ارسال درخواست احراز هویت از طریق پیامک، پیامی حاوی کد دریافت خواهید کرد. کل پیامک را بدون اضافه یا حذف چیزی کپی کرده و در اینجا جای‌گذاری کنید.</string>
     <string name="already_got_the_code_verify_now">کد را دریافت کرده‌اید؟ اکنون تأیید کنید.</string>
-    <string name="bridges_auth_info">با کلیک بر روی "تأیید" برنامه پیام‌رسانی پیش‌فرض شما باز می‌شود که در آن درخواست احراز هویت خود را به عنوان یک پیامک ارسال خواهید کرد. پس از ارسال درخواست احراز هویت، پاسخی حاوی کد دریافت خواهید کرد. پس از دریافت پیام، آن را کپی کرده و برای تأیید حساب خود به اینجا برگردید.</string>
+    <string name="bridges_auth_info">نام مستعار از شماره تلفن شما برای برقراری ارتباط از طرف شما استفاده می کند. نام مستعار مثال 12345@example.com خواهد بود.</string>
     <string name="enter_phone_number_with_country_code">شماره تلفن را با کد کشور وارد کنید</string>
+    <string name="continue_without_an_account">بدون اتصال به اینترنت ادامه دهید</string>
+    <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">یک درخواست احراز هویت ارسال کنید و پیام کوتاه ارسال شده را برای شروع ارتباط با نام مستعار خود جایگذاری کنید</string>
 
 </resources>

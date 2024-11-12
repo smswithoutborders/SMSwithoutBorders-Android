@@ -32,6 +32,11 @@
         tools:replace="android:label">
 
         <activity
+            android:name=".Bridges.BridgesSubmitCodeActivity"
+            android:exported="false"
+            android:parentActivityName=".HomepageActivity" />
+
+        <activity
             android:name=".MessageViewActivity"
             android:exported="false"
             android:parentActivityName=".HomepageActivity" />

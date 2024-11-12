@@ -58,12 +58,12 @@
         app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/homepage_vault_login_btn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:padding="15dp"
         android:text="@string/login"

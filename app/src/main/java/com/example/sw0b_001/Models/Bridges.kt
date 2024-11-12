@@ -1,6 +1,7 @@
 package com.example.sw0b_001.Models
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Base64
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.Headers
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
@@ -55,7 +56,7 @@ object Bridges {
         payload.split("\n").apply {
             if(this.size > 1) {
                 authCode = this[1].substring(0, 6)
-                val response = Base64.decode(this[1].substring(6), Base64.DEFAULT)
+                val response = Base64.decode(this[1].substring(7), Base64.DEFAULT)
                 val len = response[0].toInt()
                 pubKey = response.copyOfRange(1, len+1)
             }
@@ -75,5 +76,25 @@ object Bridges {
 
     fun formatEmailBridge(to:String, cc:String, bcc:String, subject: String, body: String): String {
         return "$to:$cc:$bcc:$subject:$body"
+    }
+
+    val filename = "com.afkanerd.relaysms.bridges.manifest"
+    fun saveAuthCode(context: Context, authCode: String) {
+        val sharedPreferences: SharedPreferences =
+            context.getSharedPreferences(filename, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("auth_code", authCode).apply()
+    }
+
+    fun getAuthCode(context: Context): String {
+        return context
+            .getSharedPreferences(filename, Context.MODE_PRIVATE).getString("auth_code", "")!!
+    }
+
+    fun deleteAuthCode(context: Context) {
+        context
+            .getSharedPreferences(filename, Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .apply()
     }
 }

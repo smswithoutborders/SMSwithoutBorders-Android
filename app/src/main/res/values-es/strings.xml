@@ -171,7 +171,7 @@
     <string name="two_fa_password_hint_text">Ingrese su contraseña de autenticación de dos factores</string>
     <string name="error_title">Error</string>
     <string name="incorrect_password_message">Contraseña incorrecta. Por favor, inténtelo de nuevo.</string>
-    <string name="ok_button_text">Aceptar</string>
+    <string name="ok_button_text">Solicitar autenticación</string>
     <string name="telegram_auth_error">Se produjo un error durante la autenticación de Telegram.</string>
     <string name="two_factor_auth_enabled">La autenticación de dos factores está habilitada. Ingrese su contraseña.</string>
     <string name="telegram_two_factor_auth_enabled">Habilitaste la autenticación de dos factores en tu cuenta de Telegram. Ingresa tu contraseña.</string>
@@ -187,7 +187,9 @@
     <string name="compose_and_send_info">Redacte su primer mensaje junto con el envío de su código de autenticación para ahorrar costes de SMS</string>
     <string name="bridges_submit_code_info">Una vez que envíe una solicitud de autenticación por SMS, recibirá un mensaje que contiene el código. Copie el SMS completo sin agregar ni eliminar nada y péguelo aquí.</string>
     <string name="already_got_the_code_verify_now">¿Ya tienes el código? Verifícalo ahora.</string>
-    <string name="bridges_auth_info">Al hacer clic en "Aceptar", se abrirá su aplicación de mensajería predeterminada, donde enviará su solicitud de autenticación como un SMS. Una vez que envíe la solicitud de autenticación, recibirá una respuesta que contiene el código. Una vez que reciba el mensaje, cópielo y regrese aquí para verificar su cuenta.</string>
+    <string name="bridges_auth_info">Un alias utiliza su número de teléfono para comunicarse en su nombre. Un alias de ejemplo sería 12345@example.com.</string>
     <string name="enter_phone_number_with_country_code">Ingrese el número de teléfono con el código de país</string>
+    <string name="continue_without_an_account">Continuar sin conexión a Internet</string>
+    <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Envíe una solicitud de autenticación y pegue el mensaje SMS enviado para comenzar a comunicarse con su Alias</string>
 
 </resources>

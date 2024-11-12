@@ -171,7 +171,7 @@
     <string name="two_fa_password_hint_text">Saisissez votre mot de passe d\'authentification à deux facteurs</string>
     <string name="error_title">Erreur</string>
     <string name="incorrect_password_message">Mot de passe incorrect. Veuillez réessayer.</string>
-    <string name="ok_button_text">OK</string>
+    <string name="ok_button_text">Demande d\'authentification</string>
     <string name="telegram_auth_error">Une erreur s\'est produite lors de l\'authentification Telegram.</string>
     <string name="two_factor_auth_enabled">L\'authentification à deux facteurs est activée. Saisissez votre mot de passe.</string>
     <string name="telegram_two_factor_auth_enabled">Vous avez activé l\'authentification à deux facteurs dans votre compte Telegram. Saisissez votre mot de passe.</string>
@@ -187,7 +187,9 @@
     <string name="compose_and_send_info">Composez votre premier message en même temps que l\'envoi de votre code d\'authentification pour économiser les coûts de SMS</string>
     <string name="bridges_submit_code_info">Une fois que vous avez envoyé une demande d\'authentification par SMS, vous recevrez un message contenant le code. Copiez l\'intégralité du SMS sans rien y ajouter ni en supprimer et collez-le ici.</string>
     <string name="already_got_the_code_verify_now">Vous avez déjà le code ? Vérifiez maintenant.</string>
-    <string name="bridges_auth_info">Cliquer sur « OK » ouvrira votre application de messagerie par défaut où vous enverrez votre demande d\'authentification par SMS. Une fois la demande d\'authentification envoyée, vous recevrez une réponse contenant le code. Une fois que vous avez reçu le message, copiez-le et revenez ici pour vérifier votre compte.</string>
+    <string name="bridges_auth_info">Un alias utilise votre numéro de téléphone pour communiquer en votre nom. Un exemple d\'alias serait 12345@exemple.com.</string>
     <string name="enter_phone_number_with_country_code">Entrez le numéro de téléphone avec l\'indicatif du pays</string>
+    <string name="continue_without_an_account">Continuer sans connexion Internet</string>
+    <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Envoyez une demande d\'authentification et collez le message SMS renvoyé pour commencer à communiquer avec votre alias</string>
 
 </resources>
