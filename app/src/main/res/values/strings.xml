@@ -271,5 +271,6 @@
     <string name="already_got_the_code_verify_now">Already got the code? Verify now.</string>
     <string name="bridges_auth_info">Clicking \'OK\' would open your default messaging app where you would send your authentication request as an SMS. Once you send the auth request, you will receive a reply containing the code. Once you get the message copy it and return here to verify your account.</string>
     <string name="enter_phone_number_with_country_code">Enter phone number with country code</string>
+    <string name="continue_without_an_account">Continue without an account</string>
 
 </resources>

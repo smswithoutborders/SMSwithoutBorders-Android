@@ -14,8 +14,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.registerReceiver
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
@@ -28,8 +26,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.os.CountDownTimer
+import com.example.sw0b_001.Models.Publishers
+import com.example.sw0b_001.Models.Vaults
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.TextInputLayout
+import vault.v1.Vault
+import java.util.concurrent.Flow.Publisher
 
 
 class OTPVerificationActivity : AppCompactActivityCustomized() {
@@ -52,7 +54,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
     private lateinit var twoFaPasswordInput: TextInputEditText
     private lateinit var codeInput: TextInputEditText
 
-    private lateinit var vault: Vault
+    private lateinit var vault: Vaults
     private lateinit var type: Type
 
     private var isTwoStepVerificationEnabled = false
@@ -130,7 +132,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     finish()
                 }
 
-        vault = Vault(applicationContext)
+        vault = Vaults(applicationContext)
     }
 
     private fun startCountdownTimer(nextAttemptTimestamp: Long, onTick: (Long) -> Unit, onFinish: () -> Unit) {
@@ -223,8 +225,8 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     }
                     Type.PNBA -> {
                         platform?.let {
-                            val llt = Vault.fetchLongLivedToken(applicationContext)
-                            val publisher = Publisher(applicationContext)
+                            val llt = Vaults.fetchLongLivedToken(applicationContext)
+                            val publisher = Publishers(applicationContext)
                             val r = publisher.phoneNumberBaseAuthenticationExchange(code,
                                 llt, phoneNumber, platform!!)
 
@@ -279,8 +281,8 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
         CoroutineScope(Dispatchers.Default).launch {
             try {
                 platform?.let {
-                    val llt = Vault.fetchLongLivedToken(applicationContext)
-                    val publisher = Publisher(applicationContext)
+                    val llt = Vaults.fetchLongLivedToken(applicationContext)
+                    val publisher = Publishers(applicationContext)
                     val r = publisher.phoneNumberBaseAuthenticationExchange(code, llt, phoneNumber, platform!!, password)
                     if (r.success) {
                         vault.refreshStoredTokens(applicationContext)
@@ -299,6 +301,7 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                     }
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 runOnUiThread {
                     AlertDialog.Builder(this@OTPVerificationActivity)
                         .setTitle(getString(R.string.error_title))

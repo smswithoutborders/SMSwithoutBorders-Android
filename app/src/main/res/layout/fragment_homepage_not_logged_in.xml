@@ -58,13 +58,13 @@
         app:layout_constraintTop_toBottomOf="@+id/materialTextView3" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/homepage_vault_login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/md_theme_outlineVariant_mediumContrast"
         android:padding="15dp"
         android:text="@string/login"
         android:textSize="16sp"
@@ -73,15 +73,15 @@
         app:layout_constraintTop_toBottomOf="@+id/homepage_vault_signup_btn" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/homepage_bridges_auth_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/md_theme_outlineVariant_mediumContrast"
         android:padding="15dp"
-        android:text="Continue without an account"
+        android:text="@string/continue_without_an_account"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

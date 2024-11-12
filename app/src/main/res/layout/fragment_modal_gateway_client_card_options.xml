@@ -58,6 +58,7 @@
                         android:backgroundTint="@color/md_theme_primary"/>
 
                     <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:id="@+id/edit_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
