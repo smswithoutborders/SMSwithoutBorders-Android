@@ -240,5 +240,6 @@
     <string name="bridges_submit_code_info">SMS yoluyla bir kimlik doğrulama isteği gönderdikten sonra, kodu içeren bir mesaj alacaksınız. SMS\'in tamamını hiçbir şey eklemeden veya çıkarmeden kopyalayın ve buraya yapıştırın.</string>
     <string name="already_got_the_code_verify_now">Kodu zaten aldınız mı? Şimdi doğrulayın.</string>
     <string name="bridges_auth_info">"Tamam"a tıklamak, kimlik doğrulama isteğinizi SMS olarak göndereceğiniz varsayılan mesajlaşma uygulamanızı açacaktır. Kimlik doğrulama isteğini gönderdikten sonra, kodu içeren bir yanıt alacaksınız. Mesajı aldıktan sonra kopyalayın ve hesabınızı doğrulamak için buraya geri dönün.</string>
+    <string name="enter_phone_number_with_country_code">Ülke koduyla birlikte telefon numarasını girin</string>
 
 </resources>
