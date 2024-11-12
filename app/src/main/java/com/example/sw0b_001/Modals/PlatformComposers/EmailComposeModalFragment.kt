@@ -49,20 +49,38 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
 
         message?.let {
             it.encryptedContent.split(":").let {
-                view.findViewById<TextInputEditText>(R.id.email_to).apply {
-                    setText(it[1])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_cc).apply {
-                    setText(it[2])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
-                    setText(it[3])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_subject).apply {
-                    setText(it[4])
-                }
-                view.findViewById<EditText>(R.id.email_compose_body_input).apply {
-                    setText(it.subList(5, it.size).joinToString())
+                if(isBridge) {
+                    view.findViewById<TextInputEditText>(R.id.email_to).apply {
+                        setText(it[0])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_cc).apply {
+                        setText(it[1])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
+                        setText(it[2])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_subject).apply {
+                        setText(it[3])
+                    }
+                    view.findViewById<EditText>(R.id.email_compose_body_input).apply {
+                        setText(it.subList(4, it.size).joinToString())
+                    }
+                } else {
+                    view.findViewById<TextInputEditText>(R.id.email_to).apply {
+                        setText(it[1])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_cc).apply {
+                        setText(it[2])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
+                        setText(it[3])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_subject).apply {
+                        setText(it[4])
+                    }
+                    view.findViewById<EditText>(R.id.email_compose_body_input).apply {
+                        setText(it.subList(5, it.size).joinToString())
+                    }
                 }
             }
         }
@@ -124,7 +142,7 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                                           bcc: String,
                                           subject: String,
                                           body: String): String {
-        return if(isBridge) "$$to:$cc:$bcc:$subject:$body"
+        return if(isBridge) "$to:$cc:$bcc:$subject:$body"
         else "${platform.account}:$to:$cc:$bcc:$subject:$body"
     }
 }

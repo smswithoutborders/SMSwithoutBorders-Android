@@ -22,18 +22,38 @@ class EmailViewActivity : MessagesComposeAppCompactActivityFactory() {
 
     private fun configureView() {
         message.encryptedContent.split(":").let {
-            findViewById<MaterialTextView>(R.id.layout_identity_header_title).apply {
-                text = "<${it[1]}>"
-            }
-            findViewById<MaterialTextView>(R.id.layout_identity_header_subject).apply {
-                text = "${getString(R.string.email_compose_cc)}: ${it[2]}\n" +
-                        "${getString(R.string.email_compose_bcc)}: ${it[3]}"
-            }
-            findViewById<MaterialTextView>(R.id.view_message_body).apply {
-                text = it.subList(5, it.size).joinToString()
-            }
-            findViewById<MaterialTextView>(R.id.layout_email_date).apply {
-                text = formatDate(applicationContext, message.date)
+            if(intent.getStringExtra("id") == "0") {
+                findViewById<MaterialTextView>(R.id.layout_identity_header_title).apply {
+                    val email = "<${it[0]}>"
+                    text = email
+                }
+                findViewById<MaterialTextView>(R.id.layout_identity_header_subject).apply {
+                    val subject = "${getString(R.string.email_compose_cc)}: ${it[1]}\n" +
+                            "${getString(R.string.email_compose_bcc)}: ${it[2]}"
+                    text = subject
+                }
+                findViewById<MaterialTextView>(R.id.view_message_body).apply {
+                    text = it.subList(4, it.size).joinToString()
+                }
+                findViewById<MaterialTextView>(R.id.layout_email_date).apply {
+                    text = formatDate(applicationContext, message.date)
+                }
+            } else {
+                findViewById<MaterialTextView>(R.id.layout_identity_header_title).apply {
+                    val email = "<${it[1]}>"
+                    text = email
+                }
+                findViewById<MaterialTextView>(R.id.layout_identity_header_subject).apply {
+                    val subject = "${getString(R.string.email_compose_cc)}: ${it[2]}\n" +
+                            "${getString(R.string.email_compose_bcc)}: ${it[3]}"
+                    text = subject
+                }
+                findViewById<MaterialTextView>(R.id.view_message_body).apply {
+                    text = it.subList(5, it.size).joinToString()
+                }
+                findViewById<MaterialTextView>(R.id.layout_email_date).apply {
+                    text = formatDate(applicationContext, message.date)
+                }
             }
         }
     }

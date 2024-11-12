@@ -80,7 +80,10 @@ object ComposeHandlers {
         println("$split - ${platforms.service_type}")
         return when(platforms.service_type!!) {
             Platforms.Type.EMAIL.type -> {
-                DecomposedMessages(body = split[5], subject = split[4], recipient = split[1])
+                if(platforms.protocol_type == "bridge") {
+                    DecomposedMessages(body = split[4], subject = split[3], recipient = split[0])
+                }
+                else DecomposedMessages(body = split[5], subject = split[4], recipient = split[1])
             }
 
             Platforms.Type.TEXT.type -> {

@@ -67,10 +67,11 @@ class BridgesSubmitCodeActivity() : AppCompatActivity() {
     }
 
     private fun configureVerificationListener() {
+        // TODO: scan multiple phone numbers to see which one sends the code
         // Start listening for SMS User Consent broadcasts from senderPhoneNumber
         // The Task<Void> will be successful if SmsRetriever was able to start
         // SMS User Consent, and will error if there was an error starting.
-        val smsSenderNumber = "+15024439537"
+        val smsSenderNumber = getString(R.string.default_relaysms_twilio)
         val task = SmsRetriever.getClient(applicationContext).startSmsUserConsent(smsSenderNumber)
         task.addOnSuccessListener {
             Log.d(javaClass.name, "Successfully showed user consent screen")

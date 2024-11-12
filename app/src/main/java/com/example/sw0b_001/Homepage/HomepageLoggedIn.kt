@@ -15,12 +15,15 @@ import com.example.sw0b_001.Database.Datastore
 import com.example.sw0b_001.EmailViewActivity
 import com.example.sw0b_001.MessageViewActivity
 import com.example.sw0b_001.Modals.AvailablePlatformsModalFragment
+import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.GatewayClients.GatewayClient
 import com.example.sw0b_001.Models.Messages.MessagesRecyclerAdapter
 import com.example.sw0b_001.Models.Messages.MessagesViewModel
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.R
 import com.example.sw0b_001.TextViewActivity
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,8 +39,8 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
 
     override fun onResume() {
         super.onResume()
-        GatewayClient.refreshGatewayClients(requireContext()) {
-        }
+        GatewayClient.refreshGatewayClients(requireContext()) { }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,12 +50,12 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
 
         configureRecyclerHandlers(view)
 
-        view.findViewById<View>(R.id.homepage_compose_new_btn)
+        view.findViewById<MaterialButton>(R.id.homepage_compose_new_btn)
             .setOnClickListener { v ->
                 showPlatformsModal(AvailablePlatformsModalFragment.Type.SAVED)
             }
 
-        view.findViewById<View>(R.id.homepage_add_new_btn)
+        view.findViewById<MaterialButton>(R.id.homepage_add_new_btn)
             .setOnClickListener { v ->
                 showPlatformsModal(AvailablePlatformsModalFragment.Type.AVAILABLE)
             }
@@ -87,6 +90,22 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
 
                         view.findViewById<View>(R.id.homepage_compose_new_btn1).visibility = View.GONE
                         view.findViewById<View>(R.id.homepage_add_new_btn1).visibility = View.GONE
+
+                        view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).apply {
+                            visibility = if(Bridges.canPublish(requireContext())) View.VISIBLE else View.GONE
+                            setOnClickListener { v ->
+                                val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+                                val emailComposeModalFragment = EmailComposeModalFragment(
+                                    Bridges.storedPlatformsEntity,
+                                    isBridge = true
+                                ) {
+                                    activity?.finish()
+                                }
+                                fragmentTransaction?.add(emailComposeModalFragment, "email_compose_tag")
+                                fragmentTransaction?.show(emailComposeModalFragment)
+                                fragmentTransaction?.commitNow()
+                            }
+                        }
                     }
                     else {
                         noRecentMessagesText.visibility = View.GONE
@@ -107,6 +126,9 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
                             .setOnClickListener { v ->
                                 showPlatformsModal(AvailablePlatformsModalFragment.Type.AVAILABLE)
                             }
+
+                        view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn)
+                            .visibility = View.GONE
                     }
                 }
 
@@ -131,12 +153,14 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
                                 CoroutineScope(Dispatchers.Default).launch {
                                     startActivity(Intent(requireContext(),
                                         EmailViewActivity::class.java).apply {
-                                        val platform = Datastore.getDatastore(requireContext())
-                                            .storedPlatformsDao().fetch(it.platformId);
-                                        putExtra("id", platform.id)
-                                        putExtra("platform_name", platform.name!!)
-                                        putExtra("message_id", it.id)
-                                        putExtra("type", it.type)
+                                            val platform = if(it.platformId == "0")
+                                                Bridges.storedPlatformsEntity
+                                            else Datastore.getDatastore(requireContext())
+                                                .storedPlatformsDao().fetch(it.platformId);
+                                            putExtra("id", platform.id)
+                                            putExtra("platform_name", platform.name!!)
+                                            putExtra("message_id", it.id)
+                                            putExtra("type", it.type)
                                     })
                                 }
                             }

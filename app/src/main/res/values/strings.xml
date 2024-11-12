@@ -285,5 +285,6 @@
     <string name="only_emailing_is_supported_with_aliasing_at_this_time">Only emailing is supported with Aliasing at this time</string>
     <string name="compose_new_message">Compose new message</string>
     <string name="aliases_configured_successfully">Aliases configured successfully!</string>
+    <string name="default_relaysms_twilio">+15024439537</string>
 
 </resources>
