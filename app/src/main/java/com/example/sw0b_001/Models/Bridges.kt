@@ -97,4 +97,9 @@ object Bridges {
             .clear()
             .apply()
     }
+
+    fun canPublish(context: Context): Boolean {
+        val pubKey = Publishers.fetchPublisherPublicKey(context)
+        return pubKey != null && pubKey.isNotEmpty() && getAuthCode(context).isNotBlank()
+    }
 }

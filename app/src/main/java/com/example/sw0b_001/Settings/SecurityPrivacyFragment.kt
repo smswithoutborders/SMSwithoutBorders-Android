@@ -19,6 +19,7 @@ import androidx.preference.SwitchPreferenceCompat
 import com.example.sw0b_001.HomepageActivity
 import com.example.sw0b_001.Modals.AvailablePlatformsModalFragment
 import com.example.sw0b_001.Modals.LogoutDeleteConfirmationModalFragment
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Modules.Security
 import com.example.sw0b_001.OnboardingActivity
@@ -52,6 +53,22 @@ class SecurityPrivacyFragment : PreferenceFragmentCompat() {
             }
         }
         lockScreenAlwaysOn?.onPreferenceChangeListener = switchSecurityPreferences()
+
+        val clearBridges = findPreference<Preference>("clear_bridges")
+        clearBridges?.setOnPreferenceClickListener {
+            val onSuccessRunnable = Runnable {
+                Bridges.deleteAuthCode(requireContext())
+                returnToHomepage()
+            }
+
+            val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+            val loginModalFragment = LogoutDeleteConfirmationModalFragment(onSuccessRunnable)
+            fragmentTransaction?.add(loginModalFragment, "logout_delete_fragment")
+            fragmentTransaction?.show(loginModalFragment)
+            fragmentTransaction?.commit()
+
+            true
+        }
 
         val logout = findPreference<Preference>("logout")
         logout?.setOnPreferenceClickListener {
@@ -110,7 +127,11 @@ class SecurityPrivacyFragment : PreferenceFragmentCompat() {
             true
         }
 
-        if(Vaults.fetchLongLivedToken(requireContext()).isNullOrBlank()) {
+        if(!Bridges.canPublish(requireContext())) {
+            clearBridges?.isEnabled = false
+        }
+
+        if(Vaults.fetchLongLivedToken(requireContext()).isBlank()) {
             logout?.isEnabled = false
             logout?.summary = getString(R.string
                     .logout_you_have_no_accounts_logged_into_vaults_at_this_time)

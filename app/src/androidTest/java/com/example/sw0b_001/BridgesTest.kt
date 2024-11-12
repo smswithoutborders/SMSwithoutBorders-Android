@@ -63,6 +63,8 @@ class BridgesTest {
 
         Publishers.storeArtifacts(context, Base64.encodeToString(publicKey, Base64.DEFAULT))
 
+        assertTrue(Bridges.canPublish(context))
+
         // Send back auth code
         authRequest = Base64.encodeToString(Bridges.authRequest1(authCode), Base64.DEFAULT)
         payload = Json.encodeToString(GatewayClientRequest(phoneNumber, authRequest))

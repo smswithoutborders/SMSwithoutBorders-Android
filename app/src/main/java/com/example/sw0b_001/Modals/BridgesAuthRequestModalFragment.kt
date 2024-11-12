@@ -17,7 +17,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.button.MaterialButton
 
 
-class BridgesAuthRequestModalFragment(var verifyNowRunnable: Runnable) : BottomSheetDialogFragment(R.layout.fragment_modal_bridges_auth) {
+class BridgesAuthRequestModalFragment(
+    var verifyNowRunnable: Runnable,
+    var canPublish: Boolean = false
+) : BottomSheetDialogFragment(
+    if(canPublish) R.layout.fragment_modal_bridge_can_publish
+    else R.layout.fragment_modal_bridges_auth
+) {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var verifyNowLink: TextView
 
@@ -30,32 +36,38 @@ class BridgesAuthRequestModalFragment(var verifyNowRunnable: Runnable) : BottomS
         bottomSheetBehavior.isDraggable = true
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        view.findViewById<MaterialButton>(R.id.bridge_auth_request_authentication_btn)
-            .setOnClickListener {
-                var authRequest = Base64.encodeToString(Bridges.authRequest(requireContext()),
-                    Base64.DEFAULT)
-                val gatewayClientMsisdn = GatewayClientsCommunications(requireContext())
-                    .getDefaultGatewayClient()
-                if(gatewayClientMsisdn.isNullOrBlank()) {
-                    Toast.makeText(requireContext(),
-                        getString(R.string.please_set_a_default_gateway_client),
-                        Toast.LENGTH_LONG).show()
-                } else {
-                    verifyNowRunnable.run()
-                    startActivity(SMSHandler.transferToDefaultSMSApp(
-                        requireContext(),
-                        gatewayClientMsisdn,
-                        authRequest
-                    ))
-//                    verifyNowRunnable.run()
-                }
-                dismiss()
-        }
+        if(canPublish) {
+            view.findViewById<MaterialButton>(R.id.bridge_compose_new_btn).setOnClickListener {
 
-        verifyNowLink = view.findViewById(R.id.bridges_verify_now_link)
-        verifyNowLink.setOnClickListener {
-            verifyNowRunnable.run()
-            dismiss()
+            }
+        }
+        else {
+            view.findViewById<MaterialButton>(R.id.bridge_auth_request_authentication_btn)
+                .setOnClickListener {
+                    var authRequest = Base64.encodeToString(Bridges.authRequest(requireContext()),
+                        Base64.DEFAULT)
+                    val gatewayClientMsisdn = GatewayClientsCommunications(requireContext())
+                        .getDefaultGatewayClient()
+                    if(gatewayClientMsisdn.isNullOrBlank()) {
+                        Toast.makeText(requireContext(),
+                            getString(R.string.please_set_a_default_gateway_client),
+                            Toast.LENGTH_LONG).show()
+                    } else {
+                        verifyNowRunnable.run()
+                        startActivity(SMSHandler.transferToDefaultSMSApp(
+                            requireContext(),
+                            gatewayClientMsisdn,
+                            authRequest
+                        ))
+                    }
+                    dismiss()
+                }
+
+            verifyNowLink = view.findViewById(R.id.bridges_verify_now_link)
+            verifyNowLink.setOnClickListener {
+                verifyNowRunnable.run()
+                dismiss()
+            }
         }
     }
 }

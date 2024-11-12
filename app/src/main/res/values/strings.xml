@@ -269,7 +269,7 @@
     <string name="compose_and_send_info">Compose your first message alongside sending your auth code to save SMS cost</string>
     <string name="bridges_submit_code_info">Once you send an authentication request via SMS, you will receive a message containing the code. Copy the entire SMS without adding or removing anything from it and paste it here.</string>
     <string name="already_got_the_code_verify_now">Already got the code? Verify now.</string>
-    <string name="bridges_auth_info">An alias uses your phone number to communicate on your behalf. An example alias would be 12345@example.com.</string>
+    <string name="bridges_auth_info">An alias uses your phone number to communicate on your behalf. An example alias would be 12345@relaysms.me.</string>
     <string name="enter_phone_number_with_country_code">Enter phone number with country code</string>
     <string name="continue_without_an_account">Continue without an internet connection</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Send an authentication request and paste the SMS message sent back to begin communicating with your Alias</string>
@@ -279,5 +279,11 @@
     <string name="authenticate_code">Verify and save code</string>
     <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">The code would be attached to the first message you send from the app</string>
     <string name="please_set_a_default_gateway_client">Please set a default Gateway Client</string>
+    <string name="send_message_without_an_account">Send message without an account</string>
+    <string name="alias_authentication_request">Alias Authentication Request</string>
+    <string name="publishing_with_aliases">Publishing with Aliases</string>
+    <string name="only_emailing_is_supported_with_aliasing_at_this_time">Only emailing is supported with Aliasing at this time</string>
+    <string name="compose_new_message">Compose new message</string>
+    <string name="aliases_configured_successfully">Aliases configured successfully!</string>
 
 </resources>

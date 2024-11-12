@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/alias_authentication_request"
+            android:text="@string/publishing_with_aliases"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -54,28 +54,17 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:text="@string/send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias"
+            android:text="@string/only_emailing_is_supported_with_aliasing_at_this_time"
             android:textAlignment="center"
             android:textColor="@color/md_theme_outline" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/bridge_auth_request_authentication_btn"
+            android:id="@+id/bridge_compose_new_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/ok"/>
-
-        <TextView
-            android:id="@+id/bridges_verify_now_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/already_got_the_code_verify_now"
-            android:textColor="@color/md_theme_primary"
             android:layout_marginBottom="24dp"
-            android:clickable="true"
-            android:focusable="true" />
+            android:text="@string/compose_new_message"/>
 
     </LinearLayout>
 

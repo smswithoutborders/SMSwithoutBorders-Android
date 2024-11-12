@@ -8,6 +8,7 @@ import com.example.sw0b_001.Bridges.BridgesSubmitCodeActivity
 import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.Modals.LoginModalFragment
 import com.example.sw0b_001.Modals.SignupModalFragment
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.R
 import com.google.android.material.button.MaterialButton
 
@@ -22,11 +23,6 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
         val loginSuccessRunnable = Runnable {
             activity?.recreate()
         }
-
-        val verifyCodeRunnable = Runnable {
-            startActivity(Intent(requireContext(), BridgesSubmitCodeActivity::class.java))
-        }
-
 
         view.findViewById<MaterialButton>(R.id.homepage_vault_signup_btn).setOnClickListener {
             val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
@@ -44,9 +40,24 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
             fragmentTransaction?.commit()
         }
 
-        view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).setOnClickListener {
-            val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(verifyCodeRunnable)
-            bridgesAuthModalFragment.show(parentFragmentManager, "bridges_auth_tag")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireView().findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).apply {
+            val canPublish = Bridges.canPublish(requireContext())
+            if(canPublish) {
+                this.text = context.getString(R.string.send_message_without_an_account)
+            }
+            setOnClickListener {
+                val verifyCodeRunnable = Runnable {
+                    startActivity(Intent(requireContext(), BridgesSubmitCodeActivity::class.java))
+                }
+
+                val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(verifyCodeRunnable,
+                    canPublish)
+                bridgesAuthModalFragment.show(parentFragmentManager, "bridges_auth_tag")
+            }
         }
     }
 }

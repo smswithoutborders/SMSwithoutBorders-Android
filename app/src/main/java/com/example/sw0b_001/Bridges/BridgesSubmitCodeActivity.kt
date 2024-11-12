@@ -54,7 +54,10 @@ class BridgesSubmitCodeActivity() : AppCompatActivity() {
                     Publishers.storeArtifacts(applicationContext,
                         Base64.encodeToString(publicKey, Base64.DEFAULT))
 
-                    Toast.makeText(applicationContext, "Aliases configured successfully!",
+                    assert(Bridges.canPublish(applicationContext))
+
+                    Toast.makeText(applicationContext,
+                        getString(R.string.aliases_configured_successfully),
                         Toast.LENGTH_LONG).show()
 
                     finish()

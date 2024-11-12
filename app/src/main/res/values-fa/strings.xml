@@ -187,7 +187,7 @@
     <string name="compose_and_send_info">برای صرفه‌جویی در هزینه SMS، اولین پیام خود را همراه با ارسال کد احراز هویت خود بنویسید</string>
     <string name="bridges_submit_code_info">پس از ارسال درخواست احراز هویت از طریق پیامک، پیامی حاوی کد دریافت خواهید کرد. کل پیامک را بدون اضافه یا حذف چیزی کپی کرده و در اینجا جای‌گذاری کنید.</string>
     <string name="already_got_the_code_verify_now">کد را دریافت کرده‌اید؟ اکنون تأیید کنید.</string>
-    <string name="bridges_auth_info">نام مستعار از شماره تلفن شما برای برقراری ارتباط از طرف شما استفاده می کند. نام مستعار مثال 12345@example.com خواهد بود.</string>
+    <string name="bridges_auth_info">نام مستعار از شماره تلفن شما برای برقراری ارتباط از طرف شما استفاده می کند. نام مستعار مثال 12345@relaysms.me خواهد بود.</string>
     <string name="enter_phone_number_with_country_code">شماره تلفن را با کد کشور وارد کنید</string>
     <string name="continue_without_an_account">بدون اتصال به اینترنت ادامه دهید</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">یک درخواست احراز هویت ارسال کنید و پیام کوتاه ارسال شده را برای شروع ارتباط با نام مستعار خود جایگذاری کنید</string>

@@ -187,7 +187,7 @@
     <string name="compose_and_send_info">Redacte su primer mensaje junto con el envío de su código de autenticación para ahorrar costes de SMS</string>
     <string name="bridges_submit_code_info">Una vez que envíe una solicitud de autenticación por SMS, recibirá un mensaje que contiene el código. Copie el SMS completo sin agregar ni eliminar nada y péguelo aquí.</string>
     <string name="already_got_the_code_verify_now">¿Ya tienes el código? Verifícalo ahora.</string>
-    <string name="bridges_auth_info">Un alias utiliza su número de teléfono para comunicarse en su nombre. Un alias de ejemplo sería 12345@example.com.</string>
+    <string name="bridges_auth_info">Un alias utiliza su número de teléfono para comunicarse en su nombre. Un alias de ejemplo sería 12345@relaysms.me.</string>
     <string name="enter_phone_number_with_country_code">Ingrese el número de teléfono con el código de país</string>
     <string name="continue_without_an_account">Continuar sin conexión a Internet</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Envíe una solicitud de autenticación y pegue el mensaje SMS enviado para comenzar a comunicarse con su Alias</string>

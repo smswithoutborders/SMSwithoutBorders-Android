@@ -239,7 +239,7 @@
     <string name="compose_and_send_info">SMS maliyetinden tasarruf etmek için ilk mesajınızı kimlik doğrulama kodunuzu gönderirken oluşturun</string>
     <string name="bridges_submit_code_info">SMS yoluyla bir kimlik doğrulama isteği gönderdikten sonra, kodu içeren bir mesaj alacaksınız. SMS\'in tamamını hiçbir şey eklemeden veya çıkarmeden kopyalayın ve buraya yapıştırın.</string>
     <string name="already_got_the_code_verify_now">Kodu zaten aldınız mı? Şimdi doğrulayın.</string>
-    <string name="bridges_auth_info">Bir takma ad, sizin adınıza iletişim kurmak için telefon numaranızı kullanır. Örnek bir takma ad 12345@example.com olabilir.</string>
+    <string name="bridges_auth_info">Bir takma ad, sizin adınıza iletişim kurmak için telefon numaranızı kullanır. Örnek bir takma ad 12345@relaysms.me olabilir.</string>
     <string name="enter_phone_number_with_country_code">Ülke koduyla birlikte telefon numarasını girin</string>
     <string name="continue_without_an_account">İnternet bağlantısı olmadan devam edin</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Kimlik doğrulama isteği gönderin ve gönderilen SMS mesajını yapıştırarak Alias\'ınızla iletişim kurmaya başlayın</string>
