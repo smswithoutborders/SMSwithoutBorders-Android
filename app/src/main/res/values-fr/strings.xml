@@ -188,5 +188,6 @@
     <string name="bridges_submit_code_info">Une fois que vous avez envoyé une demande d\'authentification par SMS, vous recevrez un message contenant le code. Copiez l\'intégralité du SMS sans rien y ajouter ni en supprimer et collez-le ici.</string>
     <string name="already_got_the_code_verify_now">Vous avez déjà le code ? Vérifiez maintenant.</string>
     <string name="bridges_auth_info">Cliquer sur « OK » ouvrira votre application de messagerie par défaut où vous enverrez votre demande d\'authentification par SMS. Une fois la demande d\'authentification envoyée, vous recevrez une réponse contenant le code. Une fois que vous avez reçu le message, copiez-le et revenez ici pour vérifier votre compte.</string>
+    <string name="enter_phone_number_with_country_code">Entrez le numéro de téléphone avec l\'indicatif du pays</string>
 
 </resources>

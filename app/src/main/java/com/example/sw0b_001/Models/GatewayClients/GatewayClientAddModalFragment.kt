@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,8 +45,8 @@ class GatewayClientAddModalFragment :
                 addGatewayClients(view)
             }
 
-        val textInputLayout = view.findViewById<TextInputEditText>(R.id.gateway_client_add_contact)
-        textInputLayout.setOnClickListener {
+        val textInputLayout = view.findViewById<TextInputLayout>(R.id.gateway_client_add_contact_layout)
+        textInputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_PICK).apply {
                 type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
             }

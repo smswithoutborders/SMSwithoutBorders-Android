@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             app:endIconDrawable="@drawable/ic_round_contacts_24"
             app:endIconMode="custom"
-            android:hint="@string/settings_gateway_clients_text">
+            android:hint="@string/enter_phone_number_with_country_code">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/gateway_client_add_contact"
                 android:layout_width="match_parent"
