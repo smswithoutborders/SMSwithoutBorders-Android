@@ -94,7 +94,7 @@ class BridgesTest {
             body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
         ).let {
             val encryptedContent = ComposeHandlers
-                .compose(context, it, platforms, storedPlatforms){ }
+                .compose(context, it, platforms, storedPlatforms, isBridge = true){ }
             Json.encodeToString(
                 GatewayClientRequest(phoneNumber,
                     Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)))

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Base64
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
 import com.example.sw0b_001.Database.Datastore
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Messages.EncryptedContent
 import com.example.sw0b_001.Models.GatewayClients.GatewayClientsCommunications
 import com.example.sw0b_001.Models.MessageComposer
@@ -20,6 +21,7 @@ object ComposeHandlers {
                 formattedContent: String,
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
+                isBridge: Boolean = false,
                 onSuccessRunnable: Runnable) : ByteArray {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
@@ -30,11 +32,15 @@ object ComposeHandlers {
             States(String(Publishers.getEncryptedStates(context, states[0].value),
                 Charsets.UTF_8)) else States()
         val messageComposer = MessageComposer(context, state)
-        val encryptedContentBase64 = messageComposer.compose(
+        var encryptedContentBase64 = messageComposer.compose(
             platforms,
             formattedContent,
         )
-        println("Final format: $encryptedContentBase64")
+
+        val decodedContent = Base64.decode(encryptedContentBase64, Base64.DEFAULT)
+        if(isBridge)
+            encryptedContentBase64 = Base64.encodeToString(Bridges.publish(decodedContent),
+                Base64.DEFAULT)
 
         val encryptedStates = Publishers.encryptStates(context, state.serializedStates)
         val  ratchetsStates = RatchetStates(value = encryptedStates)
@@ -61,7 +67,7 @@ object ComposeHandlers {
             .insert(encryptedContent)
         onSuccessRunnable.run()
 
-        return Base64.decode(encryptedContentBase64, Base64.DEFAULT)
+        return decodedContent
     }
 
     data class DecomposedMessages(val body: String,

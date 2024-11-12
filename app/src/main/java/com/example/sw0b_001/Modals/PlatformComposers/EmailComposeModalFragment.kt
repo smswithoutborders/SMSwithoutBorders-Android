@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.sw0b_001.Database.Datastore
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Messages.EncryptedContent
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                                 val message: EncryptedContent? = null,
+                                val isBridge: Boolean = false,
                                 private val onSuccessCallback: Runnable? = null)
     : BottomSheetDialogFragment(R.layout.fragment_modal_email_compose) {
 
@@ -93,14 +95,19 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
         val body = bodyTextInputEditText.text.toString()
 
         CoroutineScope(Dispatchers.Default).launch {
-            val availablePlatforms = Datastore.getDatastore(requireContext())
+            val availablePlatforms = if(isBridge) Bridges.platforms
+            else Datastore.getDatastore(requireContext())
                 .availablePlatformsDao().fetch(platform.name!!)
             val formattedContent = processEmailForEncryption(to, cc, bcc, subject, body)
-            println("Formatted content: $formattedContent")
 
             try {
-                ComposeHandlers.compose(requireContext(), formattedContent, availablePlatforms, platform) {
-                    onSuccessCallback?.let { it.run() }
+                ComposeHandlers.compose(requireContext(),
+                    formattedContent,
+                    availablePlatforms,
+                    platform,
+                    isBridge = isBridge
+                ) {
+                    onSuccessCallback?.run()
                     dismiss()
                 }
             } catch(e: Exception) {
@@ -117,6 +124,7 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                                           bcc: String,
                                           subject: String,
                                           body: String): String {
-        return "${platform.account}:$to:$cc:$bcc:$subject:$body"
+        return if(isBridge) "$$to:$cc:$bcc:$subject:$body"
+        else "${platform.account}:$to:$cc:$bcc:$subject:$body"
     }
 }

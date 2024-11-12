@@ -7,6 +7,7 @@ import android.view.View
 import com.example.sw0b_001.Bridges.BridgesSubmitCodeActivity
 import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.Modals.LoginModalFragment
+import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
 import com.example.sw0b_001.Modals.SignupModalFragment
 import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.R
@@ -50,12 +51,24 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
                 this.text = context.getString(R.string.send_message_without_an_account)
             }
             setOnClickListener {
-                val verifyCodeRunnable = Runnable {
-                    startActivity(Intent(requireContext(), BridgesSubmitCodeActivity::class.java))
+                val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(canPublish) {
+                    if(canPublish) {
+                        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+                        val emailComposeModalFragment = EmailComposeModalFragment(
+                            Bridges.storedPlatformsEntity,
+                            isBridge = true
+                        ) {
+                            activity?.finish()
+                        }
+                        fragmentTransaction?.add(emailComposeModalFragment, "email_compose_tag")
+                        fragmentTransaction?.show(emailComposeModalFragment)
+                        fragmentTransaction?.commitNow()
+                    }
+                    else {
+                        startActivity(Intent(requireContext(),
+                            BridgesSubmitCodeActivity::class.java))
+                    }
                 }
-
-                val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(verifyCodeRunnable,
-                    canPublish)
                 bridgesAuthModalFragment.show(parentFragmentManager, "bridges_auth_tag")
             }
         }

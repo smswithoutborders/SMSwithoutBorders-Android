@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.util.Base64
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.Headers
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
+import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
+import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
 import com.example.sw0b_001.Security.Cryptography
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -12,6 +14,23 @@ import java.nio.ByteOrder
 object Bridges {
 
     private const val BRIDGE_VALUE: Byte = 0
+
+    val storedPlatformsEntity = StoredPlatformsEntity(
+        id = "0",
+        account = "@relaysms.me",
+        name = "email"
+    )
+
+    val platforms = AvailablePlatforms(
+        name = "email",
+        shortcode = "e",
+        service_type = "email",
+        protocol_type = "bridge",
+        icon_svg = "",
+        icon_png = "",
+        support_url_scheme = false,
+        logo = null
+    )
 
     enum class SWITCH_TYPE(val value: Byte) {
         AUTH_REQUEST(0),
