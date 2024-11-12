@@ -84,7 +84,6 @@ class BridgesTest {
             logo = null
         )
 
-        println("shortcode: ${platforms.shortcode!!.toByteArray(Charset.forName("US-ASCII"))[0]}")
         val formattedContent: String = Bridges.formatEmailBridge(
             to = "developers@smswithoutborders.com",
             cc = "",
@@ -93,7 +92,7 @@ class BridgesTest {
             body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
         ).let {
             val encryptedContent = ComposeHandlers
-                .compose(context, it, platforms, storedPlatforms, isBridge = true){ }
+                .compose(context, it, platforms, storedPlatforms){ }
             Json.encodeToString(
                 GatewayClientRequest(phoneNumber,
                     Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)))

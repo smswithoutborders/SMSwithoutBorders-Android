@@ -26,10 +26,11 @@ object Bridges {
         val switchValue = ByteArray(1)
         switchValue[0] = SWITCH_TYPE.AUTH_CODE.value
 
-        val pubKeyLen = ByteArray(4)
-        ByteBuffer.wrap(pubKeyLen).order(ByteOrder.LITTLE_ENDIAN).putInt(authCode.length)
+//        val authCodeLen = ByteArray(1)
+//        ByteBuffer.wrap(authCodeLen).order(ByteOrder.LITTLE_ENDIAN).putInt(authCode.length)
+        val authCodeLen = authCode.length.toByte()
 
-        return bridgeFlag + switchValue + pubKeyLen + authCode.encodeToByteArray()
+        return bridgeFlag + switchValue + authCodeLen + authCode.encodeToByteArray()
     }
 
     fun authRequest(context: Context): ByteArray {

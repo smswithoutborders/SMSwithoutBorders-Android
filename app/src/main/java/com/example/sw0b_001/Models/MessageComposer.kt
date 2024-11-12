@@ -21,7 +21,7 @@ class MessageComposer(val context: Context, val state: States) {
         }
     }
 
-    fun compose(availablePlatforms: AvailablePlatforms, content: String, isBridge: Boolean = false):
+    fun compose(availablePlatforms: AvailablePlatforms, content: String):
             String {
         val (header, cipherMk) = Ratchets.ratchetEncrypt(state, content.encodeToByteArray(), AD)
 
@@ -30,7 +30,7 @@ class MessageComposer(val context: Context, val state: States) {
 
         val deviceID = if(!usePhoneNumber) Vaults.fetchDeviceId(context) else null
         return formatTransmission(header,  cipherMk,
-            availablePlatforms.shortcode!!.encodeToByteArray()[0], deviceID, isBridge = isBridge)
+            availablePlatforms.shortcode!!.encodeToByteArray()[0], deviceID)
     }
 
     companion object {
@@ -38,19 +38,13 @@ class MessageComposer(val context: Context, val state: States) {
                                cipherText: ByteArray,
                                platformLetter: Byte,
                                deviceID: ByteArray? = null,
-                               isBridge: Boolean = false
         ): String {
             val sHeader = headers.serialized
 
             val bytesLen = sHeader.size.toBytes()
             val encryptedContentPayload = bytesLen + sHeader + cipherText
             val payloadBytesLen = encryptedContentPayload.size.toBytes()
-            var data = if(isBridge) {
-                val platformLetterByteArray = ByteArray(1)
-                platformLetterByteArray[0] = platformLetter
-                platformLetterByteArray + payloadBytesLen + encryptedContentPayload
-            }
-            else payloadBytesLen + platformLetter + encryptedContentPayload
+            var data = payloadBytesLen + platformLetter + encryptedContentPayload
 
             deviceID?.let {
                 println("DeviceID: $it")
