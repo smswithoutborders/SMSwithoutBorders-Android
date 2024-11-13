@@ -11,10 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sw0b_001.Bridges.BridgesSubmitCodeActivity
 import com.example.sw0b_001.Database.Datastore
 import com.example.sw0b_001.EmailViewActivity
 import com.example.sw0b_001.MessageViewActivity
 import com.example.sw0b_001.Modals.AvailablePlatformsModalFragment
+import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
 import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
 import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.GatewayClients.GatewayClient
@@ -92,18 +94,31 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
                         view.findViewById<View>(R.id.homepage_add_new_btn1).visibility = View.GONE
 
                         view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).apply {
-                            visibility = if(Bridges.canPublish(requireContext())) View.VISIBLE else View.GONE
-                            setOnClickListener { v ->
-                                val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-                                val emailComposeModalFragment = EmailComposeModalFragment(
-                                    Bridges.storedPlatformsEntity,
-                                    isBridge = true
-                                ) {
-                                    activity?.finish()
+                            visibility = View.VISIBLE
+                            setOnClickListener {
+                                val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(Bridges
+                                    .canPublish(requireContext())) {
+                                    if(Bridges.canPublish(requireContext())) {
+                                        val fragmentTransaction = activity?.supportFragmentManager
+                                            ?.beginTransaction()
+                                        val emailComposeModalFragment = EmailComposeModalFragment(
+                                            Bridges.storedPlatformsEntity,
+                                            isBridge = true
+                                        ) {
+                                            activity?.finish()
+                                        }
+                                        fragmentTransaction?.add(emailComposeModalFragment,
+                                            "email_compose_tag")
+                                        fragmentTransaction?.show(emailComposeModalFragment)
+                                        fragmentTransaction?.commitNow()
+                                    }
+                                    else {
+                                        startActivity(Intent(requireContext(),
+                                            BridgesSubmitCodeActivity::class.java))
+                                    }
                                 }
-                                fragmentTransaction?.add(emailComposeModalFragment, "email_compose_tag")
-                                fragmentTransaction?.show(emailComposeModalFragment)
-                                fragmentTransaction?.commitNow()
+                                bridgesAuthModalFragment.show(parentFragmentManager,
+                                    "bridges_auth_tag")
                             }
                         }
                     }
