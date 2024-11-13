@@ -241,7 +241,10 @@ class Vaults(context: Context) {
 //                .build()
 //            sharedPreferences.edit().clear().apply()
 
-            KeystoreHelpers.removeAllFromKeystore(context)
+//            KeystoreHelpers.removeAllFromKeystore(context)
+            KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_KEYSTORE_ALIAS)
+            KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_SECRET_KEY_KEYSTORE_ALIAS)
+            KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_PUB_KEY)
 
             CoroutineScope(Dispatchers.Default).launch {
                 Datastore.getDatastore(context).storedPlatformsDao().deleteAll()

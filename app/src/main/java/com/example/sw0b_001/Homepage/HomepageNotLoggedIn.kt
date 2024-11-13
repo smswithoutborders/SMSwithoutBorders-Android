@@ -49,6 +49,10 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
             val canPublish = Bridges.canPublish(requireContext())
             if(canPublish) {
                 this.text = context.getString(R.string.send_message_without_an_account)
+                this.setBackgroundColor(resources.getColor(R.color.md_theme_primary,
+                    requireContext().theme))
+                this.setTextColor(resources.getColor(R.color.md_theme_onPrimary,
+                    requireContext().theme))
             }
             setOnClickListener {
                 val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(canPublish) {
