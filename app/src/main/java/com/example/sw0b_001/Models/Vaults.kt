@@ -245,6 +245,7 @@ class Vaults(context: Context) {
             KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_KEYSTORE_ALIAS)
             KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_SECRET_KEY_KEYSTORE_ALIAS)
             KeystoreHelpers.removeFromKeystore(context, DEVICE_ID_PUB_KEY)
+            KeystoreHelpers.removeFromKeystore(context, LONG_LIVED_TOKEN_KEYSTORE_ALIAS)
 
             CoroutineScope(Dispatchers.Default).launch {
                 Datastore.getDatastore(context).storedPlatformsDao().deleteAll()
