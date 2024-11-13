@@ -41,8 +41,11 @@ object ComposeHandlers {
 
         val decodedContent = Base64.decode(encryptedContentBase64, Base64.DEFAULT)
         if(isBridge)
-            encryptedContentBase64 = Base64.encodeToString(Bridges.publishWithAuthCode(decodedContent),
-                Base64.DEFAULT)
+            encryptedContentBase64 = Base64.encodeToString(
+                if(authCode != null) Bridges.publishWithAuthCode(decodedContent)
+                else Bridges.publish(decodedContent),
+                Base64.DEFAULT
+            )
 
         val encryptedStates = Publishers.encryptStates(context, state.serializedStates)
         val  ratchetsStates = RatchetStates(value = encryptedStates)

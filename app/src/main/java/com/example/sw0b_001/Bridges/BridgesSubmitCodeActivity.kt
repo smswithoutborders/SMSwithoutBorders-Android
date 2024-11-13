@@ -72,7 +72,10 @@ class BridgesSubmitCodeActivity() : AppCompatActivity() {
         // The Task<Void> will be successful if SmsRetriever was able to start
         // SMS User Consent, and will error if there was an error starting.
         val smsSenderNumber = getString(R.string.default_relaysms_twilio)
+        val smsSenderNumber1 = getString(R.string.default_relaysms_twilio_2)
         val task = SmsRetriever.getClient(applicationContext).startSmsUserConsent(smsSenderNumber)
+        val task1 = SmsRetriever.getClient(applicationContext).startSmsUserConsent(smsSenderNumber1)
+
         task.addOnSuccessListener {
             Log.d(javaClass.name, "Successfully showed user consent screen")
         }

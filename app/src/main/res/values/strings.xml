@@ -286,5 +286,6 @@
     <string name="compose_new_message">Compose new message</string>
     <string name="aliases_configured_successfully">Aliases configured successfully!</string>
     <string name="default_relaysms_twilio">+15024439537</string>
+    <string name="default_relaysms_twilio_2" translatable="false">SWOB ONLINE</string>
 
 </resources>
