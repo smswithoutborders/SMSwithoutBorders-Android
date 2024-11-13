@@ -10,9 +10,4 @@
         android:enabled="true"
         android:icon="@drawable/baseline_settings_input_antenna_24"
         android:title="@string/gateway_clients"/>
-    <item
-        android:id="@+id/bridges_navbar"
-        android:enabled="true"
-        android:icon="@drawable/data_off"
-        android:title="@string/bridges"/>
 </menu>
