@@ -31,7 +31,7 @@ class BridgesTest {
     @Serializable
     data class GatewayClientResponse(val publisher_response: String)
 
-    val phoneNumber = "+23712345678114"
+    val phoneNumber = "+23712345678115"
 
     val storedPlatforms = StoredPlatformsEntity(
         id = "0",
@@ -61,18 +61,19 @@ class BridgesTest {
         assertEquals(32, publicKey!!.size)
         println("AuthCode: $authCode, PublicKey: $publicKey")
 
+        Bridges.saveAuthCode(context, authCode)
         Publishers.storeArtifacts(context, Base64.encodeToString(publicKey, Base64.DEFAULT))
 
         assertTrue(Bridges.canPublish(context))
 
         // Send back auth code
-        authRequest = Base64.encodeToString(Bridges.authRequest1(authCode), Base64.DEFAULT)
-        payload = Json.encodeToString(GatewayClientRequest(phoneNumber, authRequest))
-        println("Responding with: $payload")
-
-        response = Network.jsonRequestPost(gatewayServerUrl, payload)
-        text = response.result.get()
-        println("Response message: $text")
+//        authRequest = Base64.encodeToString(Bridges.authRequest1(authCode), Base64.DEFAULT)
+//        payload = Json.encodeToString(GatewayClientRequest(phoneNumber, authRequest))
+//        println("Responding with: $payload")
+//
+//        response = Network.jsonRequestPost(gatewayServerUrl, payload)
+//        text = response.result.get()
+//        println("Response message: $text")
 
         // Being publishing
         val platforms = AvailablePlatforms(
@@ -86,7 +87,7 @@ class BridgesTest {
             logo = null
         )
 
-        val formattedContent: String = Bridges.formatEmailBridge(
+        var formattedContent: String = Bridges.formatEmailBridge(
             to = "developers@smswithoutborders.com",
             cc = "",
             bcc = "",
@@ -94,10 +95,49 @@ class BridgesTest {
             body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
         ).let {
             val encryptedContent = ComposeHandlers
-                .compose(context, it, platforms, storedPlatforms, isBridge = true){ }
+                .compose(
+                    context,
+                    it,
+                    platforms,
+                    storedPlatforms,
+                    isBridge = true,
+                    authCode=authCode.encodeToByteArray()
+                ){ }
             Json.encodeToString(
-                GatewayClientRequest(phoneNumber,
-                    Base64.encodeToString(Bridges.publish(encryptedContent), Base64.DEFAULT)))
+                GatewayClientRequest(
+                    phoneNumber,
+                    Base64.encodeToString(Bridges.publishWithAuthCode(encryptedContent),
+                        Base64.DEFAULT))
+            )
+        }
+
+        println("Formatted content: $formattedContent")
+        response = Network.jsonRequestPost(gatewayServerUrl, formattedContent)
+        text = response.result.get()
+        println("Publishing response: $text")
+
+        formattedContent = Bridges.formatEmailBridge(
+            to = "developers@smswithoutborders.com",
+            cc = "",
+            bcc = "",
+            subject = "Introduction to bridges - second",
+            body = "Hello world\nThis is a test bridge message!\n\nMany thanks,\nAfkanerd"
+        ).let {
+            val encryptedContent = ComposeHandlers
+                .compose(
+                    context,
+                    it,
+                    platforms,
+                    storedPlatforms,
+                    isBridge = true,
+                    authCode=authCode.encodeToByteArray()
+                ){ }
+            Json.encodeToString(
+                GatewayClientRequest(
+                    phoneNumber,
+                    Base64.encodeToString(Bridges.publishWithAuthCode(encryptedContent),
+                        Base64.DEFAULT))
+            )
         }
 
         println("Formatted content: $formattedContent")

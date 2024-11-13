@@ -83,6 +83,16 @@ object Bridges {
         return Pair(authCode, pubKey)
     }
 
+    fun publishWithAuthCode(payload: ByteArray): ByteArray{
+        val bridgeFlag = ByteArray(1)
+        bridgeFlag[0] = BRIDGE_VALUE
+
+        val switchValue = ByteArray(1)
+        switchValue[0] = SWITCH_TYPE.AUTH_CODE_WITH_PAYLOAD.value
+
+        return bridgeFlag + switchValue + payload
+    }
+
     fun publish(payload: ByteArray): ByteArray{
         val bridgeFlag = ByteArray(1)
         bridgeFlag[0] = BRIDGE_VALUE

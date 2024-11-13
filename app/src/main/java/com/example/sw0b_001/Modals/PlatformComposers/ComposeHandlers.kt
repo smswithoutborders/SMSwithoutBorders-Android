@@ -22,6 +22,7 @@ object ComposeHandlers {
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
                 isBridge: Boolean = false,
+                authCode: ByteArray? = null,
                 onSuccessRunnable: Runnable) : ByteArray {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
@@ -35,11 +36,12 @@ object ComposeHandlers {
         var encryptedContentBase64 = messageComposer.compose(
             platforms,
             formattedContent,
+            authCode = authCode
         )
 
         val decodedContent = Base64.decode(encryptedContentBase64, Base64.DEFAULT)
         if(isBridge)
-            encryptedContentBase64 = Base64.encodeToString(Bridges.publish(decodedContent),
+            encryptedContentBase64 = Base64.encodeToString(Bridges.publishWithAuthCode(decodedContent),
                 Base64.DEFAULT)
 
         val encryptedStates = Publishers.encryptStates(context, state.serializedStates)

@@ -123,7 +123,9 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                     formattedContent,
                     availablePlatforms,
                     platform,
-                    isBridge = isBridge
+                    isBridge = isBridge,
+                    authCode = if(isBridge) Bridges.getAuthCode(requireContext())
+                        .encodeToByteArray() else null
                 ) {
                     onSuccessCallback?.run()
                     dismiss()
