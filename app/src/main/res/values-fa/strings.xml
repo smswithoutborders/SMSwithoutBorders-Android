@@ -191,5 +191,17 @@
     <string name="enter_phone_number_with_country_code">شماره تلفن را با کد کشور وارد کنید</string>
     <string name="continue_without_an_account">بدون اتصال به اینترنت ادامه دهید</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">یک درخواست احراز هویت ارسال کنید و پیام کوتاه ارسال شده را برای شروع ارتباط با نام مستعار خود جایگذاری کنید</string>
+    <string name="authenticate_your_alias">احراز هویت نام مستعار</string>
+    <string name="the_code_would_be_automatically_detected_sometimes_n_nin_case_it_is_not_automatically_received_please_copy_the_entire_sms_message_and_paste_in_the_box_below">کد گاهی اوقات به طور خودکار شناسایی می‌شود.\n\nدر صورتی که به طور خودکار دریافت نشد، لطفاً کل پیامک را کپی کرده و در کادر زیر جای‌گذاری کنید.</string>
+    <string name="paste_entire_sms_message_in_here">کل پیامک را اینجا جای‌گذاری کنید...</string>
+    <string name="authenticate_code">تأیید و ذخیره کد</string>
+    <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">کد به اولین پیامی که از برنامه ارسال می‌کنید پیوست می‌شود.</string>
+    <string name="please_set_a_default_gateway_client">لطفاً یک سرویس گیرنده دروازه پیش‌فرض تنظیم کنید.</string>
+    <string name="send_message_without_an_account">ارسال پیام بدون حساب کاربری</string>
+    <string name="alias_authentication_request">درخواست احراز هویت نام مستعار</string>
+    <string name="publishing_with_aliases">انتشار با نام‌های مستعار</string>
+    <string name="only_emailing_is_supported_with_aliasing_at_this_time">در حال حاضر فقط ارسال ایمیل با نام مستعار پشتیبانی می‌شود.</string>
+    <string name="compose_new_message">نوشتن پیام جدید</string>
+    <string name="aliases_configured_successfully">نام‌های مستعار با موفقیت پیکربندی شدند!</string>
 
 </resources>

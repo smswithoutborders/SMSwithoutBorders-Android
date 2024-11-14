@@ -191,5 +191,17 @@
     <string name="enter_phone_number_with_country_code">Entrez le numéro de téléphone avec l\'indicatif du pays</string>
     <string name="continue_without_an_account">Continuer sans connexion Internet</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Envoyez une demande d\'authentification et collez le message SMS renvoyé pour commencer à communiquer avec votre alias</string>
+    <string name="authenticate_your_alias">Authentification d\'alias</string>
+    <string name="the_code_would_be_automatically_detected_sometimes_n_nin_case_it_is_not_automatically_received_please_copy_the_entire_sms_message_and_paste_in_the_box_below">Le code sera parfois détecté automatiquement.\n\nAu cas où il ne serait pas reçu automatiquement, veuillez copier l\'intégralité du message SMS et le coller dans la zone ci-dessous.</string>
+    <string name="paste_entire_sms_message_in_here">Coller le message SMS entier ici...</string>
+    <string name="authenticate_code">Vérifier et enregistrer le code</string>
+    <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">Le code sera joint au premier message que vous envoyez depuis l\'application.</string>
+    <string name="please_set_a_default_gateway_client">Veuillez définir un client de passerelle par défaut.</string>
+    <string name="send_message_without_an_account">Envoyer un message sans compte</string>
+    <string name="alias_authentication_request">Demande d\'authentification d\'alias</string>
+    <string name="publishing_with_aliases">Publication avec des alias</string>
+    <string name="only_emailing_is_supported_with_aliasing_at_this_time">Seul l\'envoi d\'e-mails est pris en charge avec les alias pour le moment.</string>
+    <string name="compose_new_message">Composer un nouveau message</string>
+    <string name="aliases_configured_successfully">Alias configurés avec succès !</string>
 
 </resources>
