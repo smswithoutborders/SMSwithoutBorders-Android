@@ -62,7 +62,7 @@ class HomepageNotLoggedIn : Fragment(R.layout.fragment_homepage_not_logged_in) {
                             Bridges.storedPlatformsEntity,
                             isBridge = true
                         ) {
-                            activity?.finish()
+//                            activity?.finish()
                         }
                         fragmentTransaction?.add(emailComposeModalFragment, "email_compose_tag")
                         fragmentTransaction?.show(emailComposeModalFragment)
