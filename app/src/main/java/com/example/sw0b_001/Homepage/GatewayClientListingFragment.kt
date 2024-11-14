@@ -41,12 +41,7 @@ import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 
 
-interface GatewayClientItemListener {
-    fun onEditGatewayClient(gatewayClient: GatewayClient)
-    fun onDeleteGatewayClient(gatewayClient: GatewayClient)
-}
-
-class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_available), GatewayClientItemListener {
+class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_available) {
 
     private lateinit var listViewAdapter: GatewayClientListingAdapter
 
@@ -262,47 +257,5 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
             }
         }
     }
-
-    override fun onEditGatewayClient(gatewayClient: GatewayClient) {
-        val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-        val gatewayClientAddFragment = GatewayClientAddModalFragment.newInstance(gatewayClient.id)
-        fragmentTransaction.add(gatewayClientAddFragment, "gateway_client_add_tag")
-        fragmentTransaction.show(gatewayClientAddFragment)
-        fragmentTransaction.commitNow()
-    }
-
-    override fun onDeleteGatewayClient(gatewayClient: GatewayClient) {
-        val defaultGatewayClientMsisdn = GatewayClientsCommunications(requireContext()).getDefaultGatewayClient()
-        if (defaultGatewayClientMsisdn == gatewayClient.mSISDN) {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.cannot_delete_selected_title)
-                .setMessage(R.string.cannot_delete_selected_message)
-                .setPositiveButton(R.string.ok) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-        } else {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.delete_gateway_client_title)
-                .setMessage(R.string.delete_gateway_client_message)
-                .setPositiveButton(R.string.delete) { dialog, _ ->
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.delete(requireContext(), gatewayClient)
-                    }
-                    dialog.dismiss()
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        updateSelectedGatewayClientUI()
-    }
-
 }
 

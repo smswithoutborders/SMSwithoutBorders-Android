@@ -3,8 +3,8 @@ package com.example.sw0b_001
 import android.util.Base64
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
-import com.example.sw0b_001.Models.Publisher
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Publishers
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Modules.Network
 import com.example.sw0b_001.Security.Cryptography
 import io.grpc.ManagedChannel
@@ -48,22 +48,20 @@ class gRPCTest {
 
     private var context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private lateinit var vault: Vault
+    private lateinit var vault: Vaults
     private val device_id_keystoreAlias = "device_id_keystoreAlias"
     private val publisher_keystoreAlias = "publisher_keystoreAlias"
 
     @Before
     fun init() {
-        vault = Vault(context)
+        vault = Vaults(context)
         deviceIdPubKey = Cryptography.generateKey(context, device_id_keystoreAlias)
         publishPubKey = Cryptography.generateKey(context, publisher_keystoreAlias)
     }
 
     @Test
     fun getPlatformsTest() {
-        val response = Publisher.getAvailablePlatforms(context) {
-
-        }
+        val response = Publishers.getAvailablePlatforms(context)
         assertTrue(response.isNotEmpty())
     }
 
@@ -121,7 +119,7 @@ class gRPCTest {
                 globalPassword,
                 "123456")
 
-            val llt = Vault.fetchLongLivedToken(context)
+            val llt = Vaults.fetchLongLivedToken(context)
             var response6 = vault.deleteEntity(llt)
         } catch(e: StatusRuntimeException) {
             println("Exception code: ${e.status.code.value()}")

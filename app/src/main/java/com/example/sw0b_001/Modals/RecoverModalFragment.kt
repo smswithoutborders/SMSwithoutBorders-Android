@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sw0b_001.BuildConfig
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.OTPVerificationActivity
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,7 +28,7 @@ class RecoverModalFragment(private val onSuccessRunnable: Runnable?) :
         BottomSheetDialogFragment(R.layout.fragment_recover_modal) {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
-    private lateinit var vault: Vault
+    private lateinit var vaults: Vaults
 
 
     private val activityLauncher =
@@ -62,7 +62,7 @@ class RecoverModalFragment(private val onSuccessRunnable: Runnable?) :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vault = Vault(requireContext())
+        vaults = Vaults(requireContext())
 
         val bottomSheet = view.findViewById<View>(R.id.recover_constraint)
 
@@ -116,7 +116,7 @@ class RecoverModalFragment(private val onSuccessRunnable: Runnable?) :
 
     private fun recover(view: View, phonenumber: String, password: String ) {
         try {
-            val response = vault.recoverEntityPassword(requireContext(),
+            val response = vaults.recoverEntityPassword(requireContext(),
                 phonenumber, password)
             if(response.requiresOwnershipProof) {
                 activity?.runOnUiThread {
@@ -179,6 +179,6 @@ class RecoverModalFragment(private val onSuccessRunnable: Runnable?) :
 
     override fun onDestroy() {
         super.onDestroy()
-        vault.shutdown()
+        vaults.shutdown()
     }
 }

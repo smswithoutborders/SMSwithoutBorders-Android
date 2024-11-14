@@ -22,7 +22,7 @@
     <string name="selected_gateway_client_text">Selected Gateway Client</string>
 
     <!-- Homepage menu -->
-    <string name="homepage_recent">"         Recent     "</string>
+    <string name="homepage_recent">Recent"</string>
 
     <string name="homepage_no_recent_messages">No Recent Messages</string>
 
@@ -48,34 +48,34 @@
 
     <!-- settings saved platforms -->
 
-    <string name="settings_accessibility_category">" Accessibility     "</string>
+    <string name="settings_accessibility_category">Accessibility</string>
     <string name="settings_language">Language</string>
 
-    <string name="settings_security_category">"Security and Privacy     "</string>
-    <string name="settings_security">"Security     "</string>
-    <string name="settings_security_category_summary">"Enable app locks and pin codes     "</string>
+    <string name="settings_security_category">Security and Privacy</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_security_category_summary">Enable app locks and pin codes</string>
 
-    <string name="settings_gateway_clients_text">"         Gateway Clients     "</string>
+    <string name="settings_gateway_clients_text">Gateway Clients</string>
 
     <!-- settings security -->
-    <string name="settings_lock_screen_preference_category">" Phone Lockscreen options     "</string>
-    <string name="settings_security_and_privacy_enable_lockscreen_open">"Enable lockscreen     "</string>
+    <string name="settings_lock_screen_preference_category">Phone Lockscreen options</string>
+    <string name="settings_security_and_privacy_enable_lockscreen_open">Enable lockscreen</string>
     <string name="settings_security_and_privacy_enable_lockscreen_open_summary">Require lockscreen pin/fingerprint when starting the app</string>
 
-    <string name="settings_security_and_privacy_account">"Account     "</string>
-    <string name="settings_security_and_privacy_account_logout">"Logout     "</string>
+    <string name="settings_security_and_privacy_account">"Account</string>
+    <string name="settings_security_and_privacy_account_logout">Logout</string>
     <string name="settings_security_and_privacy_account_logout_summary">Logout of your account. You can always log back in, however you current messages would be deleted. </string>
 
-    <string name="settings_security_and_privacy_account_delete">"Delete     "</string>
+    <string name="settings_security_and_privacy_account_delete">Delete</string>
 
     <string name="settings_security_and_privacy_account_delete_summary">"Deleting your account means deleting all your saved accounts online. You can always recreate your account once needed.     "</string>
 
     <!-- settings language -->
     <string name="language_choose_text">"Choose your preferred language     "</string>
-    <string name="language_english">"English     "</string>
-    <string name="language_french">"French  "</string>
+    <string name="language_english">English</string>
+    <string name="language_french">"French</string>
     <string name="language_farsi">Farsi</string>
-    <string name="language_spanish">"Spanish     "</string>
+    <string name="language_spanish">Spanish</string>
     <string name="language_turkish" >
         Turkish
     </string>
@@ -102,11 +102,11 @@
 
     <string name="gateway_client_settings_add_custom_empty_error">Please provide a phone number</string>
 
-    <string name="new_gateway_client_alias">"Alias (optional)     "</string>
+    <string name="new_gateway_client_alias">Alias (optional)</string>
     <string name="gateway_client_alias_description">Name to help remember the Gateway client</string>
     <string name="gateway_client_save_btn_text">Save</string>
 
-    <string name="choose_sms_app">"Select an SMS messaging app     "</string>
+    <string name="choose_sms_app">Select an SMS messaging app</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
@@ -245,10 +245,47 @@
     <string name="cannot_delete_selected_title">Cannot Delete Selected Gateway Client</string>
     <string name="cannot_delete_selected_message">Please switch to another gateway client before deleting this one.</string>
     <string name="delete">Delete</string>
-    <string name="ok">OK</string>
+    <string name="ok">Request authentication</string>
     <string name="edit">Edit</string>
     <string name="make_default">Make Default</string>
     <string name="gateway_client_options">Gateway Client Options</string>
     <string name="select_account_to_revoke_access">Select account to revoke access</string>
+    <string name="two_fa_password_hint_text">Enter your two-factor authentication password</string>
+    <string name="error_title">Error</string>
+    <string name="incorrect_password_message">Incorrect password. Please try again.</string>
+    <string name="ok_button_text">OK</string>
+    <string name="telegram_auth_error">Error occurred during Telegram authentication.</string>
+    <string name="two_factor_auth_enabled">Two factor authentication is enabled. Input your password.</string>
+    <string name="telegram_two_factor_auth_enabled">You enabled two-factor authentication in your Telegram account. Input your password.</string>
+    <string name="bridges">Bridges</string>
+    <string name="welcome_to_bridges">Welcome to Bridges</string>
+    <string name="authenticate_with_bridges">Authenticate with Bridges</string>
+    <string name="submit_code">Submit Code</string>
+    <string name="code_expires_in_2hrs">The code expires in 2hrs</string>
+    <string name="input_sms_code">Input SMS code</string>
+    <string name="send_now">Send now</string>
+    <string name="send_now_info">Send only the authentication code via SMS</string>
+    <string name="compose_and_send">Compose and send</string>
+    <string name="compose_and_send_info">Compose your first message alongside sending your auth code to save SMS cost</string>
+    <string name="bridges_submit_code_info">Once you send an authentication request via SMS, you will receive a message containing the code. Copy the entire SMS without adding or removing anything from it and paste it here.</string>
+    <string name="already_got_the_code_verify_now">Already got the code? Verify now.</string>
+    <string name="bridges_auth_info">An alias uses your phone number to communicate on your behalf. An example alias would be 12345@relaysms.me.</string>
+    <string name="enter_phone_number_with_country_code">Enter phone number with country code</string>
+    <string name="continue_without_an_account">Continue without an internet connection</string>
+    <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Send an authentication request and paste the SMS message sent back to begin communicating with your Alias</string>
+    <string name="authenticate_your_alias">Alias authentication</string>
+    <string name="the_code_would_be_automatically_detected_sometimes_n_nin_case_it_is_not_automatically_received_please_copy_the_entire_sms_message_and_paste_in_the_box_below">The code would be automatically detected sometimes.\n\nIn case it is not automatically received, please copy the entire SMS message and paste in the box below</string>
+    <string name="paste_entire_sms_message_in_here">Paste Entire SMS message in here...</string>
+    <string name="authenticate_code">Verify and save code</string>
+    <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">The code would be attached to the first message you send from the app</string>
+    <string name="please_set_a_default_gateway_client">Please set a default Gateway Client</string>
+    <string name="send_message_without_an_account">Send message without an account</string>
+    <string name="alias_authentication_request">Alias Authentication Request</string>
+    <string name="publishing_with_aliases">Publishing with Aliases</string>
+    <string name="only_emailing_is_supported_with_aliasing_at_this_time">Only emailing is supported with Aliasing at this time</string>
+    <string name="compose_new_message">Compose new message</string>
+    <string name="aliases_configured_successfully">Aliases configured successfully!</string>
+    <string name="default_relaysms_twilio" translatable="false">+15024439537</string>
+    <string name="default_relaysms_twilio_2" translatable="false">SWOB ONLINE</string>
 
 </resources>

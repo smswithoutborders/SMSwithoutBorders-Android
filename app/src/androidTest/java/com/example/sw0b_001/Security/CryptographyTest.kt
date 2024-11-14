@@ -5,18 +5,14 @@ import androidx.core.util.component1
 import androidx.core.util.component2
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.afkanerd.smswithoutborders.libsignal_doubleratchet.CryptoHelpers
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.Ratchets
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
 import com.example.sw0b_001.Models.MessageComposer
-import com.example.sw0b_001.Models.Vault
 import com.example.sw0b_001.Modules.Crypto
-import com.github.kittinunf.fuel.util.decodeBase64
 import com.github.kittinunf.fuel.util.encodeBase64
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.security.SecureRandom
 
 @RunWith(AndroidJUnit4::class)
 class CryptographyTest {

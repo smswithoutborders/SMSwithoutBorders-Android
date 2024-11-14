@@ -27,6 +27,12 @@
         app:title="@string/settings_security_and_privacy_account">
         <Preference
             app:iconSpaceReserved="false"
+            app:key="clear_bridges"
+            app:summary="This would delete your Auth codes stored for Aliasing. You can request for another code at anytime."
+            app:title="Clear aliasing" />
+
+        <Preference
+            app:iconSpaceReserved="false"
             app:key="logout"
             app:summary="@string/settings_security_and_privacy_account_logout_summary"
             app:title="@string/settings_security_and_privacy_account_logout" />

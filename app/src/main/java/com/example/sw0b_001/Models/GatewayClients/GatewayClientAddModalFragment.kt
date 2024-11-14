@@ -11,25 +11,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class GatewayClientAddModalFragment :
+class GatewayClientAddModalFragment(val gatewayClientId: Long? = null) :
     BottomSheetDialogFragment(R.layout.fragment_gateway_client_add_modal) {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
-    private var gatewayClientId: Long? = null
-
-    companion object {
-        fun newInstance(gatewayClientId: Long): GatewayClientAddModalFragment {
-            val fragment = GatewayClientAddModalFragment()
-            val args = Bundle()
-            args.putLong("gatewayClientId", gatewayClientId)
-            fragment.arguments = args
-            return fragment
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,15 +34,13 @@ class GatewayClientAddModalFragment :
                 addGatewayClients(view)
             }
 
-        val textInputLayout = view.findViewById<TextInputEditText>(R.id.gateway_client_add_contact)
-        textInputLayout.setOnClickListener {
+        val textInputLayout = view.findViewById<TextInputLayout>(R.id.gateway_client_add_contact_layout)
+        textInputLayout.setEndIconOnClickListener {
             val intent = Intent(Intent.ACTION_PICK).apply {
                 type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
             }
             startActivityForResult(intent, 1)
         }
-
-        gatewayClientId = arguments?.getLong("gatewayClientId")
 
         if (gatewayClientId != null) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -87,7 +75,7 @@ class GatewayClientAddModalFragment :
         gatewayClient.type = GatewayClient.TYPE_CUSTOM
 
         if (gatewayClientId != null) {
-            gatewayClient.id = gatewayClientId!!
+            gatewayClient.id = gatewayClientId
             CoroutineScope(Dispatchers.Default).launch {
                 Datastore.getDatastore(context).gatewayClientsDao().update(gatewayClient)
                 dismiss()

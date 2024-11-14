@@ -55,14 +55,12 @@ class OnboardingActivity : AppCompatActivity(), OnboardingComponent.ManageCompon
             findViewById<View>(R.id.onboarding_navigation_controller).visibility = View.GONE
             val fragment = fragmentList[fragmentIndex]
             if(supportFragmentManager.fragments.isNullOrEmpty()) {
-                println("Adding")
                 add(R.id.onboarding_fragment_container, fragment, "homepage_fragment")
                 setCustomAnimations(R.anim.slide_in,
                     R.anim.fade_out,
                     R.anim.fade_in,
                     R.anim.slide_out)
             } else {
-                println("Replacing")
                 replace(R.id.onboarding_fragment_container, fragment, "homepage_fragment")
                 setCustomAnimations(R.anim.slide_in,
                     R.anim.fade_out,
