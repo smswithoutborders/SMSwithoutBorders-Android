@@ -243,5 +243,17 @@
     <string name="enter_phone_number_with_country_code">Ülke koduyla birlikte telefon numarasını girin</string>
     <string name="continue_without_an_account">İnternet bağlantısı olmadan devam edin</string>
     <string name="send_an_authentication_request_and_paste_the_sms_message_sent_back_to_begin_communicating_with_your_alias">Kimlik doğrulama isteği gönderin ve gönderilen SMS mesajını yapıştırarak Alias\'ınızla iletişim kurmaya başlayın</string>
+    <string name="authenticate_your_alias">Takma Ad Kimlik Doğrulaması</string>
+    <string name="the_code_would_be_automatically_detected_sometimes_n_nin_case_it_is_not_automatically_received_please_copy_the_entire_sms_message_and_paste_in_the_box_below">Kod bazen otomatik olarak algılanır.\n\nKod otomatik olarak alınmazsa, lütfen tüm SMS mesajını kopyalayın ve aşağıdaki kutuya yapıştırın.</string>
+    <string name="paste_entire_sms_message_in_here">Tüm SMS mesajını buraya yapıştırın...</string>
+    <string name="authenticate_code">Kodu Doğrula ve Kaydet</string>
+    <string name="the_code_would_be_attached_to_the_first_message_you_send_from_the_app">Kod, uygulamadan gönderdiğiniz ilk mesaja eklenecektir.</string>
+    <string name="please_set_a_default_gateway_client">Lütfen varsayılan bir Ağ Geçidi İstemcisi ayarlayın.</string>
+    <string name="send_message_without_an_account">Hesap olmadan mesaj gönder</string>
+    <string name="alias_authentication_request">Takma Ad Kimlik Doğrulama İsteği</string>
+    <string name="publishing_with_aliases">Takma Adlarla Yayınlama</string>
+    <string name="only_emailing_is_supported_with_aliasing_at_this_time">Şu anda yalnızca e-posta gönderme, Takma Adlandırma ile desteklenmektedir.</string>
+    <string name="compose_new_message">Yeni mesaj oluştur</string>
+    <string name="aliases_configured_successfully">Takma adlar başarıyla yapılandırıldı!</string>
 
 </resources>
