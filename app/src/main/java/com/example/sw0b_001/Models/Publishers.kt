@@ -148,6 +148,15 @@ class Publishers(val context: Context) {
                 null)
         }
 
+        fun removeEncryptedStates(context: Context) {
+            val sharedPreferences = Armadillo.create(context, PUBLISHER_ATTRIBUTE_FILES)
+                .encryptionFingerprint(context)
+                .build()
+
+            KeystoreHelpers.removeFromKeystore(context, PUBLISHER_STATES_SHARED_KEY_KEYSTORE_ALIAS)
+            sharedPreferences.edit().remove(PUBLISHER_STATES_SHARED_KEY_KEYSTORE_ALIAS).apply()
+        }
+
         fun getEncryptedStates(context: Context, states: ByteArray) : ByteArray {
             val sharedPreferences = Armadillo.create(context, PUBLISHER_ATTRIBUTE_FILES)
                 .encryptionFingerprint(context)

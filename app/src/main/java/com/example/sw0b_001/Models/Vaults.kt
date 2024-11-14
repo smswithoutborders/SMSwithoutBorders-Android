@@ -84,6 +84,7 @@ class Vaults(context: Context) {
 
         storeArtifacts(context, llt, deviceId, clientDeviceIDPubKey)
         Publishers.storeArtifacts(context, publisherPubKey)
+        Publishers.removeEncryptedStates(context)
     }
 
     fun createEntity(context: Context,
