@@ -3,10 +3,9 @@ package com.example.sw0b_001.Modals.PlatformComposers
 import android.content.Context
 import android.content.Intent
 import android.util.Base64
-import android.util.Log
-import android.widget.Toast
 import com.afkanerd.smswithoutborders.libsignal_doubleratchet.libsignal.States
 import com.example.sw0b_001.Database.Datastore
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Messages.EncryptedContent
 import com.example.sw0b_001.Models.GatewayClients.GatewayClientsCommunications
 import com.example.sw0b_001.Models.MessageComposer
@@ -14,37 +13,43 @@ import com.example.sw0b_001.Models.Messages.RatchetStates
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
-import com.example.sw0b_001.Models.Publisher
+import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.Models.SMSHandler
 
 object ComposeHandlers {
-
     fun compose(context: Context,
                 formattedContent: String,
                 platforms: AvailablePlatforms,
                 storedPlatforms: StoredPlatformsEntity,
-                onSuccessRunnable: Runnable) {
+                isBridge: Boolean = false,
+                authCode: ByteArray? = null,
+                onSuccessRunnable: Runnable) : ByteArray {
         val states = Datastore.getDatastore(context).ratchetStatesDAO().fetch()
         if(states.size > 1) {
             throw Exception("More than 1 states exist")
         }
 
         val state = if(states.isNotEmpty())
-            States(String(Publisher.getEncryptedStates(context, states[0].value),
+            States(String(Publishers.getEncryptedStates(context, states[0].value),
                 Charsets.UTF_8)) else States()
         val messageComposer = MessageComposer(context, state)
-        val encryptedContentBase64 = messageComposer.compose(platforms, formattedContent)
-        println("Final format: $encryptedContentBase64")
+        var encryptedContentBase64 = messageComposer.compose(
+            platforms,
+            formattedContent,
+            authCode = authCode
+        )
 
-        val encryptedStates = Publisher.encryptStates(context, state.serializedStates)
-        val ratchetsStates : RatchetStates?
-        if(states.isNotEmpty()) {
-            ratchetsStates = RatchetStates(states[0].id, encryptedStates)
-            Datastore.getDatastore(context).ratchetStatesDAO().update(ratchetsStates)
-        } else {
-            ratchetsStates = RatchetStates(value = encryptedStates)
-            Datastore.getDatastore(context).ratchetStatesDAO().insert(ratchetsStates)
-        }
+        val decodedContent = Base64.decode(encryptedContentBase64, Base64.DEFAULT)
+        if(isBridge)
+            encryptedContentBase64 = Base64.encodeToString(
+                if(authCode != null) Bridges.publishWithAuthCode(decodedContent)
+                else Bridges.publish(decodedContent),
+                Base64.DEFAULT
+            )
+
+        val encryptedStates = Publishers.encryptStates(context, state.serializedStates)
+        val  ratchetsStates = RatchetStates(value = encryptedStates)
+        Datastore.getDatastore(context).ratchetStatesDAO().update(ratchetsStates)
 
         val gatewayClientMSISDN = GatewayClientsCommunications(context)
             .getDefaultGatewayClient()
@@ -66,6 +71,8 @@ object ComposeHandlers {
         Datastore.getDatastore(context).encryptedContentDAO()
             .insert(encryptedContent)
         onSuccessRunnable.run()
+
+        return decodedContent
     }
 
     data class DecomposedMessages(val body: String,
@@ -78,7 +85,10 @@ object ComposeHandlers {
         println("$split - ${platforms.service_type}")
         return when(platforms.service_type!!) {
             Platforms.Type.EMAIL.type -> {
-                DecomposedMessages(body = split[5], subject = split[4], recipient = split[1])
+                if(platforms.protocol_type == "bridge") {
+                    DecomposedMessages(body = split[4], subject = split[3], recipient = split[0])
+                }
+                else DecomposedMessages(body = split[5], subject = split[4], recipient = split[1])
             }
 
             Platforms.Type.TEXT.type -> {

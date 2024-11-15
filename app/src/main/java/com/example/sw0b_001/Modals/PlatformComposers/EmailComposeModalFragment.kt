@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.sw0b_001.Database.Datastore
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Messages.EncryptedContent
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 
 class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                                 val message: EncryptedContent? = null,
+                                val isBridge: Boolean = false,
                                 private val onSuccessCallback: Runnable? = null)
     : BottomSheetDialogFragment(R.layout.fragment_modal_email_compose) {
 
@@ -47,20 +49,38 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
 
         message?.let {
             it.encryptedContent.split(":").let {
-                view.findViewById<TextInputEditText>(R.id.email_to).apply {
-                    setText(it[1])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_cc).apply {
-                    setText(it[2])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
-                    setText(it[3])
-                }
-                view.findViewById<TextInputEditText>(R.id.email_subject).apply {
-                    setText(it[4])
-                }
-                view.findViewById<EditText>(R.id.email_compose_body_input).apply {
-                    setText(it.subList(5, it.size).joinToString())
+                if(isBridge) {
+                    view.findViewById<TextInputEditText>(R.id.email_to).apply {
+                        setText(it[0])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_cc).apply {
+                        setText(it[1])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
+                        setText(it[2])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_subject).apply {
+                        setText(it[3])
+                    }
+                    view.findViewById<EditText>(R.id.email_compose_body_input).apply {
+                        setText(it.subList(4, it.size).joinToString())
+                    }
+                } else {
+                    view.findViewById<TextInputEditText>(R.id.email_to).apply {
+                        setText(it[1])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_cc).apply {
+                        setText(it[2])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_bcc).apply {
+                        setText(it[3])
+                    }
+                    view.findViewById<TextInputEditText>(R.id.email_subject).apply {
+                        setText(it[4])
+                    }
+                    view.findViewById<EditText>(R.id.email_compose_body_input).apply {
+                        setText(it.subList(5, it.size).joinToString())
+                    }
                 }
             }
         }
@@ -93,14 +113,21 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
         val body = bodyTextInputEditText.text.toString()
 
         CoroutineScope(Dispatchers.Default).launch {
-            val availablePlatforms = Datastore.getDatastore(requireContext())
+            val availablePlatforms = if(isBridge) Bridges.platforms
+            else Datastore.getDatastore(requireContext())
                 .availablePlatformsDao().fetch(platform.name!!)
             val formattedContent = processEmailForEncryption(to, cc, bcc, subject, body)
-            println("Formatted content: $formattedContent")
 
             try {
-                ComposeHandlers.compose(requireContext(), formattedContent, availablePlatforms, platform) {
-                    onSuccessCallback?.let { it.run() }
+                ComposeHandlers.compose(requireContext(),
+                    formattedContent,
+                    availablePlatforms,
+                    platform,
+                    isBridge = isBridge,
+                    authCode = if(isBridge) Bridges.getAuthCode(requireContext())
+                        .encodeToByteArray() else null
+                ) {
+                    onSuccessCallback?.run()
                     dismiss()
                 }
             } catch(e: Exception) {
@@ -117,6 +144,7 @@ class EmailComposeModalFragment(val platform: StoredPlatformsEntity,
                                           bcc: String,
                                           subject: String,
                                           body: String): String {
-        return "${platform.account}:$to:$cc:$bcc:$subject:$body"
+        return if(isBridge) "$to:$cc:$bcc:$subject:$body"
+        else "${platform.account}:$to:$cc:$bcc:$subject:$body"
     }
 }

@@ -11,13 +11,14 @@
         android:id="@+id/homepage_recents_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:focusedByDefault="true"
-        app:title="@string/homepage_recent"
-        app:titleTextAppearance="@style/TextAppearance.Material3.DisplaySmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/homepage_main_menu" />
+        app:menu="@menu/homepage_main_menu"
+        app:title="@string/homepage_recent"
+        app:titleTextAppearance="@style/TextAppearance.Material3.DisplaySmall" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/homepage_fragment_container"

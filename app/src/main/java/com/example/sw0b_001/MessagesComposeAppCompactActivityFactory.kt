@@ -8,6 +8,7 @@ import com.example.sw0b_001.Database.Datastore
 import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
 import com.example.sw0b_001.Modals.PlatformComposers.MessageComposeModalFragment
 import com.example.sw0b_001.Modals.PlatformComposers.TextComposeModalFragment
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Messages.EncryptedContent
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
@@ -40,7 +41,8 @@ open class MessagesComposeAppCompactActivityFactory : AppCompactActivityCustomiz
                 CoroutineScope(Dispatchers.Default).launch {
                     val id = intent.getStringExtra("id")
                     id?.let {
-                        val platforms = Datastore.getDatastore(applicationContext)
+                        val platforms = if(id == "0") Bridges.storedPlatformsEntity
+                        else Datastore.getDatastore(applicationContext)
                             .storedPlatformsDao().fetch(id)
                         runOnUiThread {
                             showPlatformsModal(platforms)
@@ -67,7 +69,11 @@ open class MessagesComposeAppCompactActivityFactory : AppCompactActivityCustomiz
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val fragment: Fragment by lazy {
             when(intent.getStringExtra("type")!!) {
-                Platforms.Type.EMAIL.type -> EmailComposeModalFragment(platforms, message) { finish() }
+                Platforms.Type.EMAIL.type -> EmailComposeModalFragment(
+                    platforms,
+                    message,
+                    isBridge = platforms.id == "0"
+                ) { finish() }
                 Platforms.Type.TEXT.type -> TextComposeModalFragment(platforms, message) { finish() }
                 Platforms.Type.MESSAGE.type -> MessageComposeModalFragment(platforms, message) {
                     finish() }

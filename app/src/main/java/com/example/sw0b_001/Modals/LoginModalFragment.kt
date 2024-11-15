@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sw0b_001.BuildConfig
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.OTPVerificationActivity
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -34,7 +34,7 @@ class LoginModalFragment(private val onSuccessRunnable: Runnable?) :
     private lateinit var countryCodePickerView: CountryCodePicker
     private lateinit var forgotPasswordBtn: MaterialButton
 
-    private lateinit var vault: Vault
+    private lateinit var vaults: Vaults
 
     private val activityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -59,7 +59,7 @@ class LoginModalFragment(private val onSuccessRunnable: Runnable?) :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vault = Vault(requireContext())
+        vaults = Vaults(requireContext())
 
         view.findViewById<MaterialButton>(R.id.login_btn).setOnClickListener {
             loginRecaptchaEnabled(view)
@@ -174,7 +174,7 @@ class LoginModalFragment(private val onSuccessRunnable: Runnable?) :
 
         CoroutineScope(Dispatchers.Default).launch{
             try {
-                val response = vault.authenticateEntity(requireContext(),
+                val response = vaults.authenticateEntity(requireContext(),
                     phoneNumber, password)
 
                 if(response.requiresOwnershipProof) {
@@ -182,6 +182,7 @@ class LoginModalFragment(private val onSuccessRunnable: Runnable?) :
                         val intent = Intent(requireContext(), OTPVerificationActivity::class.java)
                         intent.putExtra("phone_number", phoneNumber)
                         intent.putExtra("password", password)
+                        intent.putExtra("next_attempt_timestamp", response.nextAttemptTimestamp.toString())
                         intent.putExtra("type",
                             OTPVerificationActivity.Type.AUTHENTICATE.type)
                         activityLauncher.launch(intent)
@@ -211,7 +212,7 @@ class LoginModalFragment(private val onSuccessRunnable: Runnable?) :
 
     override fun onDestroy() {
         super.onDestroy()
-        vault.shutdown()
+        vaults.shutdown()
     }
 
 }

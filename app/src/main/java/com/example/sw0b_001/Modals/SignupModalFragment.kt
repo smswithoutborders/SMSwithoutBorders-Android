@@ -15,7 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.sw0b_001.BuildConfig
-import com.example.sw0b_001.Models.Vault
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.OTPVerificationActivity
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -37,7 +37,7 @@ class SignupModalFragment(private val onSuccessRunnable: Runnable?) :
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
-    private lateinit var vault: Vault
+    private lateinit var vaults: Vaults
 
     private val activityLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -51,7 +51,7 @@ class SignupModalFragment(private val onSuccessRunnable: Runnable?) :
             }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vault = Vault(requireContext())
+        vaults = Vaults(requireContext())
 
         view.findViewById<MaterialCheckBox>(R.id.signup_read_privacy_policy_checkbox)
             .setOnCheckedChangeListener { _, isChecked ->
@@ -193,13 +193,14 @@ class SignupModalFragment(private val onSuccessRunnable: Runnable?) :
 
     private fun signup(view: View, phonenumber: String, countryCode: String, password: String ) {
         try {
-            val response = vault.createEntity(requireContext(), phonenumber, countryCode, password)
+            val response = vaults.createEntity(requireContext(), phonenumber, countryCode, password)
             if(response.requiresOwnershipProof) {
                 activity?.runOnUiThread {
                     val intent = Intent(requireContext(), OTPVerificationActivity::class.java)
                     intent.putExtra("phone_number", phonenumber)
                     intent.putExtra("password", password)
                     intent.putExtra("country_code", countryCode)
+                    intent.putExtra("next_attempt_timestamp", response.nextAttemptTimestamp.toString())
                     intent.putExtra("type", OTPVerificationActivity.Type.CREATE.type)
                     activityLauncher.launch(intent)
                 }
@@ -255,6 +256,6 @@ class SignupModalFragment(private val onSuccessRunnable: Runnable?) :
 
     override fun onDestroy() {
         super.onDestroy()
-        vault.shutdown()
+        vaults.shutdown()
     }
 }

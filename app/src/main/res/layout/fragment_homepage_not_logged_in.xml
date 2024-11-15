@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/bendy_account_login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,17 +59,32 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/homepage_vault_login_btn"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/md_theme_outlineVariant_mediumContrast"
         android:padding="15dp"
         android:text="@string/login"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homepage_vault_signup_btn" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:id="@+id/homepage_bridges_auth_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="15dp"
+        android:text="@string/continue_without_an_account"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homepage_vault_login_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

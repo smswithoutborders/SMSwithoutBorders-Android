@@ -65,10 +65,10 @@
         android:textStyle="bold"/>
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:id="@+id/onboarding_vault_login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_outlineVariant_mediumContrast"
         android:padding="15dp"
         android:text="@string/login"
         android:textSize="16sp"/>

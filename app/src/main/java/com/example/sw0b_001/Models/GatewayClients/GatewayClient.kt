@@ -1,13 +1,12 @@
 package com.example.sw0b_001.Models.GatewayClients
 
 import android.content.Context
-import android.widget.Toast
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.sw0b_001.Database.Datastore
-import com.example.sw0b_001.Models.Publisher
+import com.example.sw0b_001.Models.Publishers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +14,11 @@ import java.net.URL
 
 @Entity(indices = [Index(value = ["MSISDN"], unique = true)])
 class GatewayClient {
+    enum class TYPE(val value: String) {
+        DEFAULT("default"),
+        CUSTOM("custom")
+    }
+
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 
@@ -67,7 +71,7 @@ class GatewayClient {
             val scope = CoroutineScope(Dispatchers.Default)
             scope.launch {
                 try {
-                    Publisher.getAvailablePlatforms(context).let{ json ->
+                    Publishers.getAvailablePlatforms(context).let{ json ->
                         json.forEach { it->
                             val url = URL(it.icon_png)
                             it.logo = url.readBytes()

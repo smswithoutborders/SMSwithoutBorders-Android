@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sw0b_001.Modals.PlatformComposers.ComposeHandlers
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
 import com.example.sw0b_001.Models.Platforms.Platforms
 import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
@@ -35,14 +37,19 @@ class MessagesRecyclerAdapter(private val availablePlatforms: List<AvailablePlat
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val encryptedContent = mDiffer.currentList[position]
-        availablePlatforms.forEach {
-            if(it.name == encryptedContent.platformName) {
-                holder.bind(encryptedContent, it)
-                return@forEach
+        if(encryptedContent.platformId == "0") {
+            holder.bind(encryptedContent, Bridges.platforms)
+        }
+        else {
+            availablePlatforms.forEach {
+                if(it.name == encryptedContent.platformName) {
+                    holder.bind(encryptedContent, it)
+                    return@forEach
+                }
             }
         }
         holder.card.setOnClickListener {
-            messageOnClickListener.value = encryptedContent
+            messageOnClickListener.value = encryptedContent!!
         }
     }
 
@@ -71,6 +78,9 @@ class MessagesRecyclerAdapter(private val availablePlatforms: List<AvailablePlat
                     val bitmap = BitmapFactory.decodeByteArray( platforms.logo, 0,
                         platforms.logo!!.size )
                     platformLogo.setImageBitmap(bitmap)
+                } else {
+                    platformLogo.setImageDrawable(AppCompatResources.getDrawable(
+                        itemView.context, R.drawable.logo))
                 }
 
                 when(platforms.service_type!!) {

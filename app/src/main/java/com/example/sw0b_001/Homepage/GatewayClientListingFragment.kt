@@ -14,26 +14,30 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.sw0b_001.Database.Datastore
+import com.example.sw0b_001.Modals.GatewayClientCardOptionsModalFragment
 import com.example.sw0b_001.Models.GatewayClients.GatewayClient
 import com.example.sw0b_001.Models.GatewayClients.GatewayClientAddModalFragment
 import com.example.sw0b_001.Models.GatewayClients.GatewayClientViewModel
 import com.example.sw0b_001.Models.GatewayClients.GatewayClientsCommunications
 import com.example.sw0b_001.R
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 
 
@@ -45,6 +49,9 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
     private lateinit var selectedOperatorText: TextView
     private lateinit var selectedOperatorCodeText: TextView
     private lateinit var selectedCountryText: TextView
+
+    private var _clickedGatewayClient = MutableLiveData<GatewayClient?>()
+    val clickedGatewayClient: LiveData<GatewayClient?> = _clickedGatewayClient
 
     private val viewModel: GatewayClientViewModel by viewModels()
 
@@ -65,13 +72,17 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
 
         val gatewayClient = GatewayClientsCommunications(requireContext())
 
+        clickedGatewayClient.observe(viewLifecycleOwner) { clickedClient ->
+            clickedClient?.let { showModal(it) }
+        }
+
         viewModel.get(requireContext()) {
             activity?.runOnUiThread {
                 linearProgressIndicator.visibility = View.GONE
                 refreshLayout.isRefreshing = false
             }
         }.observe(viewLifecycleOwner, Observer {
-            listViewAdapter = GatewayClientListingAdapter(gatewayClient, it)
+            listViewAdapter = GatewayClientListingAdapter(gatewayClient, it, this)
             listView.adapter = listViewAdapter
         })
 
@@ -85,7 +96,6 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
         selectedOperatorText = view.findViewById(R.id.selected_operator_text)
         selectedOperatorCodeText = view.findViewById(R.id.selected_operator_code_text)
         selectedCountryText = view.findViewById(R.id.selected_country_text)
-        updateSelectedGatewayClientUI()
 
         val menuHost = requireActivity()
         menuHost.addMenuProvider(object: MenuProvider{
@@ -134,10 +144,11 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
     }
 
     private val sharedPreferencesChangeListener = OnSharedPreferenceChangeListener { _, _ ->
-        if(::listViewAdapter.isInitialized)
+        if(::listViewAdapter.isInitialized && view != null) {
             listViewAdapter.notifyDataSetChanged()
+            updateSelectedGatewayClientUI()
+        }
 
-        updateSelectedGatewayClientUI()
     }
 
     private fun refresh(view: View) {
@@ -160,11 +171,19 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
                         Toast.LENGTH_SHORT).show()
             }
         }
+    }
 
+    fun showModal(gatewayClient: GatewayClient) {
+        val fragmentTransaction = activity?.supportFragmentManager!!.beginTransaction()
+        val gatewayClientAddFragment = GatewayClientCardOptionsModalFragment(gatewayClient)
+        fragmentTransaction.add(gatewayClientAddFragment, "gateway_client_add_tag")
+        fragmentTransaction.show(gatewayClientAddFragment)
+        fragmentTransaction.commit()
     }
 
     class GatewayClientListingAdapter(private val gatewayClientsCommunications: GatewayClientsCommunications,
-                                      private var gatewayClientsList: List<GatewayClient>) : BaseAdapter() {
+                                      private var gatewayClientsList: List<GatewayClient>,
+                                      private val fragment: GatewayClientListingFragment) : BaseAdapter() {
 
         override fun getCount(): Int {
             return gatewayClientsList.size
@@ -180,26 +199,49 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val defaultGatewayClientMsisdn = gatewayClientsCommunications.getDefaultGatewayClient()
-            var view = convertView
-            if(view == null) {
-                val inflater: LayoutInflater = LayoutInflater.from(parent?.context);
-                view = inflater.inflate(R.layout.layout_cardlist_gateway_clients, parent,
-                        false)
-            }
+//            var view = convertView
+//            if(view == null) {
+//
+//            }
+            val inflater: LayoutInflater = LayoutInflater.from(parent?.context);
+
+            val view = inflater.inflate(R.layout.layout_cardlist_gateway_clients, parent,
+                false)
+
+            val card = view?.findViewById<MaterialCardView>(R.id.gateway_client_listing_card)
 
             val gatewayClient = getItem(position)
-            view?.findViewById<MaterialTextView>(R.id.gateway_client_MSISDN)?.text =
-                    gatewayClient.mSISDN
+            val msisdnTextView = view?.findViewById<MaterialTextView>(R.id.gateway_client_MSISDN)
+            val operatorTextView = view?.findViewById<MaterialTextView>(R.id.gateway_client_operator)
+            val countryTextView = view?.findViewById<MaterialTextView>(R.id.gateway_client_country)
+            val phoneNumberTextView = view?.findViewById<MaterialTextView>(R.id.gateway_client_phone_number)
 
-            view?.setOnClickListener(gatewayClientOnClickListener(gatewayClient))
+            if (!gatewayClient.alias.isNullOrEmpty()) {
+                msisdnTextView?.text = gatewayClient.alias
+                phoneNumberTextView?.visibility = View.VISIBLE
+                phoneNumberTextView?.text = gatewayClient.mSISDN
+            } else {
+                msisdnTextView?.text = gatewayClient.mSISDN
+                phoneNumberTextView?.visibility = View.GONE
+            }
 
-            val radioButton = view?.findViewById<SwitchMaterial>(R.id.gateway_client_radio_btn)
-            radioButton?.isChecked = defaultGatewayClientMsisdn == gatewayClient.mSISDN
-            radioButton?.setOnClickListener(gatewayClientOnClickListener(gatewayClient))
+            operatorTextView?.text = gatewayClient.operatorName
+            if (gatewayClient.operatorName.isNullOrEmpty()) {
+                operatorTextView?.visibility = View.GONE
+            } else {
+                operatorTextView?.visibility = View.VISIBLE
+            }
 
+            countryTextView?.text = gatewayClient.country
+            if (gatewayClient.country.isNullOrEmpty()) {
+                countryTextView?.visibility = View.GONE
+            } else {
+                countryTextView?.visibility = View.VISIBLE
+            }
 
-            view?.findViewById<MaterialCardView>(R.id.gateway_client_listing_card)
-                    ?.setOnClickListener(gatewayClientOnClickListener(gatewayClient))
+            card?.setOnClickListener {
+                fragment._clickedGatewayClient.value = gatewayClient
+            }
 
             return view!!
         }
@@ -216,3 +258,4 @@ class GatewayClientListingFragment : Fragment(R.layout.activity_gateway_clients_
         }
     }
 }
+

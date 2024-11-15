@@ -4,21 +4,22 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sw0b_001.Bridges.BridgesSubmitCodeActivity
 import com.example.sw0b_001.Database.Datastore
-import com.example.sw0b_001.Models.Platforms.AvailablePlatforms
+import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
+import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.Platforms.PlatformsRecyclerAdapter
 import com.example.sw0b_001.Models.Platforms.PlatformsViewModel
-import com.example.sw0b_001.Models.Platforms.StoredPlatformsEntity
-import com.example.sw0b_001.Models.Publisher
+import com.example.sw0b_001.Models.Publishers
 import com.example.sw0b_001.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.CoroutineScope
@@ -89,6 +90,29 @@ class AvailablePlatformsModalFragment(val type: Type):
                     }
                 }
                 configureStoredClickListener(type)
+                view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn)
+                    .setOnClickListener {
+                        val bridgesAuthModalFragment = BridgesAuthRequestModalFragment(Bridges
+                            .canPublish(requireContext())) {
+                            if(Bridges.canPublish(requireContext())) {
+                                val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+                                val emailComposeModalFragment = EmailComposeModalFragment(
+                                    Bridges.storedPlatformsEntity,
+                                    isBridge = true
+                                ) {
+                                    activity?.finish()
+                                }
+                                fragmentTransaction?.add(emailComposeModalFragment, "email_compose_tag")
+                                fragmentTransaction?.show(emailComposeModalFragment)
+                                fragmentTransaction?.commitNow()
+                            }
+                            else {
+                                startActivity(Intent(requireContext(),
+                                    BridgesSubmitCodeActivity::class.java))
+                            }
+                        }
+                        bridgesAuthModalFragment.show(parentFragmentManager, "bridges_auth_tag")
+                }
             }
             Type.AVAILABLE -> {
                 progress.visibility = View.VISIBLE
@@ -140,7 +164,7 @@ class AvailablePlatformsModalFragment(val type: Type):
 
             val scope = CoroutineScope(Dispatchers.Default)
             scope.launch {
-                val publisher = Publisher(requireContext())
+                val publishers = Publishers(requireContext())
                 activity?.runOnUiThread {
                     progress.visibility = View.VISIBLE
                 }
@@ -148,10 +172,10 @@ class AvailablePlatformsModalFragment(val type: Type):
                 when(it.protocol_type) {
                     "oauth2" -> {
                         try {
-                            val response = publisher.getOAuthURL(it, true,
+                            val response = publishers.getOAuthURL(it, true,
                                 it.support_url_scheme!!)
 
-                            Publisher.storeOauthRequestCodeVerifier(requireContext(),
+                            Publishers.storeOauthRequestCodeVerifier(requireContext(),
                                 response.codeVerifier)
 
 
@@ -162,9 +186,13 @@ class AvailablePlatformsModalFragment(val type: Type):
                             }
                             dismiss()
                         } catch(e: StatusRuntimeException) {
+                            e.printStackTrace()
                             activity?.runOnUiThread {
-                                Toast.makeText(requireContext(), e.status.description,
-                                    Toast.LENGTH_SHORT).show()
+                                e.status.description?.let {
+                                    Toast.makeText(requireContext(), e.status.description,
+                                        Toast.LENGTH_SHORT).show()
+                                }
+
                             }
                         } catch(e: Exception) {
                             activity?.runOnUiThread {
@@ -198,7 +226,7 @@ class AvailablePlatformsModalFragment(val type: Type):
                         }
                     }
                 }
-                publisher.shutdown()
+                publishers.shutdown()
             }
         }
     }
