@@ -16,6 +16,7 @@ import com.example.sw0b_001.Homepage.HomepageLoggedIn
 import com.example.sw0b_001.Homepage.HomepageNotLoggedIn
 import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.Homepage.GatewayClientListingFragment
+import com.example.sw0b_001.Models.Bridges
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -48,20 +49,22 @@ class HomepageActivity : AppCompactActivityCustomized() {
         window.navigationBarColor = getResources().getColor(R.color.md_theme_surfaceContainer, theme);
 
         supportFragmentManager.commit {
-            if(Vaults.fetchLongLivedToken(applicationContext).isNotBlank()) {
-                if(supportFragmentManager.findFragmentByTag("homepage_not_fragment") != null) {
-                    replace(R.id.homepage_fragment_container, homepageLoggedIn,
-                        "homepage_fragment")
-                }
-                else {
+            if (Bridges.canPublish(applicationContext) || Vaults.fetchLongLivedToken(applicationContext).isNotBlank()) {
+                if (supportFragmentManager.findFragmentByTag("homepage_fragment") != null) {
+                    replace(R.id.homepage_fragment_container, homepageLoggedIn, "homepage_fragment")
+                } else {
                     add(R.id.homepage_fragment_container, homepageLoggedIn, "homepage_fragment")
                 }
-            }
-            else {
-                if(supportFragmentManager.findFragmentByTag("homepage_fragment") != null)
+            } else {
+                if (supportFragmentManager.findFragmentByTag("homepage_not_fragment") != null) {
                     replace(R.id.homepage_fragment_container, homepageNotLoggedIn, "homepage_not_fragment")
-                else
-                    add(R.id.homepage_fragment_container, homepageNotLoggedIn, "homepage_not_fragment")
+                } else {
+                    add(
+                        R.id.homepage_fragment_container,
+                        homepageNotLoggedIn,
+                        "homepage_not_fragment"
+                    )
+                }
             }
         }
 
@@ -72,7 +75,7 @@ class HomepageActivity : AppCompactActivityCustomized() {
                 R.id.recents_navbar -> {
                     supportFragmentManager.commit {
                         supportActionBar?.title = getString(R.string.recents)
-                        if(Vaults.fetchLongLivedToken(applicationContext).isNotBlank()) {
+                        if(Vaults.fetchLongLivedToken(applicationContext).isNotBlank() || Bridges.canPublish(applicationContext)) {
                             replace(R.id.homepage_fragment_container, HomepageLoggedIn(),
                                 "homepage_fragment" )
                         }
