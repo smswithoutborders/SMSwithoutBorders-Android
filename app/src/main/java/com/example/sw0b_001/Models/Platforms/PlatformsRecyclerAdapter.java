@@ -21,7 +21,10 @@ import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlatformsRecyclerAdapter extends
         RecyclerView.Adapter<PlatformsRecyclerAdapter.ViewHolder> {
@@ -68,16 +71,30 @@ public class PlatformsRecyclerAdapter extends
         }
         if(type == AvailablePlatformsModalFragment.Type.SAVED ||
                 type == AvailablePlatformsModalFragment.Type.REVOKE) {
-            StoredPlatformsEntity platforms = storedMDiffer.getCurrentList().get(position);
-            for(AvailablePlatforms platform : this.availablePlatforms) {
-                if(platforms.getName().equals(platform.getName())) {
-                    viewHolder.bind(platform);
+            List<StoredPlatformsEntity> filteredPlatforms = new ArrayList<>();
+            Set<String> platformNames = new HashSet<>();
+            for (StoredPlatformsEntity platform : storedMDiffer.getCurrentList()) {
+                if (platformNames.add(platform.getName())) {
+                    filteredPlatforms.add(platform);
+                }
+            }
+            StoredPlatformsEntity platformEntity = filteredPlatforms.get(position);
+
+            AvailablePlatforms availablePlatform = null;
+            for (AvailablePlatforms platform : availablePlatforms) {
+                if (platform.getName().equals(platformEntity.getName())) {
+                    availablePlatform = platform;
                     break;
                 }
             }
+
+            if (availablePlatform != null) {
+                viewHolder.bind(availablePlatform);
+            }
+
             viewHolder.cardView.setOnClickListener(it -> {
-                if(isClickable) {
-                    savedPlatformsMutableData.setValue(platforms);
+                if (isClickable) {
+                    savedPlatformsMutableData.setValue(platformEntity);
                 }
             });
         }
@@ -85,10 +102,17 @@ public class PlatformsRecyclerAdapter extends
 
     @Override
     public int getItemCount() {
-        if(type == AvailablePlatformsModalFragment.Type.AVAILABLE) {
+        if (type == AvailablePlatformsModalFragment.Type.AVAILABLE) {
             return availableMDiffer.getCurrentList().size();
         } else {
-            return storedMDiffer.getCurrentList().size();
+            List<StoredPlatformsEntity> filteredPlatforms = new ArrayList<>();
+            Set<String> platformNames = new HashSet<>();
+            for (StoredPlatformsEntity platform : storedMDiffer.getCurrentList()) {
+                if (platformNames.add(platform.getName())) {
+                    filteredPlatforms.add(platform);
+                }
+            }
+            return filteredPlatforms.size();
         }
     }
 
