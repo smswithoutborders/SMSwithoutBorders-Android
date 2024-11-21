@@ -238,6 +238,12 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                                         submitPassword(it)
                                     }
                                 }
+                            } else {
+                                vault.refreshStoredTokens(applicationContext)
+                                runOnUiThread {
+                                    setResult(Activity.RESULT_OK)
+                                    finish()
+                                }
                             }
                         }
                     }
