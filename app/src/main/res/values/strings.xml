@@ -287,5 +287,6 @@
     <string name="aliases_configured_successfully">Aliases configured successfully!</string>
     <string name="default_relaysms_twilio" translatable="false">+15024439537</string>
     <string name="default_relaysms_twilio_2" translatable="false">SWOB ONLINE</string>
+    <string name="invalid_password_message">Your password is invalid. Try again.</string>
 
 </resources>

@@ -304,6 +304,23 @@ class OTPVerificationActivity : AppCompactActivityCustomized() {
                         }
                     }
                 }
+            } catch (e: StatusRuntimeException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    val errorMessage = if (e.message.toString().contains("password", ignoreCase = true)   ||
+                        e.message.toString().contains("invalid", ignoreCase = true)
+                    ) {
+                        getString(R.string.invalid_password_message)
+                    } else {
+                        e.status.description.toString()
+                    }
+                    AlertDialog.Builder(this@OTPVerificationActivity)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(errorMessage)
+                        .setPositiveButton(getString(R.string.ok_button_text), null)
+                        .show()
+                    Toast.makeText(applicationContext, errorMessage, Toast.LENGTH_SHORT).show()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 runOnUiThread {

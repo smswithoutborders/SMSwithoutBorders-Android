@@ -203,5 +203,6 @@
     <string name="only_emailing_is_supported_with_aliasing_at_this_time">در حال حاضر فقط ارسال ایمیل با نام مستعار پشتیبانی می‌شود.</string>
     <string name="compose_new_message">نوشتن پیام جدید</string>
     <string name="aliases_configured_successfully">نام‌های مستعار با موفقیت پیکربندی شدند!</string>
+    <string name="invalid_password_message">رمز عبور شما نامعتبر است. دوباره امتحان کنید.</string>
 
 </resources>

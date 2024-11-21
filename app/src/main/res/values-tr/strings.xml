@@ -255,5 +255,6 @@
     <string name="only_emailing_is_supported_with_aliasing_at_this_time">Şu anda yalnızca e-posta gönderme, Takma Adlandırma ile desteklenmektedir.</string>
     <string name="compose_new_message">Yeni mesaj oluştur</string>
     <string name="aliases_configured_successfully">Takma adlar başarıyla yapılandırıldı!</string>
+    <string name="invalid_password_message">Şifreniz geçersiz. Tekrar deneyin.</string>
 
 </resources>
