@@ -64,6 +64,9 @@ class AvailablePlatformsModalFragment(val type: Type):
         when(type) {
             Type.SAVED, Type.REVOKE -> {
                 view.findViewById<View>(R.id.store_platform_unsaved_layout).visibility = View.GONE
+                if (type == Type.REVOKE) {
+                    view.findViewById<MaterialButton>(R.id.homepage_bridges_auth_btn).visibility = View.GONE
+                }
 
                 savedPlatformsRecyclerView = view.findViewById(
                     R.id.store_platforms_saved_recycler_view)
