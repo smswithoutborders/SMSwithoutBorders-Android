@@ -2,11 +2,14 @@ package com.example.sw0b_001.Homepage
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,23 +20,36 @@ import com.example.sw0b_001.EmailViewActivity
 import com.example.sw0b_001.MessageViewActivity
 import com.example.sw0b_001.Modals.AvailablePlatformsModalFragment
 import com.example.sw0b_001.Modals.BridgesAuthRequestModalFragment
+import com.example.sw0b_001.Modals.LoginModalFragment
 import com.example.sw0b_001.Modals.PlatformComposers.EmailComposeModalFragment
 import com.example.sw0b_001.Models.Bridges
 import com.example.sw0b_001.Models.GatewayClients.GatewayClient
 import com.example.sw0b_001.Models.Messages.MessagesRecyclerAdapter
 import com.example.sw0b_001.Models.Messages.MessagesViewModel
 import com.example.sw0b_001.Models.Platforms.Platforms
+import com.example.sw0b_001.Models.Vaults
 import com.example.sw0b_001.R
 import com.example.sw0b_001.TextViewActivity
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.text.isNotBlank
 
 class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
 
     private lateinit var messagesRecyclerView : RecyclerView
     private lateinit var recentRecyclerAdapter: MessagesRecyclerAdapter
+
+    private val loginSuccessRunnable = Runnable {
+        if (isAdded) {
+            activity?.supportFragmentManager?.commit {
+                replace(R.id.homepage_fragment_container, HomepageLoggedIn(), "homepage_fragment")
+            }
+        } else {
+            Log.d("HomepageLoggedIn", "Fragment not attached")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +70,20 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
 
         view.findViewById<MaterialButton>(R.id.homepage_compose_new_btn)
             .setOnClickListener { v ->
-                showPlatformsModal(AvailablePlatformsModalFragment.Type.SAVED)
+                if (Vaults.fetchLongLivedToken(requireContext()).isNotBlank()) {
+                    showPlatformsModal(AvailablePlatformsModalFragment.Type.SAVED)
+                } else {
+                    showLoginModal()
+                }
             }
 
         view.findViewById<MaterialButton>(R.id.homepage_add_new_btn)
             .setOnClickListener { v ->
-                showPlatformsModal(AvailablePlatformsModalFragment.Type.AVAILABLE)
+                if (Vaults.fetchLongLivedToken(requireContext()).isNotBlank()) {
+                    showPlatformsModal(AvailablePlatformsModalFragment.Type.AVAILABLE)
+                } else {
+                    showLoginModal()
+                }
             }
 
     }
@@ -206,6 +230,14 @@ class HomepageLoggedIn : Fragment(R.layout.fragment_homepage_logged_in) {
         fragmentTransaction?.add(platformsModalFragment, "store_platforms_tag")
         fragmentTransaction?.show(platformsModalFragment)
         activity?.runOnUiThread { fragmentTransaction?.commit() }
+    }
+
+    private fun showLoginModal() {
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        val loginModalFragment = LoginModalFragment(loginSuccessRunnable)
+        fragmentTransaction?.add(loginModalFragment, "login_signup_login_vault_tag")
+        fragmentTransaction?.show(loginModalFragment)
+        fragmentTransaction?.commit()
     }
 
 }
