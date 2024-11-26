@@ -203,5 +203,6 @@
     <string name="only_emailing_is_supported_with_aliasing_at_this_time">Solo se admite el envío de correos electrónicos con alias en este momento.</string>
     <string name="compose_new_message">Redactar nuevo mensaje</string>
     <string name="aliases_configured_successfully">¡Alias configurados correctamente!</string>
+    <string name="invalid_password_message">Su contraseña es inválida. Inténtelo de nuevo.</string>
 
 </resources>
