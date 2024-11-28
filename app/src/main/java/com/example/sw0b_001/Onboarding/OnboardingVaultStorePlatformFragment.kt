@@ -30,7 +30,7 @@ class OnboardingVaultStorePlatformFragment:
 
         view.findViewById<MaterialButton>(R.id.onboarding_welcome_vaults_store_description_try_example_btn)
             .setOnClickListener {
-                if (Vaults.fetchLongLivedToken(activity as Context).isNotBlank()) {
+                if (Vaults.fetchLongLivedToken(requireContext()).isNotBlank()) {
                     showPlatformsModal()
                 } else {
                     val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
@@ -39,7 +39,6 @@ class OnboardingVaultStorePlatformFragment:
                     fragmentTransaction?.show(loginModalFragment)
                     fragmentTransaction?.commit()
                 }
-
             }
     }
 
