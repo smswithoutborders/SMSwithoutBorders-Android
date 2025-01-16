@@ -13,7 +13,7 @@ def versionProperties = new Properties()
 versionProperties.load(new FileInputStream(versionsPropertiesFile))
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     buildFeatures {
         viewBinding true
