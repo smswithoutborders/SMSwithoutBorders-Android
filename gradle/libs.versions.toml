@@ -9,6 +9,7 @@ baselibrary = "3.2.0-alpha11"
 biometric = "1.1.0"
 ccp = "2.7.0"
 circleimageview = "3.1.0"
+composeBom = "2025.01.00"
 constraintlayout = "2.2.0"
 dots = "1.0.1"
 espressoCore = "3.6.1"
@@ -24,9 +25,11 @@ kotlinxCoroutinesTest = "1.9.0"
 kotlinxSerializationJson = "1.6.3"
 legacySupportV4 = "1.0.0"
 lifecycleExtensions = "2.2.0"
+lifecycleViewmodelCompose = "2.8.7"
 lifecycleViewmodelKtx = "2.8.7"
 material = "1.12.0"
 materialVersion = "1.7.6"
+navigationCompose = "2.8.5"
 okhttp = "2.7.5"
 playServicesAuth = "21.3.0"
 playServicesAuthApiPhone = "18.1.0"
@@ -41,25 +44,42 @@ workRuntime = "2.10.0"
 
 [libraries]
 androidx-activity = { module = "androidx.activity:activity", version.ref = "activity" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
+androidx-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-baselibrary = { module = "androidx.databinding:baseLibrary", version.ref = "baselibrary" }
 androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-compose-material-material = { module = "androidx.compose.material:material" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 androidx-legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycleExtensions" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
+androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
+androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-preference = { module = "androidx.preference:preference", version.ref = "preferenceKtx" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata" }
+androidx-runtime-rxjava2 = { module = "androidx.compose.runtime:runtime-rxjava2" }
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 armadillo = { module = "at.favre.lib:armadillo", version.ref = "armadillo" }
