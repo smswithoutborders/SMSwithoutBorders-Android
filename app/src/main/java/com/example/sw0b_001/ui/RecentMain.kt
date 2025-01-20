@@ -1,5 +1,8 @@
 package com.example.sw0b_001.ui.theme
 
+import android.content.Context
+import android.content.ContextWrapper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -15,7 +18,8 @@ fun RecentMain(
     messagesViewModel: MessagesViewModel = MessagesViewModel()
 ) {
     val context = LocalContext.current
+
     val items: List<EncryptedContent> by messagesViewModel
         .getMessages(context).observeAsState(emptyList())
-}
 
+}
