@@ -260,7 +260,6 @@ val Orange800 = Color(0xFF5C2C00)
 val Orange900 = Color(0xFF2E1600)
 val Orange950 = Color(0xFF190C00)
 
-
 // Teal (Accent Primary)
 val Teal25 = Color(0xFFF6FEFC)
 val Teal50 = Color(0xFFF0FDF9)

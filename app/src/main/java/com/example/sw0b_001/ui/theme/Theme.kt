@@ -15,6 +15,82 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import com.example.ui.theme.AppTypography
 
+private val LightColorScheme = lightColorScheme(
+    primary = Indigo700,
+    onPrimary = Color.White,
+    primaryContainer = Indigo100,
+    onPrimaryContainer = Indigo900,
+    secondary = Orange300,
+    onSecondary = Color.White,
+    secondaryContainer = Orange100,
+    onSecondaryContainer = Orange900,
+    tertiary = Teal500,
+    onTertiary = Color.White,
+    tertiaryContainer = Teal100,
+    onTertiaryContainer = Teal900,
+    error = errorLight,
+    onError = onErrorLight,
+    errorContainer = errorContainerLight,
+    onErrorContainer = onErrorContainerLight,
+    background = Indigo25,
+    onBackground = Indigo900,
+    surface = Indigo25,
+    onSurface = Indigo900,
+    surfaceVariant = Gray200,
+    onSurfaceVariant = Gray800,
+    outline = Gray500,
+    outlineVariant = Gray500,
+    scrim = scrimLight,
+    inverseSurface = inverseSurfaceLight,
+    inverseOnSurface = inverseOnSurfaceLight,
+    inversePrimary = inversePrimaryLight,
+    surfaceDim = surfaceDimLight,
+    surfaceBright = surfaceBrightLight,
+    surfaceContainerLowest = surfaceContainerLowestLight,
+    surfaceContainerLow = surfaceContainerLowLight,
+    surfaceContainer = surfaceContainerLight,
+    surfaceContainerHigh = surfaceContainerHighLight,
+    surfaceContainerHighest = surfaceContainerHighestLight
+)
+
+private val DarkColorScheme = darkColorScheme(
+    primary = Indigo700,
+    onPrimary = Color.White,
+    primaryContainer = Indigo800,
+    onPrimaryContainer = Indigo100,
+    secondary = Orange300,
+    onSecondary = Color.Black,
+    secondaryContainer = Orange800,
+    onSecondaryContainer = Orange100,
+    tertiary = Teal500,
+    onTertiary = Color.Black,
+    tertiaryContainer = Teal800,
+    onTertiaryContainer = Teal100,
+    error = errorDark,
+    onError = onErrorDark,
+    errorContainer = errorContainerDark,
+    onErrorContainer = onErrorContainerDark,
+    background = Indigo900,
+    onBackground = Indigo100,
+    surface = Indigo900,
+    onSurface = Indigo100,
+    surfaceVariant = Gray800,
+    onSurfaceVariant = Gray300,
+    outline = Gray600,
+    outlineVariant = Gray600,
+    scrim = scrimDark,
+    inverseSurface = inverseSurfaceDark,
+    inverseOnSurface = inverseOnSurfaceDark,
+    inversePrimary = inversePrimaryDark,
+    surfaceDim = surfaceDimDark,
+    surfaceBright = surfaceBrightDark,
+    surfaceContainerLowest = surfaceContainerLowestDark,
+    surfaceContainerLow = surfaceContainerLowDark,
+    surfaceContainer = surfaceContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark,
+    surfaceContainerHighest = surfaceContainerHighestDark
+)
+
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
@@ -268,8 +344,8 @@ fun AppTheme(
           if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
       }
       
-      darkTheme -> darkScheme
-      else -> lightScheme
+      darkTheme -> DarkColorScheme
+      else -> LightColorScheme
   }
 
   MaterialTheme(
