@@ -7,15 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.viewModels
-import com.example.compose.AppTheme
+import com.example.sw0b_001.ui.theme.AppTheme
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sw0b_001.Models.Messages.MessagesViewModel
 import kotlinx.serialization.Serializable
-import kotlin.getValue
 
 @Serializable
 object RecentScreen
