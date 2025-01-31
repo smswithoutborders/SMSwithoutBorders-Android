@@ -13,6 +13,7 @@ ccp = "2.7.0"
 circleimageview = "3.1.0"
 composeBom = "2025.01.00"
 constraintlayout = "2.2.0"
+countryPicker = "2.1.0"
 dots = "1.0.1"
 espressoCore = "3.6.1"
 fernetJava8 = "1.4.2"
@@ -95,6 +96,7 @@ appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 armadillo = { module = "at.favre.lib:armadillo", version.ref = "armadillo" }
 ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+country-picker = { module = "com.github.arpitkatiyar1999:Country-Picker", version.ref = "countryPicker" }
 dots = { module = "com.github.tizisdeepan:dots", version.ref = "dots" }
 fernet-java8 = { module = "com.macasaet.fernet:fernet-java8", version.ref = "fernetJava8" }
 fuel = { module = "com.github.kittinunf.fuel:fuel", version.ref = "fuelVersion" }

@@ -263,5 +263,8 @@ dependencies {
     implementation libs.androidx.adaptive.navigation
 
     androidTestImplementation libs.ui.test.junit4
+
+    implementation(libs.country.picker)
+
 }
 

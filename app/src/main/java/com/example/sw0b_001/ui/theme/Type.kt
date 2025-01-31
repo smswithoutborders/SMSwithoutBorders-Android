@@ -58,7 +58,7 @@ val RelayTypography = Typography(
     bodySmall = TextStyle(
         fontFamily = MonaSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 12.sp
     ),
     labelLarge = TextStyle(
         fontFamily = MonaSans,
