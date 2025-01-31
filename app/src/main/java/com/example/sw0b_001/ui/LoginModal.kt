@@ -154,7 +154,7 @@ fun LoginContent(onClose: () -> Unit) {
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
+                shape = RoundedCornerShape(12.dp),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {
@@ -186,7 +186,7 @@ fun LoginContent(onClose: () -> Unit) {
                 modifier = Modifier.width(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                Text("Sign Up")
+                Text("Log In")
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -263,7 +263,7 @@ fun LoginContent(onClose: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun LoginContentPreview() {
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         LoginContent (onClose = {})
     }
 }
