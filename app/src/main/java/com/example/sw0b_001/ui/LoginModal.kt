@@ -54,10 +54,9 @@ import com.arpitkatiyarprojects.countrypicker.models.CountryDetails
 import com.example.sw0b_001.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
+fun LoginModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
@@ -67,7 +66,7 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
             sheetState = sheetState,
             containerColor = MaterialTheme.colorScheme.surface,
         ) {
-            CreateAccountContent(
+            LoginContent(
                 onClose = {
                     scope.launch { sheetState.hide() }.invokeOnCompletion {
                         if (!sheetState.isVisible) onDismiss()
@@ -79,13 +78,11 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
 }
 
 @Composable
-fun CreateAccountContent(onClose: () -> Unit) {
+fun LoginContent(onClose: () -> Unit) {
     var selectedCountry by remember { mutableStateOf<CountryDetails?>(null) }
     var phoneNumber by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var reenterPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-    var reenterPasswordVisible by remember { mutableStateOf (false) }
 
     Column(
         modifier = Modifier
@@ -101,7 +98,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Create RelaySMS Account",
+                text = "Log Into RelaySMS",
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.primary,
@@ -111,7 +108,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
 
             Text(
                 text = buildAnnotatedString {
-                    append("Create your account and ")
+                    append("Log into your account and ")
                     pushStringAnnotation(tag = "save_platforms", annotation = "save_platforms")
                     withStyle(
                         style = SpanStyle(
@@ -180,111 +177,93 @@ fun CreateAccountContent(onClose: () -> Unit) {
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = reenterPassword,
-                onValueChange = { reenterPassword = it },
-                label = { Text("Re-enter Password") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                visualTransformation = if (reenterPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    val image = if (reenterPasswordVisible)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
-
-                    val description = if (reenterPasswordVisible) "Hide password" else "Show password"
-
-                    IconButton(onClick = { reenterPasswordVisible = !reenterPasswordVisible }) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedBorderColor = MaterialTheme.colorScheme.outline,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                )
-            )
-        }
 
 
-        Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Button(onClick = { /* Sign Up Logic */ }, modifier = Modifier.width(300.dp)) {
-            Text("Sign Up")
-        }
+            Button(
+                onClick = { /* Sign Up Logic */ },
+                modifier = Modifier.width(300.dp)
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Text("Sign Up")
+            }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = false,
-                onCheckedChange = {}
-            )
-            Text(
-                text = buildAnnotatedString {
-                    append("I have read the  ")
-                    pushStringAnnotation(tag = "privacy_policy", annotation = "privacy_policy")
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.tertiary,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    ) {
-                        append("privacy policy")
-                    }
-                },
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(top = 0.dp)
-                    .clickable {
-                        // Handle click on "privacy policy"
-                    },
-                color = MaterialTheme.colorScheme.onBackground
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = buildAnnotatedString {
-                append("Already have an account?  ")
-                pushStringAnnotation(tag = "login", annotation = "login")
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.tertiary,
-                        textDecoration = TextDecoration.Underline
-                    )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    append("Log in")
+                    Checkbox(
+                        checked = false,
+                        onCheckedChange = {}
+                    )
+                    Text(
+                        text = buildAnnotatedString {
+                            append("I have read the  ")
+                            pushStringAnnotation(tag = "privacy_policy", annotation = "privacy_policy")
+                            withStyle(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    textDecoration = TextDecoration.Underline
+                                )
+                            ) {
+                                append("privacy policy")
+                            }
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 0.dp)
+                            .clickable {
+                                // Handle click on "privacy policy"
+                            },
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
                 }
-            },
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 0.dp)
-                .clickable {
-                    // Go to login modal"
-                },
-            color = MaterialTheme.colorScheme.onBackground
-        )
 
-        Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
+                Text(
+                    text = buildAnnotatedString {
+                        append("Do not have an account?  ")
+                        pushStringAnnotation(tag = "signup", annotation = "signup")
+                        withStyle(
+                            style = SpanStyle(
+                                color = MaterialTheme.colorScheme.tertiary,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ) {
+                            append("Sign up")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 0.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .clickable {
+                            // Go to login modal"
+                        },
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+        }
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun CreateAccountContentPreview() {
-    AppTheme(darkTheme = false) {
-        CreateAccountContent(onClose = {})
+fun LoginContentPreview() {
+    AppTheme(darkTheme = true) {
+        LoginContent (onClose = {})
     }
 }
