@@ -99,7 +99,7 @@ fun LoginContent(onClose: () -> Unit) {
         ) {
             Text(
                 text = "Log Into RelaySMS",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.primary,
             )

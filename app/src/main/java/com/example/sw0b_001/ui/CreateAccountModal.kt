@@ -102,7 +102,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
         ) {
             Text(
                 text = "Create RelaySMS Account",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.primary,
             )
