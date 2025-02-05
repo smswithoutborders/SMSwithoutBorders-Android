@@ -228,7 +228,7 @@ fun HomepageNotLoggedIn () {
 @Preview(showBackground = true)
 @Composable
 fun HomePagePreview() {
-    AppTheme (darkTheme = false) {
+    AppTheme (darkTheme = true) {
         HomepageNotLoggedIn()
     }
 }
