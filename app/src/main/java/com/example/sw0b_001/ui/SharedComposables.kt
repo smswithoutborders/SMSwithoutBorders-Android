@@ -2,7 +2,9 @@ package com.example.sw0b_001.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -10,9 +12,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,7 +43,8 @@ fun RelayAppBar(
             Text(
                 text = screenName,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.headlineMedium
             )
         },
         navigationIcon = {
@@ -91,11 +95,61 @@ fun RelayAppBar(
     )
 }
 
+@Composable
+fun RelayBottomNavBar(
+    currentScreen: String,
+    onRecentsClicked: () -> Unit,
+    onCountriesClicked: () -> Unit
+) {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primary,
+    ) {
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.Home, contentDescription = "Recents") },
+            label = { Text("Recents") },
+            selected = currentScreen == "Recents",
+            onClick = onRecentsClicked,
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                unselectedIconColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                unselectedTextColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                indicatorColor = MaterialTheme.colorScheme.primary
+            )
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.Public, contentDescription = "Countries") },
+            label = { Text("Countries") },
+            selected = currentScreen == "Countries",
+            onClick = onCountriesClicked,
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                unselectedIconColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                unselectedTextColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                indicatorColor = MaterialTheme.colorScheme.primary
+            )
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
 fun RelayAppBarPreview() {
-    AppTheme {
+    AppTheme(darkTheme = false) {
         RelayAppBar(screenName = "Relay Screen", onBack = {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RelayBottomNavBarPreview() {
+    AppTheme(darkTheme = false) {
+        RelayBottomNavBar(
+            currentScreen = "Recents",
+            onRecentsClicked = {},
+            onCountriesClicked = {}
+        )
     }
 }
