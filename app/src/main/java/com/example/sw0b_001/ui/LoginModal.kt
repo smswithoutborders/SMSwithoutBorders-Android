@@ -144,7 +144,7 @@ fun LoginContent(onClose: () -> Unit) {
                 defaultCountryCode = "us",
                 countryListDisplayType = CountryListDisplayType.Dialog,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Phone Number") }
+                label = { Text(text = "Phone Number", style = MaterialTheme.typography.bodySmall) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -152,7 +152,7 @@ fun LoginContent(onClose: () -> Unit) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text(text = "Password", style = MaterialTheme.typography.bodySmall) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -183,7 +183,7 @@ fun LoginContent(onClose: () -> Unit) {
 
             Button(
                 onClick = { /* Sign Up Logic */ },
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier.fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text("Log In")

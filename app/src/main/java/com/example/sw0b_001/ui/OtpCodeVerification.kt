@@ -68,7 +68,7 @@ fun OtpCodeVerification(
 
         Text(
             text = "Please enter the 6-digit code we sent to you via SMS",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -111,7 +111,7 @@ fun OtpCodeVerification(
 
         Text(
             text = "Time left until code expires: 60s",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface
         )

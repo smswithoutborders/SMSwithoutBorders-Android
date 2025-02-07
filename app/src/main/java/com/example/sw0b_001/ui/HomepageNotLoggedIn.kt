@@ -54,7 +54,7 @@ fun HomepageNotLoggedIn () {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .padding(top = 45.dp, start = 8.dp, end = 8.dp),
+                    .padding(top = 35.dp, start = 8.dp, end = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -93,12 +93,12 @@ fun HomepageNotLoggedIn () {
                 ) {
                     Text(
                         text = "Send message with Alias",
-                        color = MaterialTheme.colorScheme.primary,
+//                        color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
                         onClick = { /* TODO: Navigate to SMS compose */ },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer),
                         modifier = Modifier.fillMaxWidth(),
 //                    shape = MaterialTheme.shapes.medium
                     ) {
@@ -106,12 +106,12 @@ fun HomepageNotLoggedIn () {
                             imageVector = Icons.Filled.Create,
                             contentDescription = "Compose",
                             modifier = Modifier.size(ButtonDefaults.IconSize),
-                            tint = MaterialTheme.colorScheme.onSecondary
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                         Text("Compose Message",
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            style = MaterialTheme.typography.bodyMedium)
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            style = MaterialTheme.typography.bodySmall)
                     }
                     Text(text = buildAnnotatedString {
                         withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onBackground)) {
@@ -145,31 +145,32 @@ fun HomepageNotLoggedIn () {
                     verticalArrangement = Arrangement.SpaceEvenly,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(200.dp)
-                        .padding(start = 0.dp, end = 0.dp, bottom = 18.dp)
+                        .height(250.dp)
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 50.dp)
                 ) {
                     Text(
                         text = "Login with Internet",
                         style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.primary)
+//                        color = MaterialTheme.colorScheme.primary
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Button(
                             onClick = { /* TODO: Navigate to Login */ },
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                             shape = MaterialTheme.shapes.medium
                         ) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.Login,
                                 contentDescription = "Log In",
                                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                                tint = MaterialTheme.colorScheme.onSecondary
+                                tint = MaterialTheme.colorScheme.onPrimary
                             )
                             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                            Text("Log In", color = MaterialTheme.colorScheme.onSecondary)
+                            Text("Log In", color = MaterialTheme.colorScheme.onPrimary)
                         }
                         Button(
                             onClick = { /* TODO: Navigate to Create Account */ },
@@ -193,6 +194,8 @@ fun HomepageNotLoggedIn () {
                         color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center)
                 }
+
+                Spacer(modifier = Modifier.weight(1f))
 
                 TextButton(
                     modifier = Modifier.fillMaxWidth()

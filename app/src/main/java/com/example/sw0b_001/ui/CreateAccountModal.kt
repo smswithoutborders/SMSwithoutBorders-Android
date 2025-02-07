@@ -147,7 +147,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
                 defaultCountryCode = "us",
                 countryListDisplayType = CountryListDisplayType.Dialog,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Phone Number") }
+                label = { Text(text = "Phone Number", style = MaterialTheme.typography.bodySmall) }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -155,7 +155,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
+                label = { Text(text = "Password", style = MaterialTheme.typography.bodySmall) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -183,7 +183,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
             OutlinedTextField(
                 value = reenterPassword,
                 onValueChange = { reenterPassword = it },
-                label = { Text("Re-enter Password") },
+                label = { Text(text = "Re-enter Password", style = MaterialTheme.typography.bodySmall) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 visualTransformation = if (reenterPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -207,14 +207,16 @@ fun CreateAccountContent(onClose: () -> Unit) {
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                 )
             )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(onClick = { /* Sign Up Logic */ },
+                modifier = Modifier.fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)) {
+                Text("Sign Up")
+            }
         }
 
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(onClick = { /* Sign Up Logic */ }, modifier = Modifier.width(300.dp)) {
-            Text("Sign Up")
-        }
 
         Spacer(modifier = Modifier.height(8.dp))
 

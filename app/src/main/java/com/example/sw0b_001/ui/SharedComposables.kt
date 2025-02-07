@@ -30,6 +30,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,10 +54,14 @@ fun RelayAppBar(
     var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val isDarkTheme = isSystemInDarkTheme()
-    val logo = if (isDarkTheme) {
-        R.drawable.relaysms_blue
-    } else {
-        R.drawable.relaysms_dark_theme_shape
+    val logo by remember {
+        mutableIntStateOf(
+            if (isDarkTheme) {
+                R.drawable.relaysms_dark_theme
+            } else {
+                R.drawable.relaysms_default_shape_
+            }
+        )
     }
     CenterAlignedTopAppBar(
         title = {
@@ -104,24 +109,24 @@ fun RelayAppBar(
                 DropdownMenuItem(
                     text = { Text("Settings") },
                     onClick = {
-                        onMenuClicked()
-                        showMenu = false
+                        TODO("Show settings page")
+//                        showMenu = false
                     }
                 )
                 DropdownMenuItem(
                     text = { Text("About") },
                     onClick = {
-                        onMenuClicked()
-                        showMenu = false
+                        TODO("Show about page")
+//                        showMenu = false
                     }
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
-            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+//            containerColor = MaterialTheme.colorScheme.primary,
+//            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+//            navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+//            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
         ),
         scrollBehavior = scrollBehavior,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -135,7 +140,7 @@ fun RelayBottomNavBar(
     onCountriesClicked: () -> Unit
 ) {
     NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primary,
+//        containerColor = MaterialTheme.colorScheme.primary,
     ) {
         NavigationBarItem(
             icon = { Icon(
@@ -152,11 +157,11 @@ fun RelayBottomNavBar(
             selected = currentScreen == "Recents",
             onClick = onRecentsClicked,
             colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-                unselectedIconColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                unselectedTextColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                indicatorColor = MaterialTheme.colorScheme.primary
+                selectedIconColor = MaterialTheme.colorScheme.onSurface,
+                selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                indicatorColor = MaterialTheme.colorScheme.primaryContainer
             )
         )
         NavigationBarItem(
@@ -172,11 +177,11 @@ fun RelayBottomNavBar(
             selected = currentScreen == "Countries",
             onClick = onCountriesClicked,
             colors = NavigationBarItemDefaults.colors(
-                selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-                unselectedIconColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                unselectedTextColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                indicatorColor = MaterialTheme.colorScheme.primary
+                selectedIconColor = MaterialTheme.colorScheme.onSurface,
+                selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                indicatorColor = MaterialTheme.colorScheme.primaryContainer
             )
         )
     }
@@ -186,7 +191,7 @@ fun RelayBottomNavBar(
 @Preview(showBackground = true)
 @Composable
 fun RelayAppBarPreview() {
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         RelayAppBar(screenName = "Relay Screen", onBack = {})
     }
 }
