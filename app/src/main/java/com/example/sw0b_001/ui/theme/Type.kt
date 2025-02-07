@@ -36,23 +36,23 @@ val RelayTypography = Typography(
         fontSize = 36.sp
     ),
     displayMedium = TextStyle(
-        fontFamily = MonaSans,
+        fontFamily = Unbounded,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 24.sp
     ),
     displaySmall = TextStyle(
-        fontFamily = MonaSans,
+        fontFamily = Unbounded,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
     bodyLarge = TextStyle(
         fontFamily = MonaSans,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = MonaSans,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
     ),
     bodySmall = TextStyle(
@@ -68,12 +68,12 @@ val RelayTypography = Typography(
     labelMedium = TextStyle(
         fontFamily = MonaSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 12.sp
     ),
     labelSmall = TextStyle(
         fontFamily = MonaSans,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 10.sp
     ),
     titleLarge = TextStyle(
         fontFamily = MonaSans,

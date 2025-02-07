@@ -302,7 +302,7 @@ fun GatewayClientScreenPreview() {
 @Composable
 fun GatewayClientOptionsPreview() {
     val sampleGatewayClient = GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401")
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         GatewayClientOptionsContent (
             gatewayClient = sampleGatewayClient,
             onMakeDefaultClicked = {},

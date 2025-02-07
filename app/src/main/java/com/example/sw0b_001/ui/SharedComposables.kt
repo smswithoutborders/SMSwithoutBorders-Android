@@ -1,6 +1,16 @@
 package com.example.sw0b_001.ui
 
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -16,16 +26,20 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,23 +52,42 @@ fun RelayAppBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    val isDarkTheme = isSystemInDarkTheme()
+    val logo = if (isDarkTheme) {
+        R.drawable.relaysms_blue
+    } else {
+        R.drawable.relaysms_dark_theme_shape
+    }
     CenterAlignedTopAppBar(
         title = {
-            Text(
-                text = screenName,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.headlineMedium
+
+            Image(
+                painter = painterResource(id = logo),
+                contentDescription = "Relay Logo",
+                modifier = Modifier.size(120.dp)
             )
         },
         navigationIcon = {
-            if (!isRecentsScreen) {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Localized description"
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                if (!isRecentsScreen) {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                } else {
+                    Text(
+                        text = screenName,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = 8.dp)
                     )
+
                 }
+
             }
         },
         actions = {
@@ -105,8 +138,17 @@ fun RelayBottomNavBar(
         containerColor = MaterialTheme.colorScheme.primary,
     ) {
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Home, contentDescription = "Recents") },
-            label = { Text("Recents") },
+            icon = { Icon(
+                Icons.Filled.Home,
+                contentDescription = "Recents",
+                modifier = Modifier.size(20.dp)
+            ) },
+            label = {
+                Text(
+                    text = "Recents",
+                    style = MaterialTheme.typography.labelSmall
+                )
+                    },
             selected = currentScreen == "Recents",
             onClick = onRecentsClicked,
             colors = NavigationBarItemDefaults.colors(
@@ -118,8 +160,15 @@ fun RelayBottomNavBar(
             )
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Filled.Public, contentDescription = "Countries") },
-            label = { Text("Countries") },
+            icon = { Icon(
+                Icons.Filled.Public,
+                contentDescription = "Countries",
+                modifier = Modifier.size(20.dp)
+            ) },
+            label = { Text(
+                text = "Countries",
+                style = MaterialTheme.typography.labelSmall
+            ) },
             selected = currentScreen == "Countries",
             onClick = onCountriesClicked,
             colors = NavigationBarItemDefaults.colors(
@@ -137,7 +186,7 @@ fun RelayBottomNavBar(
 @Preview(showBackground = true)
 @Composable
 fun RelayAppBarPreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         RelayAppBar(screenName = "Relay Screen", onBack = {})
     }
 }
