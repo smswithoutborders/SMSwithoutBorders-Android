@@ -293,7 +293,7 @@ fun GatewayClientScreenPreview() {
         GatewayClient("+2349098765432", "Airtel Nigeria", "Nigeria", "62102"),
         GatewayClient("+237655443322", "Nexttel Cameroon", "Cameroon", "62403")
     )
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         GatewayClientScreen(gatewayClients = sampleGatewayClients)
     }
 }

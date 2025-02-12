@@ -75,7 +75,7 @@ fun NewMessageContent(onClose: () -> Unit) {
                 disabledContentColor = MaterialTheme.colorScheme.onSurface
             )
         ) {
-            Text(text = "New Message With Phonenumber Alias")
+            Text(text = "New Message With Your RelaySMS Account")
         }
 
         Text(
@@ -97,7 +97,7 @@ fun NewMessageContent(onClose: () -> Unit) {
                 disabledContentColor = MaterialTheme.colorScheme.onSurface
             )
         ) {
-            Text(text = "New Message with RelaySMS Account")
+            Text(text = "New Message with Online Platforms")
         }
 
         Text(
