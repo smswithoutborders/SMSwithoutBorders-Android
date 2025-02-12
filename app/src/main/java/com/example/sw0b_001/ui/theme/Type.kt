@@ -86,7 +86,7 @@ val RelayTypography = Typography(
         fontSize = 20.sp
     ),
     titleSmall = TextStyle(
-        fontFamily = Unbounded,
+        fontFamily = MonaSans,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
