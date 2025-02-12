@@ -32,30 +32,26 @@ import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
 
-// Data class for Gmail details
-data class GmailDetails(
-    val subject: String,
-    val senderAvatar: Int,
-    val senderEmail: String,
-    val to: List<String>,
-    val cc: List<String>,
-    val bcc: List<String>,
+// Data class for Telegram details
+data class TelegramDetails(
+    val senderAvatar: Int, // Resource ID for the avatar
+    val senderUsername: String,
+    val recipientNumber: String,
     val date: String,
     val fullText: String
 )
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GmailDetailsScreen(
-    gmailDetails: GmailDetails,
+fun TelegramDetailsScreen(
+    telegramDetails: TelegramDetails,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Gmail Details", onBack = onBack)
+            RelayAppBar(screenName = "Telegram Details", onBack = onBack)
         }
     ) { innerPadding ->
         Column(
@@ -64,19 +60,10 @@ fun GmailDetailsScreen(
                 .padding(innerPadding)
                 .padding(16.dp)
         ) {
-            // Subject
-            Text(
-                text = gmailDetails.subject,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // Sender Avatar
                 Image(
-                    painter = painterResource(id = gmailDetails.senderAvatar),
+                    painter = painterResource(id = telegramDetails.senderAvatar),
                     contentDescription = "Sender Avatar",
                     modifier = Modifier
                         .size(48.dp)
@@ -84,28 +71,35 @@ fun GmailDetailsScreen(
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    // Sender Email
+                    // Sender Username/number
                     Text(
-                        text = gmailDetails.senderEmail,
+                        text = telegramDetails.senderUsername,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    // Recipient Number
+                    Text(
+                        text = "To: ${telegramDetails.recipientNumber}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     // Date
                     Text(
-                        text = gmailDetails.date,
+                        text = telegramDetails.date,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = { TODO("Implement edit functionality") }) {
+                IconButton(onClick = onEditClicked) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
                         contentDescription = "Edit",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
-                IconButton(onClick = { TODO("Implement delete functionality") }) {
+                IconButton(onClick = onDeleteClicked) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
@@ -117,23 +111,9 @@ fun GmailDetailsScreen(
             HorizontalDivider(color = MaterialTheme.colorScheme.outline)
             Spacer(modifier = Modifier.height(16.dp))
 
-// To, CC, BCC
-            if (gmailDetails.to.isNotEmpty()) {
-                EmailDetailsRow(label = "To", emails = gmailDetails.to)
-            }
-            if (gmailDetails.cc.isNotEmpty()) {
-                EmailDetailsRow(label = "Cc", emails = gmailDetails.cc)
-            }
-            if (gmailDetails.bcc.isNotEmpty()) {
-                EmailDetailsRow(label = "Bcc", emails = gmailDetails.bcc)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(color = MaterialTheme.colorScheme.outline)
-            Spacer(modifier = Modifier.height(16.dp))
-
             // Full Text
             Text(
-                text = gmailDetails.fullText,
+                text = telegramDetails.fullText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -141,39 +121,17 @@ fun GmailDetailsScreen(
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun EmailDetailsRow(label: String, emails: List<String>) {
-    Column(modifier = Modifier.padding(bottom = 8.dp)) {
-        Text(
-            text = "$label:",
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        emails.forEach { email ->
-            Text(
-                text = email,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onBackground
-            )
-        }
-    }
-}
-
-@Composable
-@Preview
-fun EmailDetailsPreview() {
+fun TelegramDetailsPreview() {
     AppTheme(darkTheme = false) {
-        GmailDetailsScreen(
-            gmailDetails = GmailDetails(
-                subject = "Meeting Agenda",
-                senderAvatar = R.drawable.gmail,
-                senderEmail = "sender@example.com",
-                to = listOf("recipient1@example.com", "recipient2@example.com"),
-                cc = listOf("cc1@example.com"),
-                bcc = listOf("bcc1@example.com", "bcc2@example.com"),
-                date = "Oct 26, 2023",
-                fullText = "Hi team,\n\nPlease find the agenda for our upcoming meeting.\n\nBest,\nSender"
+        TelegramDetailsScreen(
+            telegramDetails = TelegramDetails(
+                senderAvatar = R.drawable.telegram,
+                senderUsername = "@johndoe",
+                recipientNumber = "+15551234567",
+                date = "Oct 27, 2023",
+                fullText = "Hey there! Just wanted to follow up on our conversation. Let me know if you have any questions."
             ),
             onEditClicked = {},
             onDeleteClicked = {},
