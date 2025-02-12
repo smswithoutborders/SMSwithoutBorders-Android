@@ -42,6 +42,8 @@ import com.example.sw0b_001.ui.theme.AppTheme
 data class RecentMessage(
     val platformLogo: Int,
     val platformName: String,
+    val headingText: String,
+    val subHeadingText: String? = null,
     val messagePreview: String,
     val date: String
 )
@@ -59,48 +61,64 @@ fun RecentsScreen(
         RecentMessage(
             R.drawable.relaysms_icon_blue,
             "RelaySMS",
+            "+15551234567",
+            null,
             "Hey, how are you doing? This is a test message.",
             "Today, 10:30 AM"
         ),
         RecentMessage(
             R.drawable.gmail,
             "Gmail",
-            "New email from John Doe: Project Update",
+            "Project Update",
+            "john.doe@example.com",
+            "Hi team, here's the latest update on the project...",
             "Yesterday, 3:45 PM"
         ),
         RecentMessage(
             R.drawable.telegram,
             "Telegram",
+            "+23456789012",
+            null,
             "New message in group: Team Meeting",
             "2 days ago, 9:00 AM"
         ),
         RecentMessage(
             R.drawable.x_icon,
             "X",
+            "@elonmusk",
+            null,
             "New tweet from Elon Musk: Exciting news!",
             "3 days ago, 11:15 AM"
         ),
         RecentMessage(
             R.drawable.relaysms_icon_blue,
             "RelaySMS",
+            "+15559876543",
+            null,
             "Reminder: Don't forget to submit your report.",
             "4 days ago, 2:00 PM"
         ),
         RecentMessage(
             R.drawable.gmail,
             "Gmail",
-            "New email from Jane Smith: Invoice attached",
+            "Invoice attached",
+            "jane.smith@example.com",
+            "Please find the attached invoice for your review.",
             "5 days ago, 1:30 PM"
         ),
         RecentMessage(
             R.drawable.telegram,
             "Telegram",
+            "+12345678901",
+            null,
             "New message in group: Project Discussion",
             "6 days ago, 10:00 AM"
         ),
         RecentMessage(
             R.drawable.x_icon,
             "X",
+            "@billgates",
+            null,
             "New tweet from Bill Gates: Tech advancements",
             "7 days ago, 4:00 PM"
         ),
@@ -157,7 +175,7 @@ fun RecentMessageCard(message: RecentMessage) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { TODO("Add functionality for recent message card") },
+            .clickable { /* Handle card click */ },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -176,28 +194,47 @@ fun RecentMessageCard(message: RecentMessage) {
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
+                // Heading Text (Subject for Gmail, Phone number for RelaySMS, etc.)
                 Text(
-                    text = message.platformName,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = message.headingText,
+                    style = if (message.platformName == "Gmail") {
+                        MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
+                    } else {
+                        MaterialTheme.typography.bodyLarge
+                    },
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
+                // Subheading Text (Email address for Gmail)
+                if (message.subHeadingText != null) {
+                    Text(
+                        text = message.subHeadingText,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+                // Message Preview
                 Text(
                     text = message.messagePreview,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+            // Date
             Text(
                 text = message.date,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
