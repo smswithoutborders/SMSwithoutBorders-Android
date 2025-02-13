@@ -55,7 +55,7 @@ fun GmailDetailsScreen(
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Gmail Details", onBack = onBack)
+            RelayAppBar(screenName = "Email Details", onBack = onBack)
         }
     ) { innerPadding ->
         Column(

@@ -61,8 +61,8 @@ fun RecentsScreen(
         RecentMessage(
             R.drawable.relaysms_icon_blue,
             "RelaySMS",
-            "+15551234567",
-            null,
+            "Just checking up",
+            "jane.doe@gmail.com",
             "Hey, how are you doing? This is a test message.",
             "Today, 10:30 AM"
         ),
@@ -93,8 +93,8 @@ fun RecentsScreen(
         RecentMessage(
             R.drawable.relaysms_icon_blue,
             "RelaySMS",
-            "+15559876543",
-            null,
+            "Check out Ida's View",
+            "ida@gmail.com",
             "Reminder: Don't forget to submit your report.",
             "4 days ago, 2:00 PM"
         ),
