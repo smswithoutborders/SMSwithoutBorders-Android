@@ -3,6 +3,7 @@ activity = "1.10.0"
 adaptiveLayout = "1.1.0-alpha09"
 adaptiveNavigation = "1.1.0-alpha09"
 adaptiveVersion = "1.1.0-alpha09"
+androidxMaterial = "1.7.8"
 annotation = "1.9.1"
 appauth = "0.11.1"
 appcompat = "1.7.0"
@@ -76,6 +77,7 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 androidx-material = { module = "androidx.compose.material:material", version.ref = "materialVersion" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
+androidx-material-v178 = { module = "androidx.compose.material:material", version.ref = "androidxMaterial" }
 androidx-material3 = { module = "androidx.compose.material3:material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-preference = { module = "androidx.preference:preference", version.ref = "preferenceKtx" }
