@@ -51,7 +51,7 @@ fun XComposeScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onPostClicked) {
+                    IconButton(onClick = { TODO("Post message") }) {
                         Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Post")
                     }
                 },

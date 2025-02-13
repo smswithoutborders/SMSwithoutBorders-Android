@@ -175,7 +175,7 @@ fun RecentMessageCard(message: RecentMessage) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Handle card click */ },
+            .clickable { TODO("Handle card click") },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -194,7 +194,7 @@ fun RecentMessageCard(message: RecentMessage) {
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                // Heading Text (Subject for Gmail, Phone number for RelaySMS, etc.)
+                // Heading Text
                 Text(
                     text = message.headingText,
                     style = if (message.platformName == "Gmail") {
@@ -206,7 +206,7 @@ fun RecentMessageCard(message: RecentMessage) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                // Subheading Text (Email address for Gmail)
+                // Subheading Text
                 if (message.subHeadingText != null) {
                     Text(
                         text = message.subHeadingText,

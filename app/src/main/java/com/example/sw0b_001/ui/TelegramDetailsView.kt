@@ -92,14 +92,14 @@ fun TelegramDetailsScreen(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = onEditClicked) {
+                IconButton(onClick = { TODO("Handle Edit") }) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
                         contentDescription = "Edit",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
-                IconButton(onClick = onDeleteClicked) {
+                IconButton(onClick = {TODO("Handle Edit")}) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
