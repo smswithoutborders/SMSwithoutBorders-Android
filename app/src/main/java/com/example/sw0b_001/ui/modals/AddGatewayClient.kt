@@ -5,17 +5,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -28,27 +35,27 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AliasAuthenticationRequest(
-    onRequestAuthentication: () -> Unit,
-    onVerifyCode: () -> Unit,
-    onDismiss: () -> Unit
+fun AddGatewayClientModal(
+    onSave: (String, String) -> Unit,
+    onDismiss: () -> Unit,
+    onSelectContact: () -> Unit
 ) {
     val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(true) }
+    var phoneNumber by remember { mutableStateOf("") }
+    var alias by remember { mutableStateOf("") }
 
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -62,67 +69,77 @@ fun AliasAuthenticationRequest(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.relaysms_icon_default_shape),
-                    contentDescription = "Relay Icon",
-                    modifier = Modifier.size(50.dp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Connect with an Alias",
+                    text = "Add Gateway Client",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Phone Number Input
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = phoneNumber,
+                        onValueChange = { phoneNumber = it },
+                        label = { Text("Enter phone number with country code") },
+                        modifier = Modifier.weight(1f),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                    )
+                    IconButton(onClick = onSelectContact) {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Select Contact",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
                 Text(
-                    text = "An alias lets you send and receive messages using a unique identifier, like 12345@relaysms.me, instead of your phone number.",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = "e.g +237123456 or select contact",
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.height(16.dp))
+
+                // Alias Input
+                OutlinedTextField(
+                    value = alias,
+                    onValueChange = { alias = it },
+                    label = { Text("Alias (optional)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Text(
-                    text = "To start using an alias, we need to verify your phone number.",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = "Name to help remember the Gateway Client",
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.height(24.dp))
+
+                // Save Button
                 Button(
                     onClick = {
                         scope.launch { sheetState.hide() }.invokeOnCompletion {
                             if (!sheetState.isVisible) {
                                 showBottomSheet = false
-                                onRequestAuthentication()
+                                onSave(phoneNumber, alias)
                             }
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
-                    Text(text = "Request Verification", color = Color.White)
+                    Text(text = "Save", color = Color.White)
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Already have a code? Verify now",
-                    modifier = Modifier
-                        .clickable {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                if (!sheetState.isVisible) {
-                                    showBottomSheet = false
-                                    onVerifyCode()
-                                }
-                            }
-                        }
-                        .padding(8.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center
-                )
             }
         }
     }
@@ -130,12 +147,12 @@ fun AliasAuthenticationRequest(
 
 @Preview(showBackground = true)
 @Composable
-fun AliasAuthenticationRequestPreview() {
+fun AddGatewayClientModalPreview() {
     AppTheme {
-        AliasAuthenticationRequest(
-            onRequestAuthentication = {},
-            onVerifyCode = {},
-            onDismiss = {}
+        AddGatewayClientModal(
+            onSave = { _, _ -> },
+            onDismiss = {},
+            onSelectContact = {}
         )
     }
 }

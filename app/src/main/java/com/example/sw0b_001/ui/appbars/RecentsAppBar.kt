@@ -111,7 +111,7 @@ fun RecentsAppBar(
 
 @Preview(showBackground = true)
 @Composable
-fun RelayAppBarPreview() {
+fun RecentsAppBarPreview() {
     AppTheme(darkTheme = false) {
         RecentsAppBar()
     }

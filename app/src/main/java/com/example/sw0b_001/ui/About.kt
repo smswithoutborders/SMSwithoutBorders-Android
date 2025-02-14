@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.appbars.AboutAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
@@ -49,7 +50,10 @@ fun AboutScreen(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "About", onBack = onBack)
+            AboutAppBar(
+                onBack = onBack,
+                onReportBug = { TODO() }
+            )
         }
     ) { innerPadding ->
         Column(
@@ -170,7 +174,8 @@ fun AboutScreen(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
                     modifier = Modifier
                         .size(32.dp)
                         .clickable {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://x.com/RelaySMS"))
+                            val intent =
+                                Intent(Intent.ACTION_VIEW, Uri.parse("https://x.com/RelaySMS"))
                             context.startActivity(intent)
                         }
                 )
@@ -181,7 +186,10 @@ fun AboutScreen(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
                     modifier = Modifier
                         .size(32.dp)
                         .clickable {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/smswithoutborders"))
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://github.com/smswithoutborders")
+                            )
                             context.startActivity(intent)
                         }
                 )
