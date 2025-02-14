@@ -11,16 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +31,7 @@ import com.example.sw0b_001.ui.components.OnboardingNextButton
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun OnboardingComplete(
+fun OnboardingCompleteView(
     onBack: () -> Unit,
     onSkip: () -> Unit,
     onContinue: () -> Unit
@@ -107,6 +103,6 @@ fun OnboardingComplete(
 @Composable
 fun OnboardingCompletePreview() {
     AppTheme {
-        OnboardingComplete(onBack = {}, onSkip = {}, onContinue = {})
+        OnboardingCompleteView(onBack = {}, onSkip = {}, onContinue = {})
     }
 }

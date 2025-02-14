@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,7 +33,7 @@ import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 // Data class for Gmail details
-data class GmailDetails(
+data class EmailDetails(
     val subject: String,
     val senderAvatar: Int,
     val senderEmail: String,
@@ -48,8 +47,8 @@ data class GmailDetails(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GmailDetailsScreen(
-    gmailDetails: GmailDetails,
+fun EmailDetailsView(
+    emailDetails: EmailDetails,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
     onBack: () -> Unit
@@ -67,7 +66,7 @@ fun GmailDetailsScreen(
         ) {
             // Subject
             Text(
-                text = gmailDetails.subject,
+                text = emailDetails.subject,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
@@ -77,7 +76,7 @@ fun GmailDetailsScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // Sender Avatar
                 Image(
-                    painter = painterResource(id = gmailDetails.senderAvatar),
+                    painter = painterResource(id = emailDetails.senderAvatar),
                     contentDescription = "Sender Avatar",
                     modifier = Modifier
                         .size(48.dp)
@@ -87,13 +86,13 @@ fun GmailDetailsScreen(
                 Column {
                     // Sender Email
                     Text(
-                        text = gmailDetails.senderEmail,
+                        text = emailDetails.senderEmail,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     // Date
                     Text(
-                        text = gmailDetails.date,
+                        text = emailDetails.date,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -119,14 +118,14 @@ fun GmailDetailsScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
 // To, CC, BCC
-            if (gmailDetails.to.isNotEmpty()) {
-                EmailDetailsRow(label = "To", emails = gmailDetails.to)
+            if (emailDetails.to.isNotEmpty()) {
+                EmailDetailsRow(label = "To", emails = emailDetails.to)
             }
-            if (gmailDetails.cc.isNotEmpty()) {
-                EmailDetailsRow(label = "Cc", emails = gmailDetails.cc)
+            if (emailDetails.cc.isNotEmpty()) {
+                EmailDetailsRow(label = "Cc", emails = emailDetails.cc)
             }
-            if (gmailDetails.bcc.isNotEmpty()) {
-                EmailDetailsRow(label = "Bcc", emails = gmailDetails.bcc)
+            if (emailDetails.bcc.isNotEmpty()) {
+                EmailDetailsRow(label = "Bcc", emails = emailDetails.bcc)
             }
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(color = MaterialTheme.colorScheme.outline)
@@ -134,7 +133,7 @@ fun GmailDetailsScreen(
 
             // Full Text
             Text(
-                text = gmailDetails.fullText,
+                text = emailDetails.fullText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -165,8 +164,8 @@ fun EmailDetailsRow(label: String, emails: List<String>) {
 @Preview
 fun EmailDetailsPreview() {
     AppTheme(darkTheme = false) {
-        GmailDetailsScreen(
-            gmailDetails = GmailDetails(
+        EmailDetailsView(
+            emailDetails = EmailDetails(
                 subject = "Meeting Agenda",
                 senderAvatar = R.drawable.gmail,
                 senderEmail = "sender@example.com",
@@ -177,6 +176,7 @@ fun EmailDetailsPreview() {
                 fullText = "Hi team,\n\nPlease find the agenda for our upcoming meeting.\n\nBest,\nSender"
             ),
             onEditClicked = {},
+
             onDeleteClicked = {},
             onBack = {}
         )

@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,16 +49,18 @@ data class GatewayClient(
 )
 
 @Composable
-fun GatewayClientScreen(
+fun GatewayClientView(
     gatewayClients: List<GatewayClient>,
     onGatewayClientSelected: (GatewayClient) -> Unit = {}
 ) {
     var selectedGatewayClient by remember {
-        mutableStateOf<GatewayClient?>(GatewayClient(
+        mutableStateOf<GatewayClient?>(
+            GatewayClient(
             "+237676015911",
             "MTN Cameroon",
             "Cameroon",
-            "62401"))
+            "62401")
+        )
     }
 
     Scaffold(
@@ -222,95 +224,6 @@ fun GatewayClientCard(gatewayClient: GatewayClient, onCardClicked: (GatewayClien
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun GatewayClientOptionsModal(
-    gatewayClient: GatewayClient,
-    onDismiss: () -> Unit,
-    onMakeDefaultClicked: () -> Unit,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
-) {
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-
-    ModalBottomSheet(
-        onDismissRequest = onDismiss, 
-        sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface
-    ) {
-        GatewayClientOptionsContent(
-            gatewayClient = gatewayClient,
-            onMakeDefaultClicked = onMakeDefaultClicked,
-            onEditClicked = onEditClicked,
-            onDeleteClicked = onDeleteClicked,
-        )
-    }
-}
-
-@Composable
-fun GatewayClientOptionsContent(
-    gatewayClient: GatewayClient,
-    onMakeDefaultClicked: () -> Unit,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(MaterialTheme.colorScheme.surface),
-        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Gateway Client Options",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center,
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = onMakeDefaultClicked,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer)
-        ) {
-            Text(
-                text = "Make Default",
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = onEditClicked,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondaryContainer)
-        ) {
-            Text(
-                text = "Edit",
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = onDeleteClicked,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.errorContainer)
-        ) {
-            Text(
-                text = "Delete",
-                color = MaterialTheme.colorScheme.onErrorContainer
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-    }
-}
 
 @Preview(showBackground = false)
 @Composable
@@ -323,35 +236,10 @@ fun GatewayClientScreenPreview() {
         GatewayClient("+237655443322", "Nexttel Cameroon", "Cameroon", "62403")
     )
     AppTheme(darkTheme = false) {
-        GatewayClientScreen(gatewayClients = sampleGatewayClients)
+        GatewayClientView(gatewayClients = sampleGatewayClients)
     }
 }
 
-@Preview(showBackground = false)
-@Composable
-fun GatewayClientOptionsPreview() {
-    val sampleGatewayClient = GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401")
-    AppTheme(darkTheme = false) {
-        GatewayClientOptionsContent (
-            gatewayClient = sampleGatewayClient,
-            onMakeDefaultClicked = {},
-            onEditClicked = {},
-            onDeleteClicked = {},
-        )
-    }
-}
 
-//@Preview(showBackground = false)
-//@Composable
-//fun GatewayClientOptionsModalPreview() {
-//    val sampleGatewayClient = GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401")
-//    AppTheme(darkTheme = false) {
-//        GatewayClientOptionsModal(
-//            gatewayClient = sampleGatewayClient,
-//            onMakeDefaultClicked = {},
-//            onEditClicked = {},
-//            onDeleteClicked = {},
-//            onDismiss = {}
-//        )
-//    }
-//}
+
+

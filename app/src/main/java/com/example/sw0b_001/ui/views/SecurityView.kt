@@ -1,5 +1,4 @@
-package com.example.sw0b_001.ui
-
+package com.example.sw0b_001.ui.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -11,12 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Message
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,13 +36,15 @@ import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun SettingsScreen(
-    onLanguageClicked: () -> Unit,
-    onSecurityClicked: () -> Unit
+fun SecurityView(
+    onRevokePlatformsClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
+    onDeleteClicked: () -> Unit,
+    onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Settings", onBack = {})
+            RelayAppBar(screenName = "Security", onBack = onBack)
         }
     ) { innerPadding ->
         Column(
@@ -53,42 +53,50 @@ fun SettingsScreen(
                 .padding(innerPadding)
                 .padding(16.dp)
         ) {
-
-
-            
-            // Accessibility Section
-            SettingsSection(title = "Accessibility") {
-                SettingsRow(
-                    icon = Icons.Filled.Language,
-                    title = "Language",
-                    subtext = "English",
-                    onClick = onLanguageClicked
+            // Phone Lockscreen Options Section
+            SecuritySection(title = "Phone Lockscreen options") {
+                var isLockscreenEnabled by remember { mutableStateOf(false) }
+                SecurityRowWithToggle(
+                    title = "Enable lockscreen",
+                    subtext = "Require lockscreen pin/fingerprint when starting the app",
+                    isChecked = isLockscreenEnabled,
+                    onCheckedChange = { isLockscreenEnabled = it }
                 )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Messaging Section
-            SettingsSection(title = "Messaging") {
-                var isPhoneValidationEnabled by remember { mutableStateOf(false) }
-                SettingsRowWithToggle(
-                    icon = Icons.AutoMirrored.Filled.Message,
-                    title = "Validate with phone number",
-                    subtext = "You have a Device ID for the device you log into. It is used to identify you on the Vault. You can switch to phone number to reduce size of SMS message.",
-                    isChecked = isPhoneValidationEnabled,
-                    onCheckedChange = { isPhoneValidationEnabled = it }
+            // Vault Section
+            SecuritySection(title = "Vault") {
+                SecurityRow(
+                    title = "Revoke Platforms",
+                    subtext = "Choose which platforms you want to remove from the vault",
+                    onClick = onRevokePlatformsClicked
                 )
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Security and Privacy Section
-            SettingsSection(title = "Security and Privacy") {
-                SettingsRow(
-                    icon = Icons.Filled.Security,
-                    title = "Security",
-                    subtext = "Enable app locks and pin codes",
-                    onClick = onSecurityClicked
+            // Account Section
+            SecuritySection(title = "Account") {
+                SecurityRow(
+                    title = "Clear aliasing",
+                    subtext = "This would delete your auth codes stored for aliasing. You can request for another code at anytime.",
+                    onClick = {},
+                    isEnabled = false,
+                    icon = Icons.Filled.Refresh
+                )
+                SecurityRow(
+                    title = "Logout",
+                    subtext = "Logout of your account. You can always log back in, however your current messages would be deleted.",
+                    onClick = onLogoutClicked,
+                    icon = Icons.AutoMirrored.Filled.ExitToApp
+                )
+                SecurityRow(
+                    title = "Delete",
+                    subtext = "Deleting your account means deleting all your saved accounts online. You can always recreate your account once needed.",
+                    onClick = onDeleteClicked,
+                    icon = Icons.Filled.Delete
                 )
             }
         }
@@ -96,7 +104,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun SettingsSection(title: String, content: @Composable () -> Unit) {
+fun SecuritySection(title: String, content: @Composable () -> Unit) {
     Column {
         Text(
             text = title,
@@ -110,35 +118,40 @@ fun SettingsSection(title: String, content: @Composable () -> Unit) {
 }
 
 @Composable
-fun SettingsRow(
-    icon: ImageVector,
+fun SecurityRow(
     title: String,
     subtext: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isEnabled: Boolean = true,
+    icon: ImageVector? = null
 ) {
+    val textColor = if (isEnabled) MaterialTheme.colorScheme.onSurface else Color.Gray
+    val subtextColor = if (isEnabled) MaterialTheme.colorScheme.onSurfaceVariant else Color.Gray
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable(enabled = isEnabled, onClick = onClick)
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = title,
-            tint = MaterialTheme.colorScheme.primary
-        )
-        Spacer(modifier = Modifier.width(16.dp))
+        if (icon != null) {
+            Icon(
+                imageVector = icon,
+                contentDescription = title,
+                tint = if (isEnabled) MaterialTheme.colorScheme.primary else Color.Gray
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+        }
         Column {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
+                color = textColor
             )
             Text(
                 text = subtext,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.bodyMedium,
+                color = subtextColor
             )
         }
     }
@@ -146,8 +159,7 @@ fun SettingsRow(
 }
 
 @Composable
-fun SettingsRowWithToggle(
-    icon: ImageVector,
+fun SecurityRowWithToggle(
     title: String,
     subtext: String,
     isChecked: Boolean,
@@ -160,7 +172,7 @@ fun SettingsRowWithToggle(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = icon,
+            imageVector = Icons.Filled.Lock,
             contentDescription = title,
             tint = MaterialTheme.colorScheme.primary
         )
@@ -173,10 +185,11 @@ fun SettingsRowWithToggle(
             )
             Text(
                 text = subtext,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
+        Spacer(modifier = Modifier.width(16.dp))
         Switch(
             checked = isChecked,
             onCheckedChange = onCheckedChange
@@ -187,8 +200,13 @@ fun SettingsRowWithToggle(
 
 @Preview(showBackground = true)
 @Composable
-fun SettingsScreenPreview() {
+fun SecurityScreenPreview() {
     AppTheme(darkTheme = false) {
-        SettingsScreen(onLanguageClicked = {}, onSecurityClicked = {})
+        SecurityView(
+            onRevokePlatformsClicked = {},
+            onLogoutClicked = {},
+            onDeleteClicked = {},
+            onBack = {}
+        )
     }
 }

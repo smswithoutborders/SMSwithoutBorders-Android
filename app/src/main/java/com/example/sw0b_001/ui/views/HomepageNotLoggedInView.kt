@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +27,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -41,7 +40,7 @@ import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun HomepageNotLoggedIn () {
+fun HomepageNotLoggedInView () {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -232,6 +231,6 @@ fun HomepageNotLoggedIn () {
 @Composable
 fun HomePagePreview() {
     AppTheme (darkTheme = false) {
-        HomepageNotLoggedIn()
+        HomepageNotLoggedInView()
     }
 }

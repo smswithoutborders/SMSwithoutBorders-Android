@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,7 +39,7 @@ import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun AddPlatformsScreen(
+fun AddPlatformsView(
     onRecentsClicked: (() -> Unit),
     onCountriesClicked: () -> Unit,
     onMenuClicked: () -> Unit
@@ -201,7 +201,7 @@ fun PlatformCard(logo: Int, platformName: String, modifier: Modifier = Modifier)
 @Composable
 fun AddPlatformsScreenPreview() {
     AppTheme(darkTheme = false) {
-        AddPlatformsScreen(
+        AddPlatformsView(
             onRecentsClicked = {},
             onCountriesClicked = {},
             onMenuClicked = {},

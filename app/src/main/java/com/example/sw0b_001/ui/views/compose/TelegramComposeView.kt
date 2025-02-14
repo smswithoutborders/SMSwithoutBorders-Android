@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,10 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Contacts
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,7 +38,7 @@ import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelegramComposeScreen(
+fun TelegramComposeView(
     onSendClicked: () -> Unit,
     onBack: () -> Unit,
     onSelectContactClicked: () -> Unit
@@ -133,7 +130,7 @@ fun TelegramComposeScreen(
 @Composable
 fun TelegramComposePreview() {
     AppTheme(darkTheme = false) {
-        TelegramComposeScreen(
+        TelegramComposeView(
             onSendClicked = {},
             onBack = {},
             onSelectContactClicked = {}

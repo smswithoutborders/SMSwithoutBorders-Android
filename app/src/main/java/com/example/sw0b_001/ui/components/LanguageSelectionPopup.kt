@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

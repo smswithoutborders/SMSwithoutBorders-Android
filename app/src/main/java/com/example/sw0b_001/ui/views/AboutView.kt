@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
 import android.content.Intent
 import android.net.Uri
@@ -19,10 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +44,7 @@ import com.example.sw0b_001.ui.appbars.AboutAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun AboutScreen(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
+fun AboutView(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
     val context = LocalContext.current
     Scaffold(
         topBar = {
@@ -228,6 +226,6 @@ fun AboutScreen(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
 @Composable
 fun AboutScreenPreview() {
     AppTheme(darkTheme = false) {
-        AboutScreen(onAppTutorialClicked = {}, onBack = {})
+        AboutView(onAppTutorialClicked = {}, onBack = {})
     }
 }

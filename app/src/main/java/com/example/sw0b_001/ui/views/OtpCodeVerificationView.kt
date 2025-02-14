@@ -1,6 +1,5 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
-import android.icu.util.TimeUnit
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +35,7 @@ import com.example.sw0b_001.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun OtpCodeVerification(
+fun OtpCodeVerificationView(
     onCodeSubmitted: (String) -> Unit = {},
     onResendClicked: () -> Unit = {}
 ) {
@@ -170,6 +169,6 @@ fun OtpCodeDigitBox(char: String) {
 @Composable
 fun OtpCodeVerificationPreview() {
     AppTheme {
-        OtpCodeVerification()
+        OtpCodeVerificationView()
     }
 }

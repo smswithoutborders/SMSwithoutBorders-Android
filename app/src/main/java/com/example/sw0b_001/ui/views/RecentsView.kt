@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -52,7 +52,7 @@ data class RecentMessage(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecentsScreen(
+fun RecentsView(
     onComposeMessageClicked: () -> Unit,
     onSavePlatformsClicked: () -> Unit
 ) {
@@ -249,6 +249,6 @@ fun RecentMessageCard(message: RecentMessage) {
 @Composable
 fun RecentsScreenPreview() {
     AppTheme(darkTheme = false) {
-        RecentsScreen(onComposeMessageClicked = {}, onSavePlatformsClicked = {})
+        RecentsView(onComposeMessageClicked = {}, onSavePlatformsClicked = {})
     }
 }

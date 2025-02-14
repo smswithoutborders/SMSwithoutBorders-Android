@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,11 +38,12 @@ fun OnboardingWelcome(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxHeight()
+            .padding(start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.Bottom
     ) {
+
         // Language Selection Button
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -75,7 +76,7 @@ fun OnboardingWelcome(
         Image(
             painter = painterResource(id = R.drawable.relay_sms_welcome_illus),
             contentDescription = "Welcome Illustration",
-            modifier = Modifier.size(300.dp)
+            modifier = Modifier.size(250.dp)
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -88,26 +89,34 @@ fun OnboardingWelcome(
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(64.dp))
 
         // Continue Button
-        Button(
-            onClick = onContinueClicked,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
         ) {
-            Text(text = "Continue", color = Color.White)
+            Button(
+                onClick = onContinueClicked,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Text(text = "Continue", color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Privacy Policy Link
+            Text(
+                text = "Read our privacy policy",
+                modifier = Modifier.clickable(onClick = onPrivacyPolicyClicked),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Privacy Policy Link
-        Text(
-            text = "Read our privacy policy",
-            modifier = Modifier.clickable(onClick = onPrivacyPolicyClicked),
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.bodySmall
-        )
+        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 

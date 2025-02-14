@@ -1,17 +1,13 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views.compose
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,7 +31,7 @@ import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun XComposeScreen(
+fun XComposeView(
     onPostClicked: () -> Unit,
     onBack: () -> Unit
 ) {
@@ -88,7 +84,7 @@ fun XComposeScreen(
 @Composable
 fun XComposePreview() {
     AppTheme(darkTheme = false) {
-        XComposeScreen(
+        XComposeView(
             onPostClicked = {},
             onBack = {}
         )

@@ -1,4 +1,4 @@
-package com.example.sw0b_001.ui
+package com.example.sw0b_001.ui.views.details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,26 +32,25 @@ import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
-// Data class for Telegram details
-data class TelegramDetails(
-    val senderAvatar: Int, // Resource ID for the avatar
-    val senderUsername: String,
-    val recipientNumber: String,
+// Data class for X details
+data class XDetails(
+    val userAvatar: Int,
+    val username: String,
     val date: String,
     val fullText: String
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelegramDetailsScreen(
-    telegramDetails: TelegramDetails,
+fun XDetailsView(
+    xDetails: XDetails,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
     onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Telegram Details", onBack = onBack)
+            RelayAppBar(screenName = "X Details", onBack = onBack)
         }
     ) { innerPadding ->
         Column(
@@ -62,45 +60,39 @@ fun TelegramDetailsScreen(
                 .padding(16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // Sender Avatar
+                // User Avatar
                 Image(
-                    painter = painterResource(id = telegramDetails.senderAvatar),
-                    contentDescription = "Sender Avatar",
+                    painter = painterResource(id = xDetails.userAvatar),
+                    contentDescription = "User Avatar",
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    // Sender Username/number
+                    // Username
                     Text(
-                        text = telegramDetails.senderUsername,
+                        text = xDetails.username,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onBackground
                     )
-                    // Recipient Number
-                    Text(
-                        text = "To: ${telegramDetails.recipientNumber}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
                     // Date
                     Text(
-                        text = telegramDetails.date,
+                        text = xDetails.date,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = { TODO("Handle Edit") }) {
+                IconButton(onClick = onEditClicked) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
                         contentDescription = "Edit",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
-                IconButton(onClick = {TODO("Handle Edit")}) {
+                IconButton(onClick = onDeleteClicked) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
@@ -109,12 +101,12 @@ fun TelegramDetailsScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(color = MaterialTheme.colorScheme.outline)
+            Divider(color = MaterialTheme.colorScheme.outline)
             Spacer(modifier = Modifier.height(16.dp))
 
             // Full Text
             Text(
-                text = telegramDetails.fullText,
+                text = xDetails.fullText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -124,15 +116,14 @@ fun TelegramDetailsScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun TelegramDetailsPreview() {
+fun XDetailsPreview() {
     AppTheme(darkTheme = false) {
-        TelegramDetailsScreen(
-            telegramDetails = TelegramDetails(
-                senderAvatar = R.drawable.telegram,
-                senderUsername = "@johndoe",
-                recipientNumber = "+15551234567",
+        XDetailsView(
+            xDetails = XDetails(
+                userAvatar = R.drawable.x_icon,
+                username = "@idasview",
                 date = "Oct 27, 2023",
-                fullText = "Hey there! Just wanted to follow up on our conversation. Let me know if you have any questions."
+                fullText = "I create beautiful video content. Follow me on Instagram and TikTok for more updates."
             ),
             onEditClicked = {},
             onDeleteClicked = {},

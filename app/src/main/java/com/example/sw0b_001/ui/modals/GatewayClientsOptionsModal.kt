@@ -1,0 +1,116 @@
+package com.example.sw0b_001.ui.modals
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.GatewayClient
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GatewayClientOptionsModal(
+    gatewayClient: GatewayClient,
+    onDismiss: () -> Unit,
+    onMakeDefaultClicked: () -> Unit,
+    onEditClicked: () -> Unit,
+    onDeleteClicked: () -> Unit
+) {
+    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.PartiallyExpanded)
+    val scope = rememberCoroutineScope()
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = MaterialTheme.colorScheme.surface
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.surface),
+            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Gateway Client Options",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onMakeDefaultClicked,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer)
+            ) {
+                Text(
+                    text = "Make Default",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = onEditClicked,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondaryContainer)
+            ) {
+                Text(
+                    text = "Edit",
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = onDeleteClicked,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.errorContainer)
+            ) {
+                Text(
+                    text = "Delete",
+                    color = MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Preview(showBackground = false)
+@Composable
+fun GatewayClientOptionsModalPreview() {
+    val sampleGatewayClient = GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401")
+    AppTheme(darkTheme = false) {
+        GatewayClientOptionsModal(
+            gatewayClient = sampleGatewayClient,
+            onMakeDefaultClicked = {},
+            onEditClicked = {},
+            onDeleteClicked = {},
+            onDismiss = {}
+        )
+    }
+}
