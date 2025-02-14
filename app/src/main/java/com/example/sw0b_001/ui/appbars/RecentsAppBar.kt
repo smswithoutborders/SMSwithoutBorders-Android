@@ -30,7 +30,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
-import com.example.sw0b_001.ui.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable

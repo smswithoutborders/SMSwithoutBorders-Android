@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
@@ -154,6 +155,13 @@ fun RecentsScreen(
                     )
                 }
             }
+        },
+        bottomBar = {
+            BottomNavBar (
+                currentScreen = "Recents",
+                onRecentsClicked = { TODO("add functionality") },
+                onCountriesClicked = { TODO("add functionality") }
+            )
         }
     ) { innerPadding ->
         LazyColumn(
