@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -88,13 +89,16 @@ fun AddGatewayClientModal(
                     OutlinedTextField(
                         value = phoneNumber,
                         onValueChange = { phoneNumber = it },
-                        label = { Text("Enter phone number with country code") },
+                        label = { Text(
+                            text = "Enter phone number with country code",
+                            style = MaterialTheme.typography.bodyMedium
+                        ) },
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                     )
                     IconButton(onClick = onSelectContact) {
                         Icon(
-                            imageVector = Icons.Filled.Person,
+                            imageVector = Icons.Filled.Contacts,
                             contentDescription = "Select Contact",
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -113,7 +117,10 @@ fun AddGatewayClientModal(
                 OutlinedTextField(
                     value = alias,
                     onValueChange = { alias = it },
-                    label = { Text("Alias (optional)") },
+                    label = { Text(
+                        text = "Alias (optional)",
+                        style = MaterialTheme.typography.bodyMedium
+                    ) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
