@@ -48,6 +48,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 import kotlin.text.append
 
@@ -62,11 +63,7 @@ fun HomePageScreen(
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(
-                screenName = "Recents",
-                isRecentsScreen = true,
-                onMenuClicked = onMenuClicked
-            )
+            RecentsAppBar(onMenuClicked = onMenuClicked)
         },
         bottomBar = {
             RelayBottomNavBar(

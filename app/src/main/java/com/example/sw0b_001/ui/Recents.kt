@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 data class RecentMessage(
@@ -127,7 +128,7 @@ fun RecentsScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            RelayAppBar(screenName = "Recents", isRecentsScreen = true)
+            RecentsAppBar(onMenuClicked = {})
         },
         floatingActionButton = {
             Column(horizontalAlignment = Alignment.End) {

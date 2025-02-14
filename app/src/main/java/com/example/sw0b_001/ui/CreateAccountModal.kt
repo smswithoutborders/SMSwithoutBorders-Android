@@ -27,8 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,8 +60,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.PartiallyExpanded)
     val scope = rememberCoroutineScope()
+    var selectedCountry by remember { mutableStateOf<CountryDetails?>(null) }
+    var phoneNumber by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var reenterPassword by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+    var reenterPasswordVisible by remember { mutableStateOf (false) }
 
     if (showBottomSheet) {
         ModalBottomSheet(
@@ -67,13 +75,199 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
             sheetState = sheetState,
             containerColor = MaterialTheme.colorScheme.surface,
         ) {
-            CreateAccountContent(
-                onClose = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) onDismiss()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .background(MaterialTheme.colorScheme.surface),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 32.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Create RelaySMS Account",
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = buildAnnotatedString {
+                            append("Create your account and ")
+                            pushStringAnnotation(tag = "save_platforms", annotation = "save_platforms")
+                            withStyle(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    textDecoration = TextDecoration.Underline
+                                )
+                            ) {
+                                append("save platforms")
+                            }
+                            pop()
+                            append(" for RelaySMS to send messages to Gmail, X, and Telegram on your behalf when offline")
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 0.dp)
+                            .clickable {
+                                // Handle click on "save platforms"
+                            },
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    CountryPickerOutlinedTextField(
+                        mobileNumber = phoneNumber,
+                        onMobileNumberChange = { phoneNumber = it },
+                        onCountrySelected = { selectedCountry = it },
+                        defaultCountryCode = "us",
+                        countryListDisplayType = CountryListDisplayType.Dialog,
+                        modifier = Modifier.fillMaxWidth(),
+                        label = { Text(text = "Phone Number", style = MaterialTheme.typography.bodySmall) }
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    OutlinedTextField(
+                        value = password,
+                        onValueChange = { password = it },
+                        label = { Text(text = "Password", style = MaterialTheme.typography.bodySmall) },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp),
+                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        trailingIcon = {
+                            val image = if (passwordVisible)
+                                Icons.Filled.Visibility
+                            else Icons.Filled.VisibilityOff
+
+                            val description = if (passwordVisible) "Hide password" else "Show password"
+
+                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                                Icon(imageVector = image, description)
+                            }
+                        },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = MaterialTheme.colorScheme.outline,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = reenterPassword,
+                        onValueChange = { reenterPassword = it },
+                        label = { Text(text = "Re-enter Password", style = MaterialTheme.typography.bodySmall) },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(8.dp),
+                        visualTransformation = if (reenterPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        trailingIcon = {
+                            val image = if (reenterPasswordVisible)
+                                Icons.Filled.Visibility
+                            else Icons.Filled.VisibilityOff
+
+                            val description = if (reenterPasswordVisible) "Hide password" else "Show password"
+
+                            IconButton(onClick = { reenterPasswordVisible = !reenterPasswordVisible }) {
+                                Icon(imageVector = image, description)
+                            }
+                        },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = MaterialTheme.colorScheme.outline,
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Button(onClick = { TODO("Sign up logic") },
+                        modifier = Modifier.fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)) {
+                        Text("Sign Up")
                     }
                 }
-            )
+
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = false,
+                        onCheckedChange = {}
+                    )
+                    Text(
+                        text = buildAnnotatedString {
+                            append("I have read the  ")
+                            pushStringAnnotation(tag = "privacy_policy", annotation = "privacy_policy")
+                            withStyle(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    textDecoration = TextDecoration.Underline
+                                )
+                            ) {
+                                append("privacy policy")
+                            }
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 0.dp)
+                            .clickable {
+                                // Handle click on "privacy policy"
+                            },
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = buildAnnotatedString {
+                        append("Already have an account?  ")
+                        pushStringAnnotation(tag = "login", annotation = "login")
+                        withStyle(
+                            style = SpanStyle(
+                                color = MaterialTheme.colorScheme.tertiary,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ) {
+                            append("Log in")
+                        }
+                    },
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 0.dp)
+                        .clickable {
+                            TODO("Go to login modal")
+                        },
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+            }
         }
     }
 }
@@ -87,199 +281,7 @@ fun CreateAccountContent(onClose: () -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
     var reenterPasswordVisible by remember { mutableStateOf (false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.surface),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 32.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Create RelaySMS Account",
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.primary,
-            )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = buildAnnotatedString {
-                    append("Create your account and ")
-                    pushStringAnnotation(tag = "save_platforms", annotation = "save_platforms")
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.tertiary,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    ) {
-                        append("save platforms")
-                    }
-                    pop()
-                    append(" for RelaySMS to send messages to Gmail, X, and Telegram on your behalf when offline")
-                },
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(top = 0.dp)
-                    .clickable {
-                        // Handle click on "save platforms"
-                    },
-                color = MaterialTheme.colorScheme.onBackground
-            )
-        }
-
-
-        Column(
-            modifier = Modifier.fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            CountryPickerOutlinedTextField(
-                mobileNumber = phoneNumber,
-                onMobileNumberChange = { phoneNumber = it },
-                onCountrySelected = { selectedCountry = it },
-                defaultCountryCode = "us",
-                countryListDisplayType = CountryListDisplayType.Dialog,
-                modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = "Phone Number", style = MaterialTheme.typography.bodySmall) }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text(text = "Password", style = MaterialTheme.typography.bodySmall) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    val image = if (passwordVisible)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
-
-                    val description = if (passwordVisible) "Hide password" else "Show password"
-
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedBorderColor = MaterialTheme.colorScheme.outline,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedTextField(
-                value = reenterPassword,
-                onValueChange = { reenterPassword = it },
-                label = { Text(text = "Re-enter Password", style = MaterialTheme.typography.bodySmall) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                visualTransformation = if (reenterPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    val image = if (reenterPasswordVisible)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
-
-                    val description = if (reenterPasswordVisible) "Hide password" else "Show password"
-
-                    IconButton(onClick = { reenterPasswordVisible = !reenterPasswordVisible }) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    focusedBorderColor = MaterialTheme.colorScheme.outline,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                )
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Button(onClick = { /* Sign Up Logic */ },
-                modifier = Modifier.fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)) {
-                Text("Sign Up")
-            }
-        }
-
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = false,
-                onCheckedChange = {}
-            )
-            Text(
-                text = buildAnnotatedString {
-                    append("I have read the  ")
-                    pushStringAnnotation(tag = "privacy_policy", annotation = "privacy_policy")
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.tertiary,
-                            textDecoration = TextDecoration.Underline
-                        )
-                    ) {
-                        append("privacy policy")
-                    }
-                },
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(top = 0.dp)
-                    .clickable {
-                        // Handle click on "privacy policy"
-                    },
-                color = MaterialTheme.colorScheme.onBackground
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = buildAnnotatedString {
-                append("Already have an account?  ")
-                pushStringAnnotation(tag = "login", annotation = "login")
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.tertiary,
-                        textDecoration = TextDecoration.Underline
-                    )
-                ) {
-                    append("Log in")
-                }
-            },
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 0.dp)
-                .clickable {
-                    // Go to login modal"
-                },
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-    }
 }
 
 
@@ -287,6 +289,6 @@ fun CreateAccountContent(onClose: () -> Unit) {
 @Composable
 fun CreateAccountContentPreview() {
     AppTheme(darkTheme = false) {
-        CreateAccountContent(onClose = {})
+        CreateAccountModal (onDismiss = {}, showBottomSheet = true)
     }
 }
