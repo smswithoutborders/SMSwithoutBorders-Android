@@ -80,7 +80,7 @@ fun OnboardingSaveVaultView(
 
             // Save Vault Illustration
             Image(
-                painter = painterResource(id = R.drawable.onboard_complete),
+                painter = painterResource(id = R.drawable.relay_sms_save_vault),
                 contentDescription = "Onboarding Save Vault Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -106,7 +106,7 @@ fun OnboardingSaveVaultView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingSaveVaultPreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingSaveVaultView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }

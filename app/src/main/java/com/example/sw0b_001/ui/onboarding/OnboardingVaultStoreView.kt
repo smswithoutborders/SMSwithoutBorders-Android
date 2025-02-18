@@ -80,7 +80,7 @@ fun OnboardingVaultStoreView(
 
             // Vault Store Illustration
             Image(
-                painter = painterResource(id = R.drawable.onboard_complete),
+                painter = painterResource(id = R.drawable.relay_sms_vault_store),
                 contentDescription = "Vault Store Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -106,7 +106,7 @@ fun OnboardingVaultStoreView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingVaultStorePreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingVaultStoreView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }

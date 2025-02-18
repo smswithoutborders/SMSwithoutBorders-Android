@@ -44,12 +44,12 @@ import com.example.sw0b_001.ui.appbars.AboutAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun AboutView(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
+fun AboutView() {
     val context = LocalContext.current
     Scaffold(
         topBar = {
             AboutAppBar(
-                onBack = onBack,
+                onBack = {TODO()},
                 onReportBug = { TODO() }
             )
         }
@@ -102,7 +102,7 @@ fun AboutView(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
 
             // App Tutorial Button
             Button(
-                onClick = onAppTutorialClicked,
+                onClick = {TODO("Implement app tutorial")},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
@@ -226,6 +226,6 @@ fun AboutView(onAppTutorialClicked: () -> Unit, onBack: () -> Unit) {
 @Composable
 fun AboutScreenPreview() {
     AppTheme(darkTheme = false) {
-        AboutView(onAppTutorialClicked = {}, onBack = {})
+        AboutView()
     }
 }

@@ -32,6 +32,12 @@
         tools:replace="android:label">
 
         <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleInstance"
+            android:exported="true" />
+
+        <activity
             android:name=".Bridges.BridgesSubmitCodeActivity"
             android:exported="false"
             android:parentActivityName=".HomepageActivity" />

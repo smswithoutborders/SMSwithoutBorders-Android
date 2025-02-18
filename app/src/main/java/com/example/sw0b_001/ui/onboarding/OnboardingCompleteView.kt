@@ -68,13 +68,10 @@ fun OnboardingCompleteView(
                     Text(
                         text = "Skip",
                         style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
                     )
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = "Skip",
-                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -83,7 +80,7 @@ fun OnboardingCompleteView(
 
             // Complete Illustration
             Image(
-                painter = painterResource(id = R.drawable.onboard_complete),
+                painter = painterResource(id = R.drawable.relay_sms_onboard_complete),
                 contentDescription = "Onboarding Complete Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -115,7 +112,7 @@ fun OnboardingCompleteView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingCompletePreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingCompleteView(onBack = {}, onSkip = {}, onContinue = {})
     }
 }

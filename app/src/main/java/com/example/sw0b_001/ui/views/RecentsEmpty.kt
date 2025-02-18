@@ -28,41 +28,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun HomepageView(
-    onRecentsClicked: (() -> Unit),
-    onCountriesClicked: () -> Unit,
-    onSavePlatformsClicked: () -> Unit,
-    onSendMessageClicked: () -> Unit,
-    onComposeNewMessageClicked: () -> Unit,
-    onMenuClicked: () -> Unit
+fun RecentsEmptyView(
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
-            RecentsAppBar(onMenuClicked = onMenuClicked)
+            RecentsAppBar(navController = navController)
         },
         bottomBar = {
             BottomNavBar (
                 currentScreen = "Recents",
-                onRecentsClicked = onRecentsClicked,
-                onCountriesClicked = onCountriesClicked
+                onRecentsClicked = {TODO("add functionality")},
+                onCountriesClicked = {TODO("add functionality")}
             )
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-            .padding(innerPadding)
+                .padding(innerPadding)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -104,7 +101,7 @@ fun HomepageView(
 //                )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = onComposeNewMessageClicked,
+                    onClick = {TODO("add functionality")},
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -130,7 +127,7 @@ fun HomepageView(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
-                    onClick = onSavePlatformsClicked,
+                    onClick = { TODO("add functionality") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Row(
@@ -176,15 +173,10 @@ fun HomepageView(
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+fun RecentsEmptyPreview() {
     AppTheme(darkTheme = false) {
-        HomepageView(
-            onRecentsClicked = {},
-            onCountriesClicked = {},
-            onMenuClicked = {},
-            onSavePlatformsClicked = {},
-            onSendMessageClicked = {},
-            onComposeNewMessageClicked = {},
+        RecentsEmptyView(
+            navController = NavController(context = LocalContext.current)
         )
     }
 }

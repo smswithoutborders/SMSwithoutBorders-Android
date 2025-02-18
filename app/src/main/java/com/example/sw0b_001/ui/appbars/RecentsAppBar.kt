@@ -26,16 +26,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.sw0b_001.AboutScreen
 import com.example.sw0b_001.R
+import com.example.sw0b_001.SettingsScreen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun RecentsAppBar(
-    onMenuClicked: () -> Unit = {}
+    navController: NavController
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -85,15 +89,15 @@ fun RecentsAppBar(
                 DropdownMenuItem(
                     text = { Text("Settings") },
                     onClick = {
-                        TODO("Show settings page")
-//                        showMenu = false
+                        navController.navigate(SettingsScreen)
+                        showMenu = false
                     }
                 )
                 DropdownMenuItem(
                     text = { Text("About") },
                     onClick = {
-                        TODO("Show about page")
-//                        showMenu = false
+                        navController.navigate(AboutScreen)
+                        showMenu = false
                     }
                 )
             }
@@ -113,6 +117,6 @@ fun RecentsAppBar(
 @Composable
 fun RecentsAppBarPreview() {
     AppTheme(darkTheme = false) {
-        RecentsAppBar()
+        RecentsAppBar(navController = NavController(context = LocalContext.current))
     }
 }

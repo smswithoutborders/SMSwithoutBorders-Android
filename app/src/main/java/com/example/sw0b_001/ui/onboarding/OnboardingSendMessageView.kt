@@ -85,7 +85,7 @@ fun OnboardingSendMessageView(
 
             // Illustration
             Image(
-                painter = painterResource(id = R.drawable.relay_sms_welcome_illus_dark),
+                painter = painterResource(id = R.drawable.relay_sms_send_message),
                 contentDescription = "Onboarding Send Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -94,7 +94,7 @@ fun OnboardingSendMessageView(
 
             // Main Text
             Text(
-                text = "Try sending a message using the default account.",
+                text = "Try sending a message using your default account.",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface
@@ -126,7 +126,7 @@ fun OnboardingSendMessageView(
 
             // Subtext 2
             Text(
-                text = "To use your own personal accounts, create an account or log in below.",
+                text = "To use your personal online accounts, create an account or log in below.",
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -162,7 +162,7 @@ fun OnboardingSendMessageView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingSendViewPreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingSendMessageView(
             onBack = {},
             onSkip = {},

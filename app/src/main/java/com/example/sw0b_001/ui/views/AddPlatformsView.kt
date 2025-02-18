@@ -29,10 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
@@ -40,19 +42,17 @@ import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
 fun AddPlatformsView(
-    onRecentsClicked: (() -> Unit),
-    onCountriesClicked: () -> Unit,
-    onMenuClicked: () -> Unit
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
-            RecentsAppBar(onMenuClicked = onMenuClicked)
+            RecentsAppBar(navController = navController)
         },
         bottomBar = {
             BottomNavBar (
                 currentScreen = "Recents",
-                onRecentsClicked = onRecentsClicked,
-                onCountriesClicked = onCountriesClicked
+                onRecentsClicked = {TODO("add functionality")},
+                onCountriesClicked = {TODO("add functionality")}
             )
         }
     ) { innerPadding ->
@@ -202,9 +202,7 @@ fun PlatformCard(logo: Int, platformName: String, modifier: Modifier = Modifier)
 fun AddPlatformsScreenPreview() {
     AppTheme(darkTheme = false) {
         AddPlatformsView(
-            onRecentsClicked = {},
-            onCountriesClicked = {},
-            onMenuClicked = {},
+            navController = NavController(context = LocalContext.current)
         )
     }
 }

@@ -43,16 +43,7 @@ fun OnboardingWelcome(
     onContinueClicked: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
-    val welcomeIllustration by remember {
-        mutableIntStateOf(
-            if (isDarkTheme) {
-                R.drawable.relay_sms_welcome_illus_dark
-            } else {
-                R.drawable.relay_sms_welcome_illus
-            }
-        )
-    }
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -93,7 +84,7 @@ fun OnboardingWelcome(
 
             // Welcome Illustration
             Image(
-                painter = painterResource(id = welcomeIllustration),
+                painter = painterResource(id = R.drawable.relay_sms_welcome),
                 contentDescription = "Welcome Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -143,7 +134,7 @@ fun OnboardingWelcome(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingWelcomePreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingWelcome(onContinueClicked = {}, onPrivacyPolicyClicked = {})
     }
 }

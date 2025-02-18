@@ -35,10 +35,7 @@ import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun SettingsView(
-    onLanguageClicked: () -> Unit,
-    onSecurityClicked: () -> Unit
-) {
+fun SettingsView() {
     Scaffold(
         topBar = {
             RelayAppBar(screenName = "Settings", onBack = {})
@@ -59,7 +56,7 @@ fun SettingsView(
                     icon = Icons.Filled.Language,
                     title = "Language",
                     subtext = "English",
-                    onClick = onLanguageClicked
+                    onClick = { TODO("Implement language selection") }
                 )
             }
 
@@ -85,7 +82,7 @@ fun SettingsView(
                     icon = Icons.Filled.Security,
                     title = "Security",
                     subtext = "Enable app locks and pin codes",
-                    onClick = onSecurityClicked
+                    onClick = {TODO("Implement security settings") }
                 )
             }
         }
@@ -186,6 +183,6 @@ fun SettingsRowWithToggle(
 @Composable
 fun SettingsScreenPreview() {
     AppTheme(darkTheme = false) {
-        SettingsView(onLanguageClicked = {}, onSecurityClicked = {})
+        SettingsView()
     }
 }

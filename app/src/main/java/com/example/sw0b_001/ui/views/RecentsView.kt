@@ -31,11 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
@@ -53,8 +55,7 @@ data class RecentMessage(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecentsView(
-    onComposeMessageClicked: () -> Unit,
-    onSavePlatformsClicked: () -> Unit
+    navController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
@@ -129,12 +130,12 @@ fun RecentsView(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            RecentsAppBar(onMenuClicked = {})
+            RecentsAppBar(navController = navController)
         },
         floatingActionButton = {
             Column(horizontalAlignment = Alignment.End) {
                 FloatingActionButton(
-                    onClick = onSavePlatformsClicked,
+                    onClick = {TODO("add functionality")},
                     modifier = Modifier.padding(bottom = 16.dp),
                     containerColor = MaterialTheme.colorScheme.secondary
                 ) {
@@ -145,13 +146,13 @@ fun RecentsView(
                     )
                 }
                 FloatingActionButton(
-                    onClick = onComposeMessageClicked,
-                    containerColor = MaterialTheme.colorScheme.tertiary
+                    onClick = {TODO("add functionality")},
+                    containerColor = MaterialTheme.colorScheme.secondary
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Create,
                         contentDescription = "Compose Message",
-                        tint = MaterialTheme.colorScheme.onTertiary
+                        tint = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             }
@@ -249,6 +250,6 @@ fun RecentMessageCard(message: RecentMessage) {
 @Composable
 fun RecentsScreenPreview() {
     AppTheme(darkTheme = false) {
-        RecentsView(onComposeMessageClicked = {}, onSavePlatformsClicked = {})
+        RecentsView(navController = NavController(context = LocalContext.current))
     }
 }

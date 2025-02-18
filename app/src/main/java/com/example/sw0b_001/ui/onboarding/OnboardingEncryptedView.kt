@@ -80,7 +80,7 @@ fun OnboardingEncryptedView(
 
             // Encrypted Illustration
             Image(
-                painter = painterResource(id = R.drawable.onboard_complete),
+                painter = painterResource(id = R.drawable.relay_sms_encrypted),
                 contentDescription = "Onboarding Encrypted Illustration",
                 modifier = Modifier.size(250.dp)
             )
@@ -106,7 +106,7 @@ fun OnboardingEncryptedView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingEncryptedPreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         OnboardingEncryptedView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }
