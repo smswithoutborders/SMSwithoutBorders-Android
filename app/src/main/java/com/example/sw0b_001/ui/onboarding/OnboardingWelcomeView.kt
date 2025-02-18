@@ -1,7 +1,9 @@
 package com.example.sw0b_001.ui.onboarding
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,6 +42,16 @@ fun OnboardingWelcome(
     onContinueClicked: () -> Unit,
     onPrivacyPolicyClicked: () -> Unit
 ) {
+    val isDarkTheme = isSystemInDarkTheme()
+    val welcomeIllustration by remember {
+        mutableIntStateOf(
+            if (isDarkTheme) {
+                R.drawable.relay_sms_welcome_illus_dark
+            } else {
+                R.drawable.relay_sms_welcome_illus
+            }
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -74,7 +90,7 @@ fun OnboardingWelcome(
 
         // Welcome Illustration
         Image(
-            painter = painterResource(id = R.drawable.relay_sms_welcome_illus),
+            painter = painterResource(id = welcomeIllustration),
             contentDescription = "Welcome Illustration",
             modifier = Modifier.size(250.dp)
         )
@@ -123,7 +139,7 @@ fun OnboardingWelcome(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingWelcomePreview() {
-    AppTheme {
+    AppTheme(darkTheme = false) {
         OnboardingWelcome(onContinueClicked = {}, onPrivacyPolicyClicked = {})
     }
 }

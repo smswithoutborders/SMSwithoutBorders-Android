@@ -31,7 +31,7 @@ import com.example.sw0b_001.ui.components.OnboardingNextButton
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun OnboardingCompleteView(
+fun OnboardingVaultStoreView(
     onBack: () -> Unit,
     onSkip: () -> Unit,
     onContinue: () -> Unit
@@ -75,7 +75,7 @@ fun OnboardingCompleteView(
 
         Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Illustration
+        // Vault Store Illustration
         Image(
             painter = painterResource(id = R.drawable.onboard_complete),
             contentDescription = "Onboarding Complete Illustration",
@@ -84,9 +84,9 @@ fun OnboardingCompleteView(
 
         Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Text
+        // Vault Store Text
         Text(
-            text = "You are ready to begin sending messages to your saved platforms",
+            text = "The Vault encrypts and securely saves your connection to your online accounts, allowing you to access them while offline.",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface
@@ -101,8 +101,8 @@ fun OnboardingCompleteView(
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingCompletePreview() {
+fun OnboardingVaultStorePreview() {
     AppTheme(darkTheme = false) {
-        OnboardingCompleteView(onBack = {}, onSkip = {}, onContinue = {})
+        OnboardingVaultStoreView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }

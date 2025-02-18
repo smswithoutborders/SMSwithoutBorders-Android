@@ -110,7 +110,7 @@ fun ConfirmationModal(
 @Preview(showBackground = false)
 @Composable
 fun ConfirmationModalPreview() {
-    AppTheme(darkTheme = false) {
+    AppTheme(darkTheme = true) {
         ConfirmationModal(
             onContinue = {},
             onCancel = {}
