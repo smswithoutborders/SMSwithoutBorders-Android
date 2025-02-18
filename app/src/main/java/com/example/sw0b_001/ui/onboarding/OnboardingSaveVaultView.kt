@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,7 +31,7 @@ import com.example.sw0b_001.ui.components.OnboardingNextButton
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun OnboardingCompleteView(
+fun OnboardingSaveVaultView(
     onBack: () -> Unit,
     onSkip: () -> Unit,
     onContinue: () -> Unit
@@ -78,7 +75,7 @@ fun OnboardingCompleteView(
 
         Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Illustration
+        // Save Vault Illustration
         Image(
             painter = painterResource(id = R.drawable.onboard_complete),
             contentDescription = "Onboarding Complete Illustration",
@@ -87,9 +84,9 @@ fun OnboardingCompleteView(
 
         Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Text
+        // Save Vault Text
         Text(
-            text = "You are ready to begin sending messages to your saved platforms",
+            text = "You can add new social accounts to your vault",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface
@@ -98,20 +95,14 @@ fun OnboardingCompleteView(
         Spacer(modifier = Modifier.height(144.dp))
 
         // Continue Button
-        Button(
-            onClick = { TODO("Go to homepage") },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-        ) {
-            Text(text = "Great!", color = Color.White)
-        }
+        OnboardingNextButton(onNext = onContinue)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingCompletePreview() {
+fun OnboardingSaveVaultPreview() {
     AppTheme(darkTheme = false) {
-        OnboardingCompleteView(onBack = {}, onSkip = {}, onContinue = {})
+        OnboardingSaveVaultView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }
