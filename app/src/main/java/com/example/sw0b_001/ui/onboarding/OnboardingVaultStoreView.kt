@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,66 +37,69 @@ fun OnboardingVaultStoreView(
     onSkip: () -> Unit,
     onContinue: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+    Scaffold { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
+            // Top Bar
             Row(
-                modifier = Modifier.clickable(onClick = onSkip),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Skip",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Skip",
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+                Row(
+                    modifier = Modifier.clickable(onClick = onSkip),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Skip",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "Skip",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(72.dp))
+
+            // Vault Store Illustration
+            Image(
+                painter = painterResource(id = R.drawable.onboard_complete),
+                contentDescription = "Vault Store Illustration",
+                modifier = Modifier.size(250.dp)
+            )
+
+            Spacer(modifier = Modifier.height(72.dp))
+
+            // Vault Store Text
+            Text(
+                text = "The Vault encrypts and securely saves your connection to your online accounts, allowing you to access them while offline.",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacer(modifier = Modifier.height(144.dp))
+
+            // Continue Button
+            OnboardingNextButton(onNext = onContinue)
         }
-
-        Spacer(modifier = Modifier.height(72.dp))
-
-        // Vault Store Illustration
-        Image(
-            painter = painterResource(id = R.drawable.onboard_complete),
-            contentDescription = "Onboarding Complete Illustration",
-            modifier = Modifier.size(250.dp)
-        )
-
-        Spacer(modifier = Modifier.height(72.dp))
-
-        // Vault Store Text
-        Text(
-            text = "The Vault encrypts and securely saves your connection to your online accounts, allowing you to access them while offline.",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(144.dp))
-
-        // Continue Button
-        OnboardingNextButton(onNext = onContinue)
     }
 }
 

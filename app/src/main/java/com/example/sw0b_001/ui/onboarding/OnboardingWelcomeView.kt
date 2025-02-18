@@ -21,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,87 +53,90 @@ fun OnboardingWelcome(
             }
         )
     }
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(start = 16.dp, end = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Bottom
-    ) {
-
-        // Language Selection Button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                onClick = { /* TODO: Handle language selection */ },
-                shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-                modifier = Modifier.padding(end = 8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Language,
-                    contentDescription = "Language",
-                    modifier = Modifier.size(20.dp),
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = "English",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(64.dp))
-
-        // Welcome Illustration
-        Image(
-            painter = painterResource(id = welcomeIllustration),
-            contentDescription = "Welcome Illustration",
-            modifier = Modifier.size(250.dp)
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Welcome Text
-        Text(
-            text = "RelaySMS allows you to send emails and create posts on your social accounts without an internet connection through SMS.",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(64.dp))
-
-        // Continue Button
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxHeight()
+                .padding(innerPadding)
+                .padding(start = 16.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-            Button(
-                onClick = onContinueClicked,
+
+            // Language Selection Button
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Continue", color = Color.White)
+                Button(
+                    onClick = { /* TODO: Handle language selection */ },
+                    shape = RoundedCornerShape(24.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    modifier = Modifier.padding(end = 8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Language,
+                        contentDescription = "Language",
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "English",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
 
-            // Privacy Policy Link
-            Text(
-                text = "Read our privacy policy",
-                modifier = Modifier.clickable(onClick = onPrivacyPolicyClicked),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.bodySmall
+            // Welcome Illustration
+            Image(
+                painter = painterResource(id = welcomeIllustration),
+                contentDescription = "Welcome Illustration",
+                modifier = Modifier.size(250.dp)
             )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Welcome Text
+            Text(
+                text = "RelaySMS allows you to send emails and create posts on your social accounts without an internet connection through SMS.",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Spacer(modifier = Modifier.height(64.dp))
+
+            // Continue Button
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                Button(
+                    onClick = onContinueClicked,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                ) {
+                    Text(text = "Continue", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Privacy Policy Link
+                Text(
+                    text = "Read our privacy policy",
+                    modifier = Modifier.clickable(onClick = onPrivacyPolicyClicked),
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+            Spacer(modifier = Modifier.height(64.dp))
         }
-        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 

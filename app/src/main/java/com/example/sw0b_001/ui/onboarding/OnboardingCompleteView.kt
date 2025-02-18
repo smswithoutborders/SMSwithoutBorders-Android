@@ -19,6 +19,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,71 +40,74 @@ fun OnboardingCompleteView(
     onSkip: () -> Unit,
     onContinue: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+    Scaffold { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
+            // Top Bar
             Row(
-                modifier = Modifier.clickable(onClick = onSkip),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Skip",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Skip",
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                IconButton(onClick = onBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+                Row(
+                    modifier = Modifier.clickable(onClick = onSkip),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Skip",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = "Skip",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
-        }
 
-        Spacer(modifier = Modifier.height(72.dp))
+            Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Illustration
-        Image(
-            painter = painterResource(id = R.drawable.onboard_complete),
-            contentDescription = "Onboarding Complete Illustration",
-            modifier = Modifier.size(250.dp)
-        )
+            // Complete Illustration
+            Image(
+                painter = painterResource(id = R.drawable.onboard_complete),
+                contentDescription = "Onboarding Complete Illustration",
+                modifier = Modifier.size(250.dp)
+            )
 
-        Spacer(modifier = Modifier.height(72.dp))
+            Spacer(modifier = Modifier.height(72.dp))
 
-        // Complete Text
-        Text(
-            text = "You are ready to begin sending messages to your saved platforms",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface
-        )
+            // Complete Text
+            Text(
+                text = "You are ready to begin sending messages to your saved platforms",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface
+            )
 
-        Spacer(modifier = Modifier.height(144.dp))
+            Spacer(modifier = Modifier.height(144.dp))
 
-        // Continue Button
-        Button(
-            onClick = { TODO("Go to homepage") },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-        ) {
-            Text(text = "Great!", color = Color.White)
+            // Continue Button
+            Button(
+                onClick = { TODO("Go to homepage") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Text(text = "Great!", color = MaterialTheme.colorScheme.onPrimary)
+            }
         }
     }
 }

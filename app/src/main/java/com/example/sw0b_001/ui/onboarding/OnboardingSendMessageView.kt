@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.onboarding
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,20 +25,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.R
-import com.example.sw0b_001.ui.components.OnboardingNextButton
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun OnboardingSaveVaultView(
+fun OnboardingSendMessageView(
     onBack: () -> Unit,
     onSkip: () -> Unit,
-    onContinue: () -> Unit
+    onTrySendingMessage: () -> Unit,
+    onCreateAccount: () -> Unit,
+    onLogin: () -> Unit
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -76,37 +81,94 @@ fun OnboardingSaveVaultView(
                 }
             }
 
-            Spacer(modifier = Modifier.height(72.dp))
+            Spacer(modifier = Modifier.height(64.dp))
 
-            // Save Vault Illustration
+            // Illustration
             Image(
-                painter = painterResource(id = R.drawable.onboard_complete),
-                contentDescription = "Onboarding Save Vault Illustration",
+                painter = painterResource(id = R.drawable.relay_sms_welcome_illus_dark),
+                contentDescription = "Onboarding Send Illustration",
                 modifier = Modifier.size(250.dp)
             )
 
-            Spacer(modifier = Modifier.height(72.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // Save Vault Text
+            // Main Text
             Text(
-                text = "You can add new social accounts to your vault",
+                text = "Try sending a message using the default account.",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(144.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Continue Button
-            OnboardingNextButton(onNext = onContinue)
+            // Subtext 1
+            Text(
+                text = "This will create a default email (your_phonenumber@relaysms.me) using your phone number.",
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 48.dp)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Try Sending a Message Button
+            Button(
+                onClick = onTrySendingMessage,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Text(text = "Try sending a message", color = MaterialTheme.colorScheme.onPrimary)
+            }
+
+            Spacer(modifier = Modifier.height(64.dp))
+
+            // Subtext 2
+            Text(
+                text = "To use your own personal accounts, create an account or log in below.",
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 48.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Create Account and Login Buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Button(
+                    onClick = onCreateAccount,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                ) {
+                    Text(text = "Create account", color = MaterialTheme.colorScheme.onPrimaryContainer)
+                }
+                Button(
+                    onClick = onLogin,
+                    modifier = Modifier.weight(1f),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                ) {
+                    Text(text = "Login", color = MaterialTheme.colorScheme.onPrimaryContainer)
+                }
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun OnboardingSaveVaultPreview() {
+fun OnboardingSendViewPreview() {
     AppTheme(darkTheme = false) {
-        OnboardingSaveVaultView (onBack = {}, onSkip = {}, onContinue = {})
+        OnboardingSendMessageView(
+            onBack = {},
+            onSkip = {},
+            onTrySendingMessage = {},
+            onCreateAccount = {},
+            onLogin = {}
+        )
     }
 }
