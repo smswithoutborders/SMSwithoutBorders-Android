@@ -28,17 +28,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun SettingsView() {
+fun SettingsView(
+    navController: NavController,
+) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Settings", onBack = {})
+            RelayAppBar(screenName = "Settings", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -183,6 +187,6 @@ fun SettingsRowWithToggle(
 @Composable
 fun SettingsScreenPreview() {
     AppTheme(darkTheme = false) {
-        SettingsView()
+        SettingsView(navController = NavController(LocalContext.current))
     }
 }

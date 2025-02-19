@@ -16,23 +16,25 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RelayAppBar(
     screenName: String,
-    onBack: () -> Unit
+    navController: NavController,
 ) {
     TopAppBar(
         title = {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBack) {
+                IconButton(onClick = {navController.popBackStack()}) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back"
@@ -61,6 +63,6 @@ fun RelayAppBar(
 @Composable
 fun RelayAppBarPreview() {
     AppTheme {
-        RelayAppBar(screenName = "My Screen", onBack = {})
+        RelayAppBar(screenName = "My Screen", navController = NavController(LocalContext.current))
     }
 }

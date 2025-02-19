@@ -39,19 +39,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.AboutAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
-fun AboutView() {
+fun AboutView(
+    navController: NavController
+) {
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            AboutAppBar(
-                onBack = {TODO()},
-                onReportBug = { TODO() }
-            )
+            AboutAppBar(navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -226,6 +226,6 @@ fun AboutView() {
 @Composable
 fun AboutScreenPreview() {
     AppTheme(darkTheme = false) {
-        AboutView()
+        AboutView(navController = NavController(LocalContext.current))
     }
 }

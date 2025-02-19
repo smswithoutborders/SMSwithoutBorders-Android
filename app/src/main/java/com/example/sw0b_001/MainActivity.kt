@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = RecentScreen,
                     ) {
                         composable<RecentScreen> {
-                            RecentScreenComposable(navController = navController)
+                            RecentScreenComposable()
                         }
                         composable<SettingsScreen> {
                             SettingsScreenComposable()
@@ -76,19 +76,20 @@ class MainActivity : ComponentActivity() {
         }
 
     }
+
+    @Composable
+    fun RecentScreenComposable() {
+        RecentsView(navController = navController)
+    }
+
+    @Composable
+    fun SettingsScreenComposable() {
+        SettingsView(navController = navController)
+    }
+
+    @Composable
+    fun AboutScreenComposable() {
+        AboutView(navController = navController)
+    }
 }
 
-@Composable
-fun RecentScreenComposable(navController: NavHostController) {
-    RecentsView(navController = navController)
-}
-
-@Composable
-fun SettingsScreenComposable() {
-    SettingsView()
-}
-
-@Composable
-fun AboutScreenComposable() {
-    AboutView()
-}

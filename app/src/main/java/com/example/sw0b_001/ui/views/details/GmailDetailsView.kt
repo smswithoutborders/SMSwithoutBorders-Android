@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
@@ -49,13 +51,11 @@ data class EmailDetails(
 @Composable
 fun EmailDetailsView(
     emailDetails: EmailDetails,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Email Details", onBack = onBack)
+            RelayAppBar(screenName = "Email Details", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -175,10 +175,7 @@ fun EmailDetailsPreview() {
                 date = "Oct 26, 2023",
                 fullText = "Hi team,\n\nPlease find the agenda for our upcoming meeting.\n\nBest,\nSender"
             ),
-            onEditClicked = {},
-
-            onDeleteClicked = {},
-            onBack = {}
+            navController = NavController(LocalContext.current)
         )
     }
 }

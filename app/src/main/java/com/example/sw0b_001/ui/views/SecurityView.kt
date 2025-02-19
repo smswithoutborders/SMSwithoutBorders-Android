@@ -29,22 +29,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
 fun SecurityView(
-    onRevokePlatformsClicked: () -> Unit,
-    onLogoutClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Security", onBack = onBack)
+            RelayAppBar(screenName = "Security", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -71,7 +70,7 @@ fun SecurityView(
                 SecurityRow(
                     title = "Revoke Platforms",
                     subtext = "Choose which platforms you want to remove from the vault",
-                    onClick = onRevokePlatformsClicked
+                    onClick = {TODO("Implement platform revoking")}
                 )
             }
 
@@ -89,13 +88,13 @@ fun SecurityView(
                 SecurityRow(
                     title = "Logout",
                     subtext = "Logout of your account. You can always log back in, however your current messages would be deleted.",
-                    onClick = onLogoutClicked,
+                    onClick = {TODO("Implement logout")},
                     icon = Icons.AutoMirrored.Filled.ExitToApp
                 )
                 SecurityRow(
                     title = "Delete",
                     subtext = "Deleting your account means deleting all your saved accounts online. You can always recreate your account once needed.",
-                    onClick = onDeleteClicked,
+                    onClick = {TODO("Implement account deletion")},
                     icon = Icons.Filled.Delete
                 )
             }
@@ -203,10 +202,7 @@ fun SecurityRowWithToggle(
 fun SecurityScreenPreview() {
     AppTheme(darkTheme = false) {
         SecurityView(
-            onRevokePlatformsClicked = {},
-            onLogoutClicked = {},
-            onDeleteClicked = {},
-            onBack = {}
+            navController = NavController(LocalContext.current)
         )
     }
 }

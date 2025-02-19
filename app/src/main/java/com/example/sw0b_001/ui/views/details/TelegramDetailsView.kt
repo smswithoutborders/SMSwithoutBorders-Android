@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
@@ -45,13 +47,11 @@ data class TelegramDetails(
 @Composable
 fun TelegramDetailsView(
     telegramDetails: TelegramDetails,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Telegram Details", onBack = onBack)
+            RelayAppBar(screenName = "Telegram Details", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -133,9 +133,7 @@ fun TelegramDetailsPreview() {
                 date = "Oct 27, 2023",
                 fullText = "Hey there! Just wanted to follow up on our conversation. Let me know if you have any questions."
             ),
-            onEditClicked = {},
-            onDeleteClicked = {},
-            onBack = {}
+            navController = NavController(LocalContext.current)
         )
     }
 }

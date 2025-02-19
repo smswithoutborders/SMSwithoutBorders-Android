@@ -12,15 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutAppBar(
-    onBack: () -> Unit,
-    onReportBug: () -> Unit
+    navController: NavController,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -31,7 +32,7 @@ fun AboutAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back"
@@ -39,7 +40,7 @@ fun AboutAppBar(
             }
         },
         actions = {
-            IconButton(onClick = onReportBug) {
+            IconButton(onClick = { TODO("Report Bug/Feedback") }) {
                 Icon(
                     imageVector = Icons.Filled.BugReport,
                     contentDescription = "Report Bug/Feedback"
@@ -54,6 +55,6 @@ fun AboutAppBar(
 @Composable
 fun AboutAppBarPreview() {
     AppTheme {
-        AboutAppBar(onBack = {}, onReportBug = {})
+        AboutAppBar(navController = NavController(context = LocalContext.current))
     }
 }

@@ -19,15 +19,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GatewayClientsAppBar(
-    onBack: () -> Unit,
-    onRefresh: () -> Unit
+    navController: NavController,
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
@@ -40,7 +41,7 @@ fun GatewayClientsAppBar(
             )
         },
         navigationIcon = {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = {navController.popBackStack()}) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back"
@@ -61,8 +62,8 @@ fun GatewayClientsAppBar(
                 DropdownMenuItem(
                     text = { Text("Refresh") },
                     onClick = {
-                        onRefresh()
-                        showMenu = false
+                        TODO("Add functionality to refresh gateway clients")
+//                        showMenu = false
                     },
                     leadingIcon = {
                         Icon(
@@ -81,6 +82,6 @@ fun GatewayClientsAppBar(
 @Composable
 fun GatewayClientsAppBarPreview() {
     AppTheme {
-        GatewayClientsAppBar(onBack = {}, onRefresh = {})
+        GatewayClientsAppBar(navController = NavController(LocalContext.current))
     }
 }

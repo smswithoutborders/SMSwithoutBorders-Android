@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
@@ -44,13 +46,11 @@ data class XDetails(
 @Composable
 fun XDetailsView(
     xDetails: XDetails,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
-    onBack: () -> Unit
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "X Details", onBack = onBack)
+            RelayAppBar(screenName = "X Details", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -85,14 +85,14 @@ fun XDetailsView(
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = onEditClicked) {
+                IconButton(onClick = {TODO("Handle Edit")}) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
                         contentDescription = "Edit",
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
-                IconButton(onClick = onDeleteClicked) {
+                IconButton(onClick = {TODO("Handle Delete")}) {
                     Icon(
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "Delete",
@@ -125,9 +125,7 @@ fun XDetailsPreview() {
                 date = "Oct 27, 2023",
                 fullText = "I create beautiful video content. Follow me on Instagram and TikTok for more updates."
             ),
-            onEditClicked = {},
-            onDeleteClicked = {},
-            onBack = {}
+            navController = NavController(LocalContext.current)
         )
     }
 }
