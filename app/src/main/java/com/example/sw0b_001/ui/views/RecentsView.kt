@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.views
 
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,16 +42,35 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.details.EmailDetails
+import com.example.sw0b_001.ui.views.details.TelegramDetails
+import com.example.sw0b_001.ui.views.details.XDetails
+import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
+@Serializable
 data class RecentMessage(
     val platformLogo: Int,
     val platformName: String,
     val headingText: String,
     val subHeadingText: String? = null,
     val messagePreview: String,
-    val date: String
+    val date: String,
+    val messageType: MessageType
 )
+
+enum class MessageType {
+    DEFAULT,
+    GMAIL,
+    TELEGRAM,
+    X
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +87,8 @@ fun RecentsView(
             "Just checking up",
             "jane.doe@gmail.com",
             "Hey, how are you doing? This is a test message.",
-            "Today, 10:30 AM"
+            "Today, 10:30 AM",
+            MessageType.DEFAULT
         ),
         RecentMessage(
             R.drawable.gmail,
@@ -75,7 +96,8 @@ fun RecentsView(
             "Project Update",
             "john.doe@example.com",
             "Hi team, here's the latest update on the project...",
-            "Yesterday, 3:45 PM"
+            "Yesterday, 3:45 PM",
+            MessageType.GMAIL
         ),
         RecentMessage(
             R.drawable.telegram,
@@ -83,7 +105,8 @@ fun RecentsView(
             "+23456789012",
             null,
             "New message in group: Team Meeting",
-            "2 days ago, 9:00 AM"
+            "2 days ago, 9:00 AM",
+            MessageType.TELEGRAM
         ),
         RecentMessage(
             R.drawable.x_icon,
@@ -91,7 +114,8 @@ fun RecentsView(
             "@elonmusk",
             null,
             "New tweet from Elon Musk: Exciting news!",
-            "3 days ago, 11:15 AM"
+            "3 days ago, 11:15 AM",
+            MessageType.X
         ),
         RecentMessage(
             R.drawable.relaysms_icon_blue,
@@ -99,7 +123,8 @@ fun RecentsView(
             "Check out Ida's View",
             "ida@gmail.com",
             "Reminder: Don't forget to submit your report.",
-            "4 days ago, 2:00 PM"
+            "4 days ago, 2:00 PM",
+            MessageType.DEFAULT
         ),
         RecentMessage(
             R.drawable.gmail,
@@ -107,7 +132,8 @@ fun RecentsView(
             "Invoice attached",
             "jane.smith@example.com",
             "Please find the attached invoice for your review.",
-            "5 days ago, 1:30 PM"
+            "5 days ago, 1:30 PM",
+            MessageType.GMAIL
         ),
         RecentMessage(
             R.drawable.telegram,
@@ -115,7 +141,8 @@ fun RecentsView(
             "+12345678901",
             null,
             "New message in group: Project Discussion",
-            "6 days ago, 10:00 AM"
+            "6 days ago, 10:00 AM",
+            MessageType.TELEGRAM
         ),
         RecentMessage(
             R.drawable.x_icon,
@@ -123,7 +150,8 @@ fun RecentsView(
             "@billgates",
             null,
             "New tweet from Bill Gates: Tech advancements",
-            "7 days ago, 4:00 PM"
+            "7 days ago, 4:00 PM",
+            MessageType.X
         ),
     )
 
@@ -172,18 +200,21 @@ fun RecentsView(
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
             items(recentMessages) { message ->
-                RecentMessageCard(message)
+                RecentMessageCard(message, navController)
             }
         }
     }
 }
 
 @Composable
-fun RecentMessageCard(message: RecentMessage) {
+fun RecentMessageCard(
+    message: RecentMessage,
+    navController: NavController
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { TODO("Handle card click") },
+            .clickable { navigateToDetailsScreen(navController, message) },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -239,6 +270,25 @@ fun RecentMessageCard(message: RecentMessage) {
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+    }
+}
+
+fun navigateToDetailsScreen(navController: NavController, message: RecentMessage) {
+    val recentMessageJson = Json.encodeToString(message)
+    // URL-encode the JSON string
+    val encodedJson = URLEncoder.encode(recentMessageJson, StandardCharsets.UTF_8.toString())
+    when (message.messageType) {
+        MessageType.GMAIL, MessageType.DEFAULT -> {
+            navController.navigate(Screen.EmailDetails(encodedJson).route)
+        }
+
+        MessageType.TELEGRAM -> {
+            navController.navigate(Screen.TelegramDetails(encodedJson).route)
+        }
+
+        MessageType.X -> {
+            navController.navigate(Screen.XDetails(encodedJson).route)
         }
     }
 }

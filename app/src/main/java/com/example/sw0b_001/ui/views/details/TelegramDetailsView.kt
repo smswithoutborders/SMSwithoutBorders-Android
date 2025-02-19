@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.views.details
 
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,9 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.MessageType
+import com.example.sw0b_001.ui.views.RecentMessage
+import kotlinx.android.parcel.Parcelize
 
 // Data class for Telegram details
 data class TelegramDetails(
@@ -46,9 +50,15 @@ data class TelegramDetails(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TelegramDetailsView(
-    telegramDetails: TelegramDetails,
+    message: RecentMessage,
     navController: NavController
 ) {
+    val telegramDetails = TelegramDetails(
+        senderAvatar = message.platformLogo,
+        senderUsername = message.subHeadingText ?: "",
+        recipientNumber = message.messagePreview,
+        date = message.date,
+        fullText = message.messagePreview)
     Scaffold(
         topBar = {
             RelayAppBar(screenName = "Telegram Details", navController = navController)
@@ -126,12 +136,14 @@ fun TelegramDetailsView(
 fun TelegramDetailsPreview() {
     AppTheme(darkTheme = false) {
         TelegramDetailsView(
-            telegramDetails = TelegramDetails(
-                senderAvatar = R.drawable.telegram,
-                senderUsername = "@johndoe",
-                recipientNumber = "+15551234567",
-                date = "Oct 27, 2023",
-                fullText = "Hey there! Just wanted to follow up on our conversation. Let me know if you have any questions."
+            message = RecentMessage(
+                platformLogo = R.drawable.telegram,
+                platformName = "Telegram",
+                headingText = "John Doe",
+                subHeadingText = "123-456-7890",
+                date = "10:30 AM",
+                messagePreview = "Hello, this is a test message.",
+                messageType = MessageType.TELEGRAM
             ),
             navController = NavController(LocalContext.current)
         )

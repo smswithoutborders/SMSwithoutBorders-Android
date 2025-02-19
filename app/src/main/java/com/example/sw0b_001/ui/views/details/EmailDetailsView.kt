@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.views.details
 
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +34,12 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.MessageType
+import com.example.sw0b_001.ui.views.RecentMessage
+import kotlinx.android.parcel.Parcelize
 
 // Data class for Gmail details
+
 data class EmailDetails(
     val subject: String,
     val senderAvatar: Int,
@@ -50,9 +55,20 @@ data class EmailDetails(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailDetailsView(
-    emailDetails: EmailDetails,
+    message: RecentMessage,
     navController: NavController
 ) {
+    val emailDetails = EmailDetails(
+        subject = message.headingText,
+        senderAvatar = message.platformLogo,
+        senderEmail = message.subHeadingText ?: "",
+        to = listOf("recipient1@example.com", "recipient2@example.com"),
+        cc = listOf("cc1@example.com"),
+        bcc = listOf("bcc1@example.com", "bcc2@example.com"),
+        date = message.date,
+        fullText = message.messagePreview
+    )
+    
     Scaffold(
         topBar = {
             RelayAppBar(screenName = "Email Details", navController = navController)
@@ -165,15 +181,15 @@ fun EmailDetailsRow(label: String, emails: List<String>) {
 fun EmailDetailsPreview() {
     AppTheme(darkTheme = false) {
         EmailDetailsView(
-            emailDetails = EmailDetails(
-                subject = "Meeting Agenda",
-                senderAvatar = R.drawable.gmail,
-                senderEmail = "sender@example.com",
-                to = listOf("recipient1@example.com", "recipient2@example.com"),
-                cc = listOf("cc1@example.com"),
-                bcc = listOf("bcc1@example.com", "bcc2@example.com"),
+            message = RecentMessage(
+                platformLogo = R.drawable.gmail,
+                platformName = "Gmail",
+                headingText = "Meeting Agenda",
+
+                subHeadingText = "sender@example.com",
+                messagePreview = "Hi team, Please find the agenda for our upcoming meeting.",
                 date = "Oct 26, 2023",
-                fullText = "Hi team,\n\nPlease find the agenda for our upcoming meeting.\n\nBest,\nSender"
+                messageType = MessageType.GMAIL
             ),
             navController = NavController(LocalContext.current)
         )

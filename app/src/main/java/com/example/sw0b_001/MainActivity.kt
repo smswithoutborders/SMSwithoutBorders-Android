@@ -13,9 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.sw0b_001.ui.theme.AppTheme
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.sw0b_001.Homepage.HomepageLoggedIn
 import com.example.sw0b_001.Homepage.HomepageNotLoggedIn
 import com.example.sw0b_001.Models.Messages.MessagesViewModel
@@ -23,9 +25,18 @@ import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.views.AboutView
 import com.example.sw0b_001.ui.views.GatewayClientView
+import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
 import com.example.sw0b_001.ui.views.SettingsView
+import com.example.sw0b_001.ui.views.details.EmailDetails
+import com.example.sw0b_001.ui.views.details.EmailDetailsView
+import com.example.sw0b_001.ui.views.details.TelegramDetails
+import com.example.sw0b_001.ui.views.details.TelegramDetailsView
+import com.example.sw0b_001.ui.views.details.XDetailsView
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 //@Serializable
 //object RecentScreen
@@ -104,6 +115,39 @@ class MainActivity : ComponentActivity() {
             }
             composable(Screen.GatewayClients.route) {
                 GatewayClientView(navController = navController)
+            }
+            composable(
+                route = Screen.EmailDetails().route,
+                arguments = listOf(navArgument("recentMessage") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val encodedJson = backStackEntry.arguments?.getString("recentMessage")
+                encodedJson?.let {
+                    val decodedJson = URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                    val recentMessage = Json.decodeFromString<RecentMessage>(decodedJson)
+                    EmailDetailsView(message = recentMessage, navController = navController)
+                }
+            }
+            composable(
+                route = Screen.TelegramDetails().route,
+                arguments = listOf(navArgument("recentMessage") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val encodedJson = backStackEntry.arguments?.getString("recentMessage")
+                encodedJson?.let {
+                    val decodedJson = URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                    val recentMessage = Json.decodeFromString<RecentMessage>(decodedJson)
+                    TelegramDetailsView(message = recentMessage, navController = navController)
+                }
+            }
+            composable(
+                route = Screen.XDetails().route,
+                arguments = listOf(navArgument("recentMessage") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val encodedJson = backStackEntry.arguments?.getString("recentMessage")
+                encodedJson?.let {
+                    val decodedJson = URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
+                    val recentMessage = Json.decodeFromString<RecentMessage>(decodedJson)
+                    XDetailsView(message = recentMessage, navController = navController)
+                }
             }
         }
     }

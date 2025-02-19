@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.views.details
 
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +35,9 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.MessageType
+import com.example.sw0b_001.ui.views.RecentMessage
+import kotlinx.android.parcel.Parcelize
 
 // Data class for X details
 data class XDetails(
@@ -45,9 +50,15 @@ data class XDetails(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun XDetailsView(
-    xDetails: XDetails,
+    message: RecentMessage,
     navController: NavController,
 ) {
+    val xDetails = XDetails(
+        userAvatar = message.platformLogo,
+        username = message.subHeadingText ?: "",
+        date = message.date,
+        fullText = message.messagePreview
+    )
     Scaffold(
         topBar = {
             RelayAppBar(screenName = "X Details", navController = navController)
@@ -101,7 +112,7 @@ fun XDetailsView(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Divider(color = MaterialTheme.colorScheme.outline)
+            HorizontalDivider(color = MaterialTheme.colorScheme.outline)
             Spacer(modifier = Modifier.height(16.dp))
 
             // Full Text
@@ -119,11 +130,14 @@ fun XDetailsView(
 fun XDetailsPreview() {
     AppTheme(darkTheme = false) {
         XDetailsView(
-            xDetails = XDetails(
-                userAvatar = R.drawable.x_icon,
-                username = "@idasview",
-                date = "Oct 27, 2023",
-                fullText = "I create beautiful video content. Follow me on Instagram and TikTok for more updates."
+            message = RecentMessage(
+                platformLogo = R.drawable.x_icon,
+                platformName = "X",
+                headingText = "John Doe",
+                subHeadingText = "123-456-7890",
+                date = "10:30 AM",
+                messagePreview = "Hello, this is a test message.",
+                messageType = MessageType.X
             ),
             navController = NavController(LocalContext.current)
         )
