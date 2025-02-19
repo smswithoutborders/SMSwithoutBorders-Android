@@ -31,9 +31,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.sw0b_001.AboutScreen
 import com.example.sw0b_001.R
-import com.example.sw0b_001.SettingsScreen
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
@@ -89,14 +88,14 @@ fun RecentsAppBar(
                 DropdownMenuItem(
                     text = { Text("Settings") },
                     onClick = {
-                        navController.navigate(SettingsScreen)
+                        navController.navigate(Screen.Settings.route)
                         showMenu = false
                     }
                 )
                 DropdownMenuItem(
                     text = { Text("About") },
                     onClick = {
-                        navController.navigate(AboutScreen)
+                        navController.navigate(Screen.About.route)
                         showMenu = false
                     }
                 )

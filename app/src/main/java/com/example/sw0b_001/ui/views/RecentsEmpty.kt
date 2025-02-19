@@ -50,9 +50,7 @@ fun RecentsEmptyView(
         },
         bottomBar = {
             BottomNavBar (
-                currentScreen = "Recents",
-                onRecentsClicked = {TODO("add functionality")},
-                onCountriesClicked = {TODO("add functionality")}
+                navController = navController
             )
         }
     ) { innerPadding ->

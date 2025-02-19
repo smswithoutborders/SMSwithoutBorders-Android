@@ -52,9 +52,9 @@ data class GatewayClient(
 
 @Composable
 fun GatewayClientView(
-    gatewayClients: List<GatewayClient>,
+    gatewayClients: List<GatewayClient> = sampleGatewayClients,
     onGatewayClientSelected: (GatewayClient) -> Unit = {},
-    navController: NavController
+    navController: NavController,
 ) {
     var selectedGatewayClient by remember {
         mutableStateOf<GatewayClient?>(
@@ -77,9 +77,7 @@ fun GatewayClientView(
         },
         bottomBar = {
             BottomNavBar(
-                currentScreen = "Recents",
-                onRecentsClicked = { TODO("add functionality") },
-                onCountriesClicked = {TODO("add functionality")}
+                navController = navController
             )
         }
     ) { innerPadding ->
@@ -224,17 +222,18 @@ fun GatewayClientCard(gatewayClient: GatewayClient, onCardClicked: (GatewayClien
     }
 }
 
+val sampleGatewayClients = listOf(
+    GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401"),
+    GatewayClient("+237699876543", "Orange Cameroon", "Cameroon", "62402"),
+    GatewayClient("+2348012345678", "MTN Nigeria", "Nigeria", "62101"),
+    GatewayClient("+2349098765432", "Airtel Nigeria", "Nigeria", "62102"),
+    GatewayClient("+237655443322", "Nexttel Cameroon", "Cameroon", "62403")
+)
+
 
 @Preview(showBackground = false)
 @Composable
 fun GatewayClientScreenPreview() {
-    val sampleGatewayClients = listOf(
-        GatewayClient("+237676015911", "MTN Cameroon", "Cameroon", "62401"),
-        GatewayClient("+237699876543", "Orange Cameroon", "Cameroon", "62402"),
-        GatewayClient("+2348012345678", "MTN Nigeria", "Nigeria", "62101"),
-        GatewayClient("+2349098765432", "Airtel Nigeria", "Nigeria", "62102"),
-        GatewayClient("+237655443322", "Nexttel Cameroon", "Cameroon", "62403")
-    )
     AppTheme(darkTheme = false) {
         GatewayClientView(gatewayClients = sampleGatewayClients, navController = NavController(LocalContext.current))
     }

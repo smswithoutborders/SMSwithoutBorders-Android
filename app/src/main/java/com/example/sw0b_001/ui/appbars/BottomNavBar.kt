@@ -11,17 +11,23 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
 fun BottomNavBar(
-    currentScreen: String,
-    onRecentsClicked: () -> Unit,
-    onCountriesClicked: () -> Unit
+    navController: NavController,
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
     NavigationBar(
 //        containerColor = MaterialTheme.colorScheme.primary,
     ) {
@@ -37,8 +43,14 @@ fun BottomNavBar(
                     style = MaterialTheme.typography.labelSmall
                 )
             },
-            selected = currentScreen == "Recents",
-            onClick = onRecentsClicked,
+            selected = currentRoute == Screen.Recents.route,
+            onClick = {
+                navController.navigate(Screen.Recents.route) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+//            onClick = { navController.navigate(RecentScreen)},
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.onSurface,
                 selectedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -57,8 +69,13 @@ fun BottomNavBar(
                 text = "Countries",
                 style = MaterialTheme.typography.labelSmall
             ) },
-            selected = currentScreen == "Countries",
-            onClick = onCountriesClicked,
+            selected = currentRoute == Screen.GatewayClients.route,
+            onClick = {
+                navController.navigate(Screen.GatewayClients.route) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
             colors = NavigationBarItemDefaults.colors(
                 selectedIconColor = MaterialTheme.colorScheme.onSurface,
                 selectedTextColor = MaterialTheme.colorScheme.onSurface,
@@ -76,9 +93,7 @@ fun BottomNavBar(
 fun RelayBottomNavBarPreview() {
     AppTheme(darkTheme = false) {
         BottomNavBar (
-            currentScreen = "Recents",
-            onRecentsClicked = {},
-            onCountriesClicked = {}
+            navController = NavController(LocalContext.current)
         )
     }
 }

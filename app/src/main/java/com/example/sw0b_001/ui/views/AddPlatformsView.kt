@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
+import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
@@ -46,13 +47,11 @@ fun AddPlatformsView(
 ) {
     Scaffold(
         topBar = {
-            RecentsAppBar(navController = navController)
+            RelayAppBar(screenName = "Add Platforms", navController = navController)
         },
         bottomBar = {
             BottomNavBar (
-                currentScreen = "Recents",
-                onRecentsClicked = {TODO("add functionality")},
-                onCountriesClicked = {TODO("add functionality")}
+                navController = navController
             )
         }
     ) { innerPadding ->
