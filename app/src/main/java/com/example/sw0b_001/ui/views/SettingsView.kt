@@ -34,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sw0b_001.ui.appbars.RelayAppBar
+import com.example.sw0b_001.ui.components.LanguageOption
+import com.example.sw0b_001.ui.components.LanguageSelectionPopup
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
@@ -41,6 +43,8 @@ import com.example.sw0b_001.ui.theme.AppTheme
 fun SettingsView(
     navController: NavController,
 ) {
+    var showLanguagePopup by remember { mutableStateOf(false) }
+    var currentLanguage by remember { mutableStateOf(LanguageOption("English", "en")) }
     Scaffold(
         topBar = {
             RelayAppBar(screenName = "Settings", navController = navController)
@@ -60,8 +64,8 @@ fun SettingsView(
                 SettingsRow(
                     icon = Icons.Filled.Language,
                     title = "Language",
-                    subtext = "English",
-                    onClick = { TODO("Implement language selection") }
+                    subtext = currentLanguage.name,
+                    onClick = { showLanguagePopup = true }
                 )
             }
 
@@ -90,6 +94,17 @@ fun SettingsView(
                     onClick = {navController.navigate(Screen.Security.route) }
                 )
             }
+        }
+
+        if (showLanguagePopup) {
+            LanguageSelectionPopup(
+                currentLanguageCode = currentLanguage.code,
+                onLanguageSelected = { selectedLanguage ->
+                    currentLanguage = selectedLanguage
+                    // TODO: Implement language change logic
+                },
+                onDismiss = { showLanguagePopup = false }
+            )
         }
     }
 }
