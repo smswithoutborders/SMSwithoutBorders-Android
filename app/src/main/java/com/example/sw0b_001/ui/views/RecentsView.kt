@@ -1,9 +1,9 @@
 package com.example.sw0b_001.ui.views
 
-import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -22,13 +22,19 @@ import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -42,12 +48,9 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
+import com.example.sw0b_001.ui.modals.NewMessageModal
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
-import com.example.sw0b_001.ui.views.details.EmailDetails
-import com.example.sw0b_001.ui.views.details.TelegramDetails
-import com.example.sw0b_001.ui.views.details.XDetails
-import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -78,6 +81,7 @@ fun RecentsView(
     navController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     // Sample recent messages data
     val recentMessages = listOf(
@@ -162,27 +166,41 @@ fun RecentsView(
         },
         floatingActionButton = {
             Column(horizontalAlignment = Alignment.End) {
-                FloatingActionButton(
-                    onClick = {TODO("add functionality")},
+                ExtendedFloatingActionButton(
+                    onClick = { navController.navigate(Screen.AddPlatforms.route) },
                     modifier = Modifier.padding(bottom = 16.dp),
-                    containerColor = MaterialTheme.colorScheme.secondary
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Download,
-                        contentDescription = "Save Platforms",
-                        tint = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-                FloatingActionButton(
-                    onClick = {TODO("add functionality")},
-                    containerColor = MaterialTheme.colorScheme.secondary
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Create,
-                        contentDescription = "Compose Message",
-                        tint = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.Download,
+                            contentDescription = "Save Platforms",
+                            tint = MaterialTheme.colorScheme.onSecondary
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = "Platforms",
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+                )
+                ExtendedFloatingActionButton(
+                    onClick = { showBottomSheet = true },
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.Create,
+                            contentDescription = "Compose Message",
+                            tint = MaterialTheme.colorScheme.onSecondary
+                        )
+                    },
+                    text = {
+                        Text(
+                            text = "Compose",
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+                )
             }
         },
         bottomBar = {
@@ -191,16 +209,29 @@ fun RecentsView(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
+        Box(
+            Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
         ) {
-            items(recentMessages) { message ->
-                RecentMessageCard(message, navController)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(vertical = 16.dp)
+            ) {
+                items(recentMessages) { message ->
+                    RecentMessageCard(message, navController)
+                }
+            }
+
+            if (showBottomSheet) {
+                NewMessageModal(
+                    showBottomSheet = showBottomSheet,
+                    onDismissRequest = { showBottomSheet = false }
+                )
             }
         }
     }

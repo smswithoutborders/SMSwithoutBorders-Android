@@ -22,8 +22,10 @@ import com.example.sw0b_001.Homepage.HomepageLoggedIn
 import com.example.sw0b_001.Homepage.HomepageNotLoggedIn
 import com.example.sw0b_001.Models.Messages.MessagesViewModel
 import com.example.sw0b_001.ui.appbars.BottomNavBar
+import com.example.sw0b_001.ui.modals.NewMessageModal
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.views.AboutView
+import com.example.sw0b_001.ui.views.AddPlatformsView
 import com.example.sw0b_001.ui.views.GatewayClientView
 import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
@@ -116,6 +118,12 @@ class MainActivity : ComponentActivity() {
             composable(Screen.GatewayClients.route) {
                 GatewayClientView(navController = navController)
             }
+            composable(Screen.AddPlatforms.route) {
+                AddPlatformsView(navController = navController)
+            }
+
+
+            // Message Details Screens
             composable(
                 route = Screen.EmailDetails().route,
                 arguments = listOf(navArgument("recentMessage") { type = NavType.StringType })

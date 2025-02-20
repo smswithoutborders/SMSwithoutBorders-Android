@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,27 +22,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewMessageModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
-    val scope = rememberCoroutineScope()
+fun NewMessageModal(
+    showBottomSheet: Boolean,
+    onDismissRequest: () -> Unit,
+) {
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        skipHiddenState = false
+    )
 
     if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = onDismiss,
+            onDismissRequest = onDismissRequest,
             sheetState = sheetState,
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+            scrimColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface)
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f))
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -54,7 +65,7 @@ fun NewMessageModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
                 )
 
                 Button(
-                    onClick = { /* Handle New Message With Alias */ },
+                    onClick = { TODO("add functionality") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonColors(
@@ -76,7 +87,7 @@ fun NewMessageModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
                 HorizontalDivider()
 
                 Button(
-                    onClick = { /* Handle New Message with RelaySMS Account */ },
+                    onClick = { TODO("add functionality") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonColors(
@@ -108,6 +119,6 @@ fun NewMessageModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
 @Composable
 fun NewMessageContentPreview() {
     AppTheme(darkTheme = false) {
-        NewMessageModal (onDismiss = {}, showBottomSheet = true)
+        NewMessageModal (showBottomSheet = true, onDismissRequest = {})
     }
 }
