@@ -3,6 +3,7 @@ package com.example.sw0b_001.ui.appbars
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -61,6 +62,31 @@ fun BottomNavBar(
         )
         NavigationBarItem(
             icon = { Icon(
+                Icons.Filled.PhoneAndroid,
+                contentDescription = "Platforms",
+                modifier = Modifier.size(20.dp)
+            ) },
+            label = { Text(
+                text = "Platforms",
+                style = MaterialTheme.typography.labelSmall
+            ) },
+            selected = currentRoute == Screen.AddPlatforms.route,
+            onClick = {
+                navController.navigate(Screen.AddPlatforms.route) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            },
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = MaterialTheme.colorScheme.onSurface,
+                selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                unselectedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                indicatorColor = MaterialTheme.colorScheme.primaryContainer
+            )
+        )
+        NavigationBarItem(
+            icon = { Icon(
                 Icons.Filled.Public,
                 contentDescription = "Countries",
                 modifier = Modifier.size(20.dp)
@@ -84,6 +110,7 @@ fun BottomNavBar(
                 indicatorColor = MaterialTheme.colorScheme.primaryContainer
             )
         )
+
     }
 }
 

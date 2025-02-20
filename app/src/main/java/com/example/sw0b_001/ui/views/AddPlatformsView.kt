@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,6 +43,7 @@ import com.example.sw0b_001.ui.appbars.RecentsAppBar
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AddPlatformsView(
     navController: NavController,
@@ -99,24 +102,29 @@ fun AddPlatformsView(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Row(
+                FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(48.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    maxItemsInEachRow = 2
                 ) {
                     PlatformCard(
                         logo = R.drawable.gmail,
                         platformName = "Gmail",
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.width(130.dp),
+                        isActive = true
                     )
                     PlatformCard(
                         logo = R.drawable.telegram,
                         platformName = "Telegram",
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.width(130.dp),
+                        isActive = false
                     )
                     PlatformCard(
                         logo = R.drawable.x_icon,
                         platformName = "X",
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.width(130.dp),
+                        isActive = false
                     )
                 }
             }
@@ -151,25 +159,31 @@ fun RelaySMSCard() {
                     .background(Color.Green)
                     .align(Alignment.TopEnd)
             )
-            Text(
-                text = "RelaySMS account",
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+//            Text(
+//                text = "RelaySMS account",
+//                style = MaterialTheme.typography.labelSmall,
+//                modifier = Modifier
+//                    .align(Alignment.BottomCenter)
+//                    .padding(bottom = 8.dp),
+//                color = MaterialTheme.colorScheme.onSurfaceVariant
+//            )
         }
 
     }
 }
 
 @Composable
-fun PlatformCard(logo: Int, platformName: String, modifier: Modifier = Modifier) {
+fun PlatformCard(
+    logo: Int,
+    platformName: String,
+    modifier: Modifier = Modifier,
+    isActive: Boolean
+) {
     Card(
-        modifier = modifier.height(130.dp)
+        modifier = modifier
+            .height(130.dp)
             .width(130.dp)
-            .clickable{ TODO("Add functionality for platform card") },
+            .clickable { TODO("Add functionality for platform card") },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -182,8 +196,18 @@ fun PlatformCard(logo: Int, platformName: String, modifier: Modifier = Modifier)
                 modifier = Modifier
                     .size(50.dp)
                     .align(Alignment.Center),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
+                colorFilter = if (!isActive) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)) else null
             )
+            if (isActive) {
+                Box(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(12.dp)
+                        .clip(CircleShape)
+                        .background(Color.Green)
+                        .align(Alignment.TopEnd)
+                )
+            }
             Text(
                 text = platformName,
                 style = MaterialTheme.typography.labelSmall,

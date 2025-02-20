@@ -167,24 +167,6 @@ fun RecentsView(
         floatingActionButton = {
             Column(horizontalAlignment = Alignment.End) {
                 ExtendedFloatingActionButton(
-                    onClick = { navController.navigate(Screen.AddPlatforms.route) },
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Filled.Download,
-                            contentDescription = "Save Platforms",
-                            tint = MaterialTheme.colorScheme.onSecondary
-                        )
-                    },
-                    text = {
-                        Text(
-                            text = "Platforms",
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    }
-                )
-                ExtendedFloatingActionButton(
                     onClick = { showBottomSheet = true },
                     containerColor = MaterialTheme.colorScheme.secondary,
                     icon = {
