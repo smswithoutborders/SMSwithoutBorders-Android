@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sw0b_001.ui.appbars.RelayAppBar
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @Composable
@@ -86,7 +87,7 @@ fun SettingsView(
                     icon = Icons.Filled.Security,
                     title = "Security",
                     subtext = "Enable app locks and pin codes",
-                    onClick = {TODO("Implement security settings") }
+                    onClick = {navController.navigate(Screen.Security.route) }
                 )
             }
         }

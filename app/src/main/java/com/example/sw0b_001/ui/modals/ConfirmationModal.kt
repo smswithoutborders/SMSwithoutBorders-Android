@@ -38,19 +38,23 @@ import kotlinx.coroutines.launch
 fun ConfirmationModal(
     onContinue: () -> Unit,
     onCancel: () -> Unit,
+    showBottomSheet: Boolean = true,
     message: String = "Click continue to confirm this action. Do not worry, it has no dangerous effects."
 ) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        skipHiddenState = false
+    )
     val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(true) }
 
     if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = {
-                showBottomSheet = false
                 onCancel()
             },
             sheetState = sheetState,
+            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+            scrimColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         ) {
             Column(
                 modifier = Modifier
@@ -76,7 +80,6 @@ fun ConfirmationModal(
                             .clickable {
                                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                                     if (!sheetState.isVisible) {
-                                        showBottomSheet = false
                                         onCancel()
                                     }
                                 }
@@ -86,14 +89,7 @@ fun ConfirmationModal(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
-                        onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                if (!sheetState.isVisible) {
-                                    showBottomSheet = false
-                                    onContinue()
-                                }
-                            }
-                        },
+                        onClick = onContinue,
                         colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer)
                     ) {
                         Text(
@@ -113,7 +109,7 @@ fun ConfirmationModalPreview() {
     AppTheme(darkTheme = true) {
         ConfirmationModal(
             onContinue = {},
-            onCancel = {}
+            onCancel = {},
         )
     }
 }

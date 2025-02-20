@@ -29,6 +29,7 @@ import com.example.sw0b_001.ui.views.AddPlatformsView
 import com.example.sw0b_001.ui.views.GatewayClientView
 import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
+import com.example.sw0b_001.ui.views.SecurityView
 import com.example.sw0b_001.ui.views.SettingsView
 import com.example.sw0b_001.ui.views.details.EmailDetails
 import com.example.sw0b_001.ui.views.details.EmailDetailsView
@@ -120,6 +121,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(Screen.AddPlatforms.route) {
                 AddPlatformsView(navController = navController)
+            }
+            composable(Screen.Security.route) {
+                SecurityView(navController = navController)
             }
 
 
