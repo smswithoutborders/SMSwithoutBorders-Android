@@ -35,28 +35,30 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.GatewayClient
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddGatewayClientModal(
-    onSave: (String, String) -> Unit,
     onDismiss: () -> Unit,
-    onSelectContact: () -> Unit
+    showBottomSheet: Boolean,
+    gatewayClient: GatewayClient? = null
 ) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        skipHiddenState = false
+    )
     val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(true) }
-    var phoneNumber by remember { mutableStateOf("") }
-    var alias by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf(gatewayClient?.phoneNumber ?: "") }
+    var alias by remember { mutableStateOf(gatewayClient?.alias ?: "") }
 
     if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = {
-                showBottomSheet = false
-                onDismiss()
-            },
+            onDismissRequest = onDismiss,
             sheetState = sheetState,
+//            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+//            scrimColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
         ) {
             Column(
                 modifier = Modifier
@@ -88,7 +90,7 @@ fun AddGatewayClientModal(
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                     )
-                    IconButton(onClick = onSelectContact) {
+                    IconButton(onClick = {TODO("add functionality")}) {
                         Icon(
                             imageVector = Icons.Filled.Contacts,
                             contentDescription = "Select Contact",
@@ -127,12 +129,7 @@ fun AddGatewayClientModal(
                 // Save Button
                 Button(
                     onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            if (!sheetState.isVisible) {
-                                showBottomSheet = false
-                                onSave(phoneNumber, alias)
-                            }
-                        }
+                        TODO("add functionality")
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
@@ -149,9 +146,8 @@ fun AddGatewayClientModal(
 fun AddGatewayClientModalPreview() {
     AppTheme {
         AddGatewayClientModal(
-            onSave = { _, _ -> },
+            showBottomSheet = true,
             onDismiss = {},
-            onSelectContact = {}
         )
     }
 }

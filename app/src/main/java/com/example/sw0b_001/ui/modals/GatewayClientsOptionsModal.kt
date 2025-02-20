@@ -30,17 +30,20 @@ import com.example.sw0b_001.ui.views.GatewayClient
 fun GatewayClientOptionsModal(
     gatewayClient: GatewayClient,
     onDismiss: () -> Unit,
-    onMakeDefaultClicked: () -> Unit,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
+    showBottomSheet: Boolean,
+    onEditClicked: (GatewayClient) -> Unit
 ) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.PartiallyExpanded)
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        skipHiddenState = false
+    )
     val scope = rememberCoroutineScope()
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface
+        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+        scrimColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
     ) {
         Column(
             modifier = Modifier
@@ -60,7 +63,7 @@ fun GatewayClientOptionsModal(
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = onMakeDefaultClicked,
+                onClick = {TODO("add make default functionality")},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer)
             ) {
@@ -73,7 +76,7 @@ fun GatewayClientOptionsModal(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = onEditClicked,
+                onClick = { onEditClicked(gatewayClient) },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondaryContainer)
             ) {
@@ -86,7 +89,7 @@ fun GatewayClientOptionsModal(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = onDeleteClicked,
+                onClick = {TODO("add delete functionality")},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.errorContainer)
             ) {
@@ -107,10 +110,9 @@ fun GatewayClientOptionsModalPreview() {
     AppTheme(darkTheme = false) {
         GatewayClientOptionsModal(
             gatewayClient = sampleGatewayClient,
-            onMakeDefaultClicked = {},
-            onEditClicked = {},
-            onDeleteClicked = {},
-            onDismiss = {}
+            onDismiss = {},
+            showBottomSheet = true,
+            onEditClicked = {}
         )
     }
 }
