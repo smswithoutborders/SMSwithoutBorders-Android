@@ -48,6 +48,7 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RecentsAppBar
+import com.example.sw0b_001.ui.modals.ActivePlatformsModal
 import com.example.sw0b_001.ui.modals.NewMessageModal
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
@@ -210,9 +211,10 @@ fun RecentsView(
             }
 
             if (showBottomSheet) {
-                NewMessageModal(
+                ActivePlatformsModal(
                     showBottomSheet = showBottomSheet,
-                    onDismissRequest = { showBottomSheet = false }
+                    onDismiss = { showBottomSheet = false },
+                    navController = navController
                 )
             }
         }

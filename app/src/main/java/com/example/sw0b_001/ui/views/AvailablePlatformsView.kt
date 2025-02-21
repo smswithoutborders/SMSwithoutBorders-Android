@@ -43,6 +43,12 @@ import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 
+data class PlatformData(
+    val logo: Int,
+    val platformName: String,
+    val isActive: Boolean
+)
+
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AvailablePlatformsView(
@@ -80,53 +86,43 @@ fun AvailablePlatformsView(
 //
 //                Spacer(modifier = Modifier.height(24.dp))
 
-                Text(
-                    text = "Use your RelaySMS account",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground
+                val platforms = listOf(
+                    PlatformData(R.drawable.gmail, "Gmail", true),
+                    PlatformData(R.drawable.telegram, "Telegram", false),
+                    PlatformData(R.drawable.x_icon, "X", false)
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                RelaySMSCard()
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Use your online accounts",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onBackground
+                PlatformListContent(
+                    platforms = platforms,
+                    filterPlatforms = false // No filtering in AvailablePlatformsView
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
 
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(48.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    maxItemsInEachRow = 2
-                ) {
-                    PlatformCard(
-                        logo = R.drawable.gmail,
-                        platformName = "Gmail",
-                        modifier = Modifier.width(130.dp),
-                        isActive = true
-                    )
-                    PlatformCard(
-                        logo = R.drawable.telegram,
-                        platformName = "Telegram",
-                        modifier = Modifier.width(130.dp),
-                        isActive = false
-                    )
-                    PlatformCard(
-                        logo = R.drawable.x_icon,
-                        platformName = "X",
-                        modifier = Modifier.width(130.dp),
-                        isActive = false
-                    )
-                }
+//                FlowRow(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    horizontalArrangement = Arrangement.spacedBy(48.dp),
+//                    verticalArrangement = Arrangement.spacedBy(16.dp),
+//                    maxItemsInEachRow = 2
+//                ) {
+//                    PlatformCard(
+//                        logo = R.drawable.gmail,
+//                        platformName = "Gmail",
+//                        modifier = Modifier.width(130.dp),
+//                        isActive = true
+//                    )
+//                    PlatformCard(
+//                        logo = R.drawable.telegram,
+//                        platformName = "Telegram",
+//                        modifier = Modifier.width(130.dp),
+//                        isActive = false
+//                    )
+//                    PlatformCard(
+//                        logo = R.drawable.x_icon,
+//                        platformName = "X",
+//                        modifier = Modifier.width(130.dp),
+//                        isActive = false
+//                    )
+//                }
             }
         }
     }
@@ -172,18 +168,78 @@ fun RelaySMSCard() {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun PlatformListContent(
+    platforms: List<PlatformData>,
+    filterPlatforms: Boolean = false,
+    onPlatformClick: (PlatformData) -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Use your RelaySMS account",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        RelaySMSCard()
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = "Use your online accounts",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        val displayedPlatforms = if (filterPlatforms) {
+            platforms.filter { it.isActive }
+        } else {
+            platforms
+        }
+
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            maxItemsInEachRow = 2
+        ) {
+            displayedPlatforms.forEach { platform ->
+                PlatformCard(
+                    logo = platform.logo,
+                    platformName = platform.platformName,
+                    modifier = Modifier.width(130.dp),
+                    isActive = platform.isActive,
+                    onClick = { onPlatformClick(platform) }
+                )
+            }
+        }
+    }
+}
+
 @Composable
 fun PlatformCard(
     logo: Int,
     platformName: String,
     modifier: Modifier = Modifier,
-    isActive: Boolean
+    isActive: Boolean,
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier
             .height(130.dp)
             .width(130.dp)
-            .clickable { TODO("Add functionality for platform card") },
+            .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
