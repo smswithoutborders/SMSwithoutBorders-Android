@@ -10,6 +10,11 @@ sealed class Screen(val route: String) {
     data object Security : Screen("security")
     data object GetStarted : Screen("get_started")
 
+    // Message Compose Routes
+    data object EmailCompose : Screen("email_compose")
+    data object MessageCompose : Screen("message_compose")
+    data object TextCompose : Screen("text_compose")
+
     // Message Details Routes
     data class EmailDetails(val recentMessage: String = "{recentMessage}") : Screen("email_details/$recentMessage") {
         companion object {

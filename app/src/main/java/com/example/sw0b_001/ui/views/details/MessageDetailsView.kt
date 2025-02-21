@@ -1,6 +1,5 @@
 package com.example.sw0b_001.ui.views.details
 
-import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,10 +35,9 @@ import com.example.sw0b_001.ui.appbars.RelayAppBar
 import com.example.sw0b_001.ui.theme.AppTheme
 import com.example.sw0b_001.ui.views.MessageType
 import com.example.sw0b_001.ui.views.RecentMessage
-import kotlinx.android.parcel.Parcelize
 
 // Data class for Telegram details
-data class TelegramDetails(
+data class MessageDetails(
     val senderAvatar: Int, // Resource ID for the avatar
     val senderUsername: String,
     val recipientNumber: String,
@@ -49,11 +47,11 @@ data class TelegramDetails(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelegramDetailsView(
+fun MessageDetailsView(
     message: RecentMessage,
     navController: NavController
 ) {
-    val telegramDetails = TelegramDetails(
+    val telegramDetails = MessageDetails(
         senderAvatar = message.platformLogo,
         senderUsername = message.subHeadingText ?: "",
         recipientNumber = message.messagePreview,
@@ -61,7 +59,7 @@ fun TelegramDetailsView(
         fullText = message.messagePreview)
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "Telegram Details", navController = navController)
+            RelayAppBar(screenName = "Message Details", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -133,9 +131,9 @@ fun TelegramDetailsView(
 
 @Preview(showBackground = true)
 @Composable
-fun TelegramDetailsPreview() {
+fun MessageDetailsPreview() {
     AppTheme(darkTheme = false) {
-        TelegramDetailsView(
+        MessageDetailsView(
             message = RecentMessage(
                 platformLogo = R.drawable.telegram,
                 platformName = "Telegram",

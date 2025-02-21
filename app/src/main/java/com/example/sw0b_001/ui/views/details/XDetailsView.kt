@@ -40,7 +40,7 @@ import com.example.sw0b_001.ui.views.RecentMessage
 import kotlinx.android.parcel.Parcelize
 
 // Data class for X details
-data class XDetails(
+data class TextDetails(
     val userAvatar: Int,
     val username: String,
     val date: String,
@@ -49,11 +49,11 @@ data class XDetails(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun XDetailsView(
+fun TextDetailsView(
     message: RecentMessage,
     navController: NavController,
 ) {
-    val xDetails = XDetails(
+    val textDetails = TextDetails(
         userAvatar = message.platformLogo,
         username = message.subHeadingText ?: "",
         date = message.date,
@@ -61,7 +61,7 @@ fun XDetailsView(
     )
     Scaffold(
         topBar = {
-            RelayAppBar(screenName = "X Details", navController = navController)
+            RelayAppBar(screenName = "Text Details", navController = navController)
         }
     ) { innerPadding ->
         Column(
@@ -73,7 +73,7 @@ fun XDetailsView(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // User Avatar
                 Image(
-                    painter = painterResource(id = xDetails.userAvatar),
+                    painter = painterResource(id = textDetails.userAvatar),
                     contentDescription = "User Avatar",
                     modifier = Modifier
                         .size(48.dp)
@@ -83,14 +83,14 @@ fun XDetailsView(
                 Column {
                     // Username
                     Text(
-                        text = xDetails.username,
+                        text = textDetails.username,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                     // Date
                     Text(
-                        text = xDetails.date,
+                        text = textDetails.date,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -117,7 +117,7 @@ fun XDetailsView(
 
             // Full Text
             Text(
-                text = xDetails.fullText,
+                text = textDetails.fullText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -127,9 +127,9 @@ fun XDetailsView(
 
 @Preview(showBackground = true)
 @Composable
-fun XDetailsPreview() {
+fun TextDetailsPreview() {
     AppTheme(darkTheme = false) {
-        XDetailsView(
+        TextDetailsView(
             message = RecentMessage(
                 platformLogo = R.drawable.x_icon,
                 platformName = "X",

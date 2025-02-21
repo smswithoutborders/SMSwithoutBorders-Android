@@ -32,11 +32,13 @@ import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
 import com.example.sw0b_001.ui.views.SecurityView
 import com.example.sw0b_001.ui.views.SettingsView
+import com.example.sw0b_001.ui.views.compose.EmailComposeView
+import com.example.sw0b_001.ui.views.compose.MessageComposeView
+import com.example.sw0b_001.ui.views.compose.TextComposeView
 import com.example.sw0b_001.ui.views.details.EmailDetails
 import com.example.sw0b_001.ui.views.details.EmailDetailsView
-import com.example.sw0b_001.ui.views.details.TelegramDetails
-import com.example.sw0b_001.ui.views.details.TelegramDetailsView
-import com.example.sw0b_001.ui.views.details.XDetailsView
+import com.example.sw0b_001.ui.views.details.MessageDetailsView
+import com.example.sw0b_001.ui.views.details.TextDetailsView
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.net.URLDecoder
@@ -130,6 +132,17 @@ class MainActivity : ComponentActivity() {
                 GetStartedView(navController = navController)
             }
 
+            // Message Compose Screens
+            composable(Screen.EmailCompose.route) {
+                EmailComposeView(navController = navController)
+            }
+            composable(Screen.MessageCompose.route) {
+                MessageComposeView(navController = navController)
+            }
+            composable(Screen.TextCompose.route) {
+                TextComposeView(navController = navController)
+            }
+
 
 
             // Message Details Screens
@@ -152,7 +165,7 @@ class MainActivity : ComponentActivity() {
                 encodedJson?.let {
                     val decodedJson = URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
                     val recentMessage = Json.decodeFromString<RecentMessage>(decodedJson)
-                    TelegramDetailsView(message = recentMessage, navController = navController)
+                    MessageDetailsView(message = recentMessage, navController = navController)
                 }
             }
             composable(
@@ -163,7 +176,7 @@ class MainActivity : ComponentActivity() {
                 encodedJson?.let {
                     val decodedJson = URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
                     val recentMessage = Json.decodeFromString<RecentMessage>(decodedJson)
-                    XDetailsView(message = recentMessage, navController = navController)
+                    TextDetailsView(message = recentMessage, navController = navController)
                 }
             }
         }

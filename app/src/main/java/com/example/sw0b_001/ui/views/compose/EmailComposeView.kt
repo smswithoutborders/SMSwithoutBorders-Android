@@ -26,15 +26,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailComposeView(onSendClicked: () -> Unit, onBack: () -> Unit) {
+fun EmailComposeView(
+    navController: NavController,
+) {
     var to by remember { mutableStateOf("") }
     var cc by remember { mutableStateOf("") }
     var bcc by remember { mutableStateOf("") }
@@ -46,12 +50,12 @@ fun EmailComposeView(onSendClicked: () -> Unit, onBack: () -> Unit) {
             TopAppBar(
                 title = { Text("Compose Email") },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = { TODO("Handle back") }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
-                    IconButton(onClick = onSendClicked) {
+                    IconButton(onClick = {TODO("Handle send") }) {
                         Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send")
                     }
                 },
@@ -157,6 +161,8 @@ fun EmailComposeView(onSendClicked: () -> Unit, onBack: () -> Unit) {
 @Composable
 fun EmailComposePreview() {
     AppTheme(darkTheme = false) {
-        EmailComposeView(onSendClicked = {}, onBack = {})
+        EmailComposeView(
+            navController = NavController(LocalContext.current),
+        )
     }
 }

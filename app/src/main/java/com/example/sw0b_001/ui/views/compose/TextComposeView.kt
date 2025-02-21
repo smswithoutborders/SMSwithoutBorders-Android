@@ -23,17 +23,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun XComposeView(
-    onPostClicked: () -> Unit,
-    onBack: () -> Unit
+fun TextComposeView(
+    navController: NavController,
 ) {
     var message by remember { mutableStateOf("") }
 
@@ -42,7 +43,7 @@ fun XComposeView(
             TopAppBar(
                 title = { Text("New Post") },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {TODO("Handle back")}) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -82,11 +83,10 @@ fun XComposeView(
 
 @Preview(showBackground = true)
 @Composable
-fun XComposePreview() {
+fun TextComposePreview() {
     AppTheme(darkTheme = false) {
-        XComposeView(
-            onPostClicked = {},
-            onBack = {}
+        TextComposeView(
+            navController = NavController(LocalContext.current),
         )
     }
 }

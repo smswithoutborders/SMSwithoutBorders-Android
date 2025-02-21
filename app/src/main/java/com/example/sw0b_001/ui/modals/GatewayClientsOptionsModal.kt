@@ -42,8 +42,6 @@ fun GatewayClientOptionsModal(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
-        scrimColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
     ) {
         Column(
             modifier = Modifier
