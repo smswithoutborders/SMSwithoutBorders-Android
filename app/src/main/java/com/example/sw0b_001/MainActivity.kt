@@ -25,8 +25,9 @@ import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.modals.NewMessageModal
 import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.views.AboutView
-import com.example.sw0b_001.ui.views.AddPlatformsView
+import com.example.sw0b_001.ui.views.AvailablePlatformsView
 import com.example.sw0b_001.ui.views.GatewayClientView
+import com.example.sw0b_001.ui.views.GetStartedView
 import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
 import com.example.sw0b_001.ui.views.SecurityView
@@ -119,12 +120,16 @@ class MainActivity : ComponentActivity() {
             composable(Screen.GatewayClients.route) {
                 GatewayClientView(navController = navController)
             }
-            composable(Screen.AddPlatforms.route) {
-                AddPlatformsView(navController = navController)
+            composable(Screen.AvailablePlatforms.route) {
+                AvailablePlatformsView(navController = navController)
             }
             composable(Screen.Security.route) {
                 SecurityView(navController = navController)
             }
+            composable(Screen.GetStarted.route) {
+                GetStartedView(navController = navController)
+            }
+
 
 
             // Message Details Screens

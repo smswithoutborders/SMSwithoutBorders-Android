@@ -70,9 +70,9 @@ fun BottomNavBar(
                 text = "Platforms",
                 style = MaterialTheme.typography.labelSmall
             ) },
-            selected = currentRoute == Screen.AddPlatforms.route,
+            selected = currentRoute == Screen.AvailablePlatforms.route,
             onClick = {
-                navController.navigate(Screen.AddPlatforms.route) {
+                navController.navigate(Screen.AvailablePlatforms.route) {
                     launchSingleTop = true
                     restoreState = true
                 }

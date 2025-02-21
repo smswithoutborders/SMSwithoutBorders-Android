@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +33,7 @@ fun GatewayClientsAppBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = {
             Text(
                 text = "Gateway Clients",
@@ -40,39 +41,39 @@ fun GatewayClientsAppBar(
                 fontWeight = FontWeight.Bold
             )
         },
-        navigationIcon = {
-            IconButton(onClick = {navController.popBackStack()}) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
-                )
-            }
-        },
+//        navigationIcon = {
+//            IconButton(onClick = {navController.popBackStack()}) {
+//                Icon(
+//                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                    contentDescription = "Back"
+//                )
+//            }
+//        },
         actions = {
-            IconButton(onClick = { showMenu = !showMenu }) {
+            IconButton(onClick = { TODO("Implement refresh") }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
+                    imageVector = Icons.Filled.Refresh,
                     contentDescription = "Menu"
                 )
             }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text("Refresh") },
-                    onClick = {
-                        TODO("Add functionality to refresh gateway clients")
-//                        showMenu = false
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Refresh,
-                            contentDescription = "Refresh"
-                        )
-                    }
-                )
-            }
+//            DropdownMenu(
+//                expanded = showMenu,
+//                onDismissRequest = { showMenu = false }
+//            ) {
+//                DropdownMenuItem(
+//                    text = { Text("Refresh") },
+//                    onClick = {
+//                        TODO("Add functionality to refresh gateway clients")
+////                        showMenu = false
+//                    },
+//                    leadingIcon = {
+//                        Icon(
+//                            imageVector = Icons.Filled.Refresh,
+//                            contentDescription = "Refresh"
+//                        )
+//                    }
+//                )
+//            }
         },
         colors = TopAppBarDefaults.topAppBarColors()
     )

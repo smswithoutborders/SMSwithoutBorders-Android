@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -77,7 +78,7 @@ fun RecentsAppBar(
         actions = {
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
+                    imageVector = Icons.Filled.MoreVert,
                     contentDescription = "Menu"
                 )
             }

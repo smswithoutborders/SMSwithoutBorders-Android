@@ -6,8 +6,9 @@ sealed class Screen(val route: String) {
     data object GatewayClients : Screen("gateway")
     data object About : Screen("about")
     data object Settings : Screen("settings")
-    data object AddPlatforms : Screen("add_platforms")
+    data object AvailablePlatforms : Screen("available_platforms")
     data object Security : Screen("security")
+    data object GetStarted : Screen("get_started")
 
     // Message Details Routes
     data class EmailDetails(val recentMessage: String = "{recentMessage}") : Screen("email_details/$recentMessage") {
