@@ -1,5 +1,6 @@
 package com.example.sw0b_001.ui.views.compose
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +31,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sw0b_001.ui.modals.Account
+import com.example.sw0b_001.ui.modals.SelectAccountModal
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,13 +41,37 @@ fun TextComposeView(
     navController: NavController,
 ) {
     var message by remember { mutableStateOf("") }
+    var showSelectAccountModal by remember { mutableStateOf(true) }
+    var selectedAccount by remember { mutableStateOf<Account?>(null) }
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = Unit) {
+        showSelectAccountModal = true
+    }
+
+    // Conditionally show the SelectAccountModal
+    if (showSelectAccountModal) {
+        SelectAccountModal(
+            navController = navController,
+            onDismissRequest = {
+                if (selectedAccount == null) {
+                    navController.popBackStack()
+                }
+                Toast.makeText(context, "No account selected", Toast.LENGTH_SHORT).show()
+            },
+            onAccountSelected = { account ->
+                selectedAccount = account
+                showSelectAccountModal = false
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("New Post") },
                 navigationIcon = {
-                    IconButton(onClick = {TODO("Handle back")}) {
+                    IconButton(onClick = {navController.popBackStack()}) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },

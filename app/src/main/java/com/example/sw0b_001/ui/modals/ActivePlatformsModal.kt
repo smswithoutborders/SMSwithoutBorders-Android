@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 import com.example.sw0b_001.ui.views.PlatformData
 import com.example.sw0b_001.ui.views.PlatformListContent
@@ -88,9 +89,22 @@ fun ActivePlatformsModal(
                 PlatformListContent(
                     platforms = platforms,
                     filterPlatforms = true,
+//                    onPlatformClick = { platform ->
+//                        selectedPlatform = platform
+//                        showSelectAccountModal = true
+//                    }
                     onPlatformClick = { platform ->
-                        selectedPlatform = platform
-                        showSelectAccountModal = true
+                        when (platform.platformName) {
+                            "Gmail" -> navController.navigate(Screen.EmailCompose.route)
+                            "Telegram" -> navController.navigate(Screen.MessageCompose.route)
+                            "X" -> navController.navigate(Screen.TextCompose.route)
+                            else -> {
+                                TODO("Handle other platforms")
+                            }
+                        }
+                        scope.launch { sheetState.hide() }.invokeOnCompletion {
+                            onDismiss()
+                        }
                     }
                 )
             }
@@ -111,8 +125,8 @@ fun ActivePlatformsModal(
 
 val testPlatforms = listOf(
     PlatformData(R.drawable.gmail, "Gmail", true),
-    PlatformData(R.drawable.telegram, "Telegram", false),
-    PlatformData(R.drawable.x_icon, "X", false),
+    PlatformData(R.drawable.telegram, "Telegram", true),
+    PlatformData(R.drawable.x_icon, "X", true),
 )
 
 @Preview(showBackground = true)

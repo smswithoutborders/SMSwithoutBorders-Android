@@ -14,15 +14,21 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,35 +61,52 @@ data class Account(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectAccountModal(
-    platform: PlatformData,
+    platform: PlatformData = PlatformData(R.drawable.gmail, "Gmail", true),
     accounts: List<Account> = sampleAccounts,
     onAccountSelected: (Account) -> Unit = {},
     navController: NavController,
     onDismissRequest: () -> Unit
 ) {
-    val sheetState = rememberStandardBottomSheetState(
-        initialValue = SheetValue.Expanded,
-        skipHiddenState = false
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { it != SheetValue.Hidden }
     )
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(true) }
 
+
     if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = {
-                scope.launch {
-                    sheetState.hide()
-                }.invokeOnCompletion {
-                    showBottomSheet = false
-                }
+
             },
             sheetState = sheetState,
+            dragHandle = null,
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    IconButton(onClick = {
+                        scope.launch {
+                            sheetState.hide()
+                        }.invokeOnCompletion {
+                            showBottomSheet = false
+                            onDismissRequest()
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "Close Modal"
+                        )
+                    }
+                }
                 Text(
                     text = "Select an account to send a message",
                     style = MaterialTheme.typography.headlineSmall,
