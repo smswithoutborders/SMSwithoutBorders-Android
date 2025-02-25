@@ -27,6 +27,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +45,7 @@ import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
 import com.example.sw0b_001.ui.appbars.RelayAppBar
+import com.example.sw0b_001.ui.modals.ActivePlatformsModal
 import com.example.sw0b_001.ui.theme.AppTheme
 
 data class PlatformData(
@@ -54,6 +59,15 @@ data class PlatformData(
 fun AvailablePlatformsView(
     navController: NavController,
 ) {
+    var showModal by remember { mutableStateOf(false) }
+    var showActivePlatformsModal by remember { mutableStateOf(false) }
+    var selectedPlatform by remember { mutableStateOf<PlatformData?>(null) }
+    val platforms = listOf(
+        PlatformData(R.drawable.gmail, "Gmail", true),
+        PlatformData(R.drawable.telegram, "Telegram", false),
+        PlatformData(R.drawable.x_icon, "X", false)
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("Available Platforms") })
@@ -124,6 +138,21 @@ fun AvailablePlatformsView(
 //                    )
 //                }
             }
+        }
+//        if (showModal && selectedPlatform != null) {
+//            PlatformOptionsModal(
+//                platform = selectedPlatform!!,
+//                onDismiss = { showModal = false },
+//                navController = navController
+//            )
+//        }
+        if (showActivePlatformsModal) {
+            ActivePlatformsModal(
+                platforms = platforms,
+                onDismiss = { showActivePlatformsModal = false },
+                navController = navController,
+                showBottomSheet = showActivePlatformsModal
+            )
         }
     }
 }

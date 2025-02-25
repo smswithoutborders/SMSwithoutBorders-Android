@@ -32,13 +32,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
+import com.example.sw0b_001.ui.views.PlatformData
 import kotlinx.coroutines.launch
 
 // Data class to represent an account
@@ -52,19 +55,27 @@ data class Account(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectAccountModal(
-    accounts: List<Account>,
-    onAccountSelected: (Account) -> Unit,
-    onDismiss: () -> Unit
+    platform: PlatformData,
+    accounts: List<Account> = sampleAccounts,
+    onAccountSelected: (Account) -> Unit = {},
+    navController: NavController,
+    onDismissRequest: () -> Unit
 ) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.Expanded)
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded,
+        skipHiddenState = false
+    )
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(true) }
 
     if (showBottomSheet) {
         ModalBottomSheet(
             onDismissRequest = {
-                showBottomSheet = false
-                onDismiss()
+                scope.launch {
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    showBottomSheet = false
+                }
             },
             sheetState = sheetState,
         ) {
@@ -91,7 +102,6 @@ fun SelectAccountModal(
                             scope.launch { sheetState.hide() }.invokeOnCompletion {
                                 if (!sheetState.isVisible) {
                                     showBottomSheet = false
-                                    onDismiss()
                                 }
                             }
                         }
@@ -141,34 +151,37 @@ fun AccountCard(account: Account, onAccountSelected: (Account) -> Unit) {
     }
 }
 
+val sampleAccounts = listOf(
+    Account(
+        profilePhoto = null,
+        platformName = "Gmail",
+        accountIdentifier = "user@gmail.com",
+        subtext = "Gmail"
+    ),
+    Account(
+        profilePhoto = null,
+        platformName = "X",
+        accountIdentifier = "@userx",
+        subtext = "X (formerly Twitter)"
+    ),
+    Account(
+        profilePhoto = R.drawable.relaysms_icon_default_shape,
+        platformName = "Telegram",
+        accountIdentifier = "+15551234567",
+        subtext = "Telegram"
+    )
+)
+
 @Preview(showBackground = true)
 @Composable
 fun SelectAccountModalPreview() {
-    val sampleAccounts = listOf(
-        Account(
-            profilePhoto = null,
-            platformName = "Gmail",
-            accountIdentifier = "user@gmail.com",
-            subtext = "Gmail"
-        ),
-        Account(
-            profilePhoto = null,
-            platformName = "X",
-            accountIdentifier = "@userx",
-            subtext = "X (formerly Twitter)"
-        ),
-        Account(
-            profilePhoto = R.drawable.relaysms_icon_default_shape,
-            platformName = "Telegram",
-            accountIdentifier = "+15551234567",
-            subtext = "Telegram"
-        )
-    )
     AppTheme {
         SelectAccountModal(
+            platform = PlatformData(R.drawable.gmail, "Gmail", true),
             accounts = sampleAccounts,
             onAccountSelected = {},
-            onDismiss = {}
+            navController = NavController(LocalContext.current),
+            onDismissRequest = {}
         )
     }
 }

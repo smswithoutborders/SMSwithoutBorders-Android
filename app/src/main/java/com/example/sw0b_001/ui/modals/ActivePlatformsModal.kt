@@ -41,6 +41,7 @@ import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.theme.AppTheme
 import com.example.sw0b_001.ui.views.PlatformData
 import com.example.sw0b_001.ui.views.PlatformListContent
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,9 +57,15 @@ fun ActivePlatformsModal(
     )
     val scope = rememberCoroutineScope()
     var isExpanded by remember { mutableStateOf(false) }
+    var showSelectAccountModal by remember { mutableStateOf(false) }
+    var selectedPlatform by remember { mutableStateOf<PlatformData?>(null) }
 
     ModalBottomSheet(
-        onDismissRequest = { onDismiss() },
+        onDismissRequest = {
+            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                onDismiss()
+            }
+        },
         sheetState = sheetState,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -82,12 +89,23 @@ fun ActivePlatformsModal(
                     platforms = platforms,
                     filterPlatforms = true,
                     onPlatformClick = { platform ->
-                        // Handle platform click in modal
-                        println("Clicked on ${platform.platformName} in modal")
+                        selectedPlatform = platform
+                        showSelectAccountModal = true
                     }
                 )
             }
         }
+    }
+
+    if (showSelectAccountModal && selectedPlatform != null) {
+        SelectAccountModal(
+            platform = selectedPlatform!!,
+            navController = navController,
+            onDismissRequest = {
+                showSelectAccountModal = false
+                selectedPlatform = null
+            }
+        )
     }
 }
 
