@@ -44,14 +44,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sw0b_001.R
 import com.example.sw0b_001.ui.appbars.BottomNavBar
-import com.example.sw0b_001.ui.appbars.RelayAppBar
-import com.example.sw0b_001.ui.modals.ActivePlatformsModal
+import com.example.sw0b_001.ui.modals.PlatformOptionsModal
 import com.example.sw0b_001.ui.theme.AppTheme
 
 data class PlatformData(
     val logo: Int,
     val platformName: String,
-    val isActive: Boolean
+    val isActive: Boolean,
+    val icon: Int = R.drawable.relaysms_icon_default_shape
 )
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -60,13 +60,18 @@ fun AvailablePlatformsView(
     navController: NavController,
 ) {
     var showModal by remember { mutableStateOf(false) }
-    var showActivePlatformsModal by remember { mutableStateOf(false) }
+    var showPlatformOptions by remember { mutableStateOf(false) }
     var selectedPlatform by remember { mutableStateOf<PlatformData?>(null) }
     val platforms = listOf(
         PlatformData(R.drawable.gmail, "Gmail", true),
         PlatformData(R.drawable.telegram, "Telegram", false),
         PlatformData(R.drawable.x_icon, "X", false)
     )
+
+    val showPlatformOptionsModal = { platform: PlatformData ->
+        selectedPlatform = platform
+        showPlatformOptions = true
+    }
 
     Scaffold(
         topBar = {
@@ -108,61 +113,32 @@ fun AvailablePlatformsView(
 
                 PlatformListContent(
                     platforms = platforms,
-                    filterPlatforms = false // No filtering in AvailablePlatformsView
+                    filterPlatforms = false,
+                    onPlatformClick = showPlatformOptionsModal
                 )
-
-
-//                FlowRow(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    horizontalArrangement = Arrangement.spacedBy(48.dp),
-//                    verticalArrangement = Arrangement.spacedBy(16.dp),
-//                    maxItemsInEachRow = 2
-//                ) {
-//                    PlatformCard(
-//                        logo = R.drawable.gmail,
-//                        platformName = "Gmail",
-//                        modifier = Modifier.width(130.dp),
-//                        isActive = true
-//                    )
-//                    PlatformCard(
-//                        logo = R.drawable.telegram,
-//                        platformName = "Telegram",
-//                        modifier = Modifier.width(130.dp),
-//                        isActive = false
-//                    )
-//                    PlatformCard(
-//                        logo = R.drawable.x_icon,
-//                        platformName = "X",
-//                        modifier = Modifier.width(130.dp),
-//                        isActive = false
-//                    )
-//                }
             }
         }
-//        if (showModal && selectedPlatform != null) {
-//            PlatformOptionsModal(
-//                platform = selectedPlatform!!,
-//                onDismiss = { showModal = false },
-//                navController = navController
-//            )
-//        }
-        if (showActivePlatformsModal) {
-            ActivePlatformsModal(
-                platforms = platforms,
-                onDismiss = { showActivePlatformsModal = false },
-                navController = navController,
-                showBottomSheet = showActivePlatformsModal
+
+        if (showPlatformOptions) {
+            PlatformOptionsModal(
+                platform = selectedPlatform!!,
+                onDismissRequest = { showPlatformOptions = false },
+                isActive = selectedPlatform!!.isActive,
+                isDefault = selectedPlatform!!.platformName == "RelaySMS"
             )
         }
     }
 }
 
 @Composable
-fun RelaySMSCard() {
+fun RelaySMSCard(
+    onClick: (PlatformData) -> Unit
+) {
     Card(
         modifier = Modifier
             .width(130.dp)
-            .height(130.dp),
+            .height(130.dp)
+            .clickable { onClick(PlatformData(R.drawable.relaysms_icon_blue, "RelaySMS", true)) },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -184,14 +160,6 @@ fun RelaySMSCard() {
                     .background(Color.Green)
                     .align(Alignment.TopEnd)
             )
-//            Text(
-//                text = "RelaySMS account",
-//                style = MaterialTheme.typography.labelSmall,
-//                modifier = Modifier
-//                    .align(Alignment.BottomCenter)
-//                    .padding(bottom = 8.dp),
-//                color = MaterialTheme.colorScheme.onSurfaceVariant
-//            )
         }
 
     }
@@ -218,7 +186,7 @@ fun PlatformListContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        RelaySMSCard()
+        RelaySMSCard(onPlatformClick)
 
         Spacer(modifier = Modifier.height(24.dp))
 
