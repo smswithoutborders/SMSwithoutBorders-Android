@@ -33,7 +33,10 @@ class OnboardingActivity : AppCompatActivity(), OnboardingComponent.ManageCompon
         // This decides if to skp the onboarding not to show it
         if(!BuildConfig.IS_ONBOARDING)
             if(OnboardingComponent.getOnboarded(applicationContext)) {
-                val intent = Intent(this, HomepageActivity::class.java).apply {
+//                val intent = Intent(this, HomepageActivity::class.java).apply {
+//                    setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                }
+                val intent = Intent(this, MainActivity::class.java).apply {
                     setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
                 startActivity(intent)
