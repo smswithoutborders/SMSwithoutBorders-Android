@@ -10,20 +10,30 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Help
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.PhoneAndroid
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,7 +50,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,6 +98,7 @@ fun RecentsView(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     // Sample recent messages data
+    val recents = emptyList<RecentMessage>()
     val recentMessages = listOf(
         RecentMessage(
             R.drawable.relaysms_icon_blue,
@@ -166,28 +180,30 @@ fun RecentsView(
             RecentsAppBar(navController = navController)
         },
         floatingActionButton = {
-            Column(horizontalAlignment = Alignment.End) {
-                ExtendedFloatingActionButton(
-                    onClick = { showBottomSheet = true },
-                    containerColor = MaterialTheme.colorScheme.secondary,
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Filled.Create,
-                            contentDescription = "Compose Message",
-                            tint = MaterialTheme.colorScheme.onSecondary
-                        )
-                    },
-                    text = {
-                        Text(
-                            text = "Compose",
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    }
-                )
+            if (recents.isNotEmpty()) {
+                Column(horizontalAlignment = Alignment.End) {
+                    ExtendedFloatingActionButton(
+                        onClick = { showBottomSheet = true },
+                        containerColor = MaterialTheme.colorScheme.secondary,
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.Create,
+                                contentDescription = "Compose Message",
+                                tint = MaterialTheme.colorScheme.onSecondary
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = "Compose",
+                                color = MaterialTheme.colorScheme.onSecondary
+                            )
+                        }
+                    )
+                }
             }
         },
         bottomBar = {
-            BottomNavBar (
+            BottomNavBar(
                 navController = navController
             )
         }
@@ -198,15 +214,127 @@ fun RecentsView(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(vertical = 16.dp)
-            ) {
-                items(recentMessages) { message ->
-                    RecentMessageCard(message, navController)
+            if (recents.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    contentPadding = PaddingValues(vertical = 16.dp)
+                ) {
+                    items(recentMessages) { message ->
+                        RecentMessageCard(message, navController)
+                    }
+                }
+
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // Illustration
+                    Image(
+                        painter = painterResource(id = R.drawable.relay_sms_send_message),
+                        contentDescription = "Get Started Illustration",
+                        modifier = Modifier
+                            .size(300.dp)
+                            .padding(bottom = 16.dp)
+                    )
+
+                    // No Recent Messages
+                    Text(
+                        text = "No recent messages",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Center,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    HorizontalDivider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = {showBottomSheet = true},
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                                disabledContentColor = MaterialTheme.colorScheme.onSurface
+                            )
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Add,
+                                    contentDescription = "Compose New Message",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = "New Message")
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(32.dp))
+
+                        Button(
+                            onClick = { navController.navigate(Screen.AvailablePlatforms.route) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.PhoneAndroid,
+                                    contentDescription = "Save Platforms",
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(text = "Save Platforms")
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(64.dp))
+
+
+
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Help,
+                            contentDescription = "Tutorial",
+                            modifier = Modifier.size(ButtonDefaults.IconSize),
+//                        tint = MaterialTheme.colorScheme.secondary
+                        )
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text("Need Help? View Tutorial",
+//                        color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.bodySmall,
+                            textAlign = TextAlign.Center,
+                            textDecoration = TextDecoration.Underline
+                        )
+                    }
                 }
             }
 
@@ -217,6 +345,7 @@ fun RecentsView(
                     navController = navController
                 )
             }
+
         }
     }
 }
@@ -288,6 +417,7 @@ fun RecentMessageCard(
         }
     }
 }
+
 
 fun navigateToDetailsScreen(navController: NavController, message: RecentMessage) {
     val recentMessageJson = Json.encodeToString(message)
