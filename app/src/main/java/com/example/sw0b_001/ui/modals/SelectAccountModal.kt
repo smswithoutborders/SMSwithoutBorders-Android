@@ -67,9 +67,9 @@ fun SelectAccountModal(
     navController: NavController,
     onDismissRequest: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-        confirmValueChange = { it != SheetValue.Hidden }
+    val sheetState = rememberStandardBottomSheetState(
+        confirmValueChange = { it != SheetValue.Hidden },
+        skipHiddenState = false
     )
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(true) }

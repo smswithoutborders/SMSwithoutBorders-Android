@@ -132,9 +132,18 @@ class MainActivity : ComponentActivity() {
                 GetStartedView(navController = navController)
             }
 
-            // Message Compose Screens
-            composable(Screen.EmailCompose.route) {
-                EmailComposeView(navController = navController)
+            // Compose Screens
+            composable(
+                route = Screen.EmailCompose.route,
+                arguments = listOf(
+                    navArgument("isDefault") {
+                        type = NavType.BoolType
+                        defaultValue = false
+                    }
+                )
+            ) { backStackEntry ->
+                val isDefault = backStackEntry.arguments?.getBoolean("isDefault") ?: false
+                EmailComposeView(navController = navController, isDefault = isDefault)
             }
             composable(Screen.MessageCompose.route) {
                 MessageComposeView(navController = navController)

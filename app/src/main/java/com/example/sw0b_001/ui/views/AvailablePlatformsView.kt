@@ -124,7 +124,8 @@ fun AvailablePlatformsView(
                 platform = selectedPlatform!!,
                 onDismissRequest = { showPlatformOptions = false },
                 isActive = selectedPlatform!!.isActive,
-                isDefault = selectedPlatform!!.platformName == "RelaySMS"
+                isDefault = selectedPlatform!!.platformName == "RelaySMS",
+                navController = navController
             )
         }
     }

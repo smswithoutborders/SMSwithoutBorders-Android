@@ -11,7 +11,11 @@ sealed class Screen(val route: String) {
     data object GetStarted : Screen("get_started")
 
     // Message Compose Routes
-    data object EmailCompose : Screen("email_compose")
+    data object EmailCompose : Screen("email_compose?isDefault={isDefault}") {
+        fun withIsDefault(isDefault: Boolean): String {
+            return "email_compose?isDefault=$isDefault"
+        }
+    }
     data object MessageCompose : Screen("message_compose")
     data object TextCompose : Screen("text_compose")
 

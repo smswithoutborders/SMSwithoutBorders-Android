@@ -43,6 +43,7 @@ import com.example.sw0b_001.ui.theme.AppTheme
 @Composable
 fun EmailComposeView(
     navController: NavController,
+    isDefault: Boolean
 ) {
     var to by remember { mutableStateOf("") }
     var cc by remember { mutableStateOf("") }
@@ -55,8 +56,13 @@ fun EmailComposeView(
     val context = LocalContext.current
     var from by remember { mutableStateOf("") }
 
-    LaunchedEffect(key1 = Unit) {
-        showSelectAccountModal = true
+    LaunchedEffect(key1 = isDefault) {
+        if (isDefault) {
+            from = "your_phone_number@relaysms.me"
+            showSelectAccountModal = false
+        } else {
+            showSelectAccountModal = true
+        }
     }
 
     // Conditionally show the SelectAccountModal
@@ -195,6 +201,7 @@ fun EmailComposePreview() {
     AppTheme(darkTheme = false) {
         EmailComposeView(
             navController = NavController(LocalContext.current),
+            isDefault = true
         )
     }
 }

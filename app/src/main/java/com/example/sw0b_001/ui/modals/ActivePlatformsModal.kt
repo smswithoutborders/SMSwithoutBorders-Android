@@ -89,17 +89,16 @@ fun ActivePlatformsModal(
                 PlatformListContent(
                     platforms = platforms,
                     filterPlatforms = true,
-//                    onPlatformClick = { platform ->
-//                        selectedPlatform = platform
-//                        showSelectAccountModal = true
-//                    }
                     onPlatformClick = { platform ->
                         when (platform.platformName) {
-                            "Gmail" -> navController.navigate(Screen.EmailCompose.route)
+                            "Gmail" -> navController.navigate(Screen.EmailCompose.withIsDefault(false))
                             "Telegram" -> navController.navigate(Screen.MessageCompose.route)
                             "X" -> navController.navigate(Screen.TextCompose.route)
+                            "RelaySMS" -> navController.navigate(Screen.EmailCompose.withIsDefault(true))
                             else -> {
-                                TODO("Handle other platforms")
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    onDismiss()
+                                }
                             }
                         }
                         scope.launch { sheetState.hide() }.invokeOnCompletion {

@@ -33,12 +33,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 import com.example.sw0b_001.ui.views.PlatformData
 import kotlinx.coroutines.launch
@@ -50,6 +53,7 @@ fun PlatformOptionsModal(
     isActive: Boolean = true,
     isDefault: Boolean = false,
     onDismissRequest: () -> Unit,
+    navController: NavController
 
 ) {
     val sheetState = rememberStandardBottomSheetState(
@@ -90,7 +94,10 @@ fun PlatformOptionsModal(
                 Spacer(modifier = Modifier.height(24.dp))
                 if (isDefault) {
                     Button(
-                        onClick = { TODO("Add send message functionality") },
+                        onClick = {
+                            showBottomSheet = false
+                            navController.navigate(Screen.EmailCompose.withIsDefault(true))
+                                  },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text("Send Message")
@@ -126,7 +133,8 @@ fun PlatformOptionsModalPreview() {
     AppTheme(darkTheme = false) {
         PlatformOptionsModal(
             platform = PlatformData(R.drawable.gmail, "Gmail", true),
-            onDismissRequest = {}
+            onDismissRequest = {},
+            navController = NavController(LocalContext.current)
         )
     }
 }
