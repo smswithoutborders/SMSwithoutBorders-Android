@@ -96,14 +96,6 @@ fun AvailablePlatformsView(
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-//                Text(
-//                    text = "Available Platforms",
-//                    style = MaterialTheme.typography.headlineMedium,
-//                    fontWeight = FontWeight.Bold,
-//                    color = MaterialTheme.colorScheme.onBackground
-//                )
-//
-//                Spacer(modifier = Modifier.height(24.dp))
 
                 val platforms = listOf(
                     PlatformData(R.drawable.gmail, "Gmail", true),

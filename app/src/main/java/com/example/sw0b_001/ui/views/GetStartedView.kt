@@ -45,6 +45,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sw0b_001.R
+import com.example.sw0b_001.ui.modals.CreateAccountModal
+import com.example.sw0b_001.ui.modals.LoginModal
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +59,7 @@ fun GetStartedView (
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     var showLoginBottomSheet by remember { mutableStateOf(false) }
     var showCreateAccountBottomSheet by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -111,7 +115,7 @@ fun GetStartedView (
                         style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
-                        onClick = { /* TODO: Navigate to SMS compose */ },
+                        onClick = { navController.navigate(Screen.EmailCompose.withIsDefault(true)) },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer),
                         modifier = Modifier.fillMaxWidth(),
 //                    shape = MaterialTheme.shapes.medium
@@ -173,7 +177,7 @@ fun GetStartedView (
                         horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Button(
-                            onClick = { /* TODO: Navigate to Login */ },
+                            onClick = { showLoginBottomSheet = true },
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                             modifier = Modifier.weight(1f)
                         ) {
@@ -187,7 +191,7 @@ fun GetStartedView (
                             Text("Log In", color = MaterialTheme.colorScheme.onPrimary)
                         }
                         Button(
-                            onClick = { /* TODO: Navigate to Create Account */ },
+                            onClick = { showCreateAccountBottomSheet = true },
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                             modifier = Modifier.weight(1f)
                         ) {
@@ -236,6 +240,21 @@ fun GetStartedView (
             }
         }
 
+        if (showLoginBottomSheet) {
+            LoginModal(
+                showBottomSheet = showLoginBottomSheet,
+                onDismiss = { showLoginBottomSheet = false },
+                navController = navController
+            )
+        }
+
+        if (showCreateAccountBottomSheet) {
+            CreateAccountModal(
+                showBottomSheet = showCreateAccountBottomSheet,
+                onDismiss = { showCreateAccountBottomSheet = false },
+                navController = navController
+            )
+        }
 
     }
 

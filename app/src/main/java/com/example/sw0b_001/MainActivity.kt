@@ -28,6 +28,7 @@ import com.example.sw0b_001.ui.views.AboutView
 import com.example.sw0b_001.ui.views.AvailablePlatformsView
 import com.example.sw0b_001.ui.views.GatewayClientView
 import com.example.sw0b_001.ui.views.GetStartedView
+import com.example.sw0b_001.ui.views.HomepageView
 import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
 import com.example.sw0b_001.ui.views.SecurityView
@@ -108,8 +109,11 @@ class MainActivity : ComponentActivity() {
     fun MainNavigation(navController: NavHostController) {
         NavHost(
             navController = navController,
-            startDestination = Screen.Recents.route,
+            startDestination = Screen.Homepage.route,
         ) {
+            composable(Screen.Homepage.route) {
+                HomepageView(navController = navController)
+            }
             composable(Screen.Recents.route) {
                 RecentsView(navController = navController)
             }

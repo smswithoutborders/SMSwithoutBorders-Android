@@ -46,8 +46,7 @@ fun GatewayClientOptionsModal(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
-                .background(MaterialTheme.colorScheme.surface),
+                .padding(16.dp),
             horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
         ) {
             Text(
@@ -63,11 +62,14 @@ fun GatewayClientOptionsModal(
             Button(
                 onClick = {TODO("add make default functionality")},
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primaryContainer)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
             ) {
                 Text(
                     text = "Make Default",
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
 
@@ -76,11 +78,13 @@ fun GatewayClientOptionsModal(
             Button(
                 onClick = { onEditClicked(gatewayClient) },
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondaryContainer)
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text(
                     text = "Edit",
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -89,7 +93,10 @@ fun GatewayClientOptionsModal(
             Button(
                 onClick = {TODO("add delete functionality")},
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.errorContainer)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer
+                )
             ) {
                 Text(
                     text = "Delete",

@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,16 +49,25 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.arpitkatiyarprojects.countrypicker.CountryPickerOutlinedTextField
 import com.arpitkatiyarprojects.countrypicker.enums.CountryListDisplayType
 import com.arpitkatiyarprojects.countrypicker.models.CountryDetails
+import com.example.sw0b_001.ui.navigation.Screen
 import com.example.sw0b_001.ui.theme.AppTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
-    val sheetState = rememberStandardBottomSheetState(initialValue = SheetValue.PartiallyExpanded)
+fun CreateAccountModal(
+    showBottomSheet: Boolean,
+    onDismiss: () -> Unit,
+    navController: NavController
+) {
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.PartiallyExpanded,
+        skipHiddenState = false
+    )
     val scope = rememberCoroutineScope()
     var selectedCountry by remember { mutableStateOf<CountryDetails?>(null) }
     var phoneNumber by remember { mutableStateOf("") }
@@ -66,9 +76,21 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
     var passwordVisible by remember { mutableStateOf(false) }
     var reenterPasswordVisible by remember { mutableStateOf (false) }
 
+    var showLoginModal by remember { mutableStateOf(false) }
+
+    if (showLoginModal) {
+        LoginModal(
+            showBottomSheet = true,
+            onDismiss = { showLoginModal = false },
+            navController = navController
+        )
+    }
+
     if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = onDismiss,
+            onDismissRequest = {
+                onDismiss()
+            },
             sheetState = sheetState,
             containerColor = MaterialTheme.colorScheme.surface,
         ) {
@@ -195,7 +217,9 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
-                    Button(onClick = { TODO("Sign up logic") },
+                    Button(onClick = {
+                        navController.navigate(Screen.Recents.route)
+                    },
                         modifier = Modifier.fillMaxWidth()
                             .align(Alignment.CenterHorizontally)) {
                         Text("Sign Up")
@@ -257,7 +281,7 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
                     modifier = Modifier
                         .padding(top = 0.dp)
                         .clickable {
-                            TODO("Go to login modal")
+                            showLoginModal = true
                         },
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -274,6 +298,10 @@ fun CreateAccountModal(showBottomSheet: Boolean, onDismiss: () -> Unit) {
 @Composable
 fun CreateAccountContentPreview() {
     AppTheme(darkTheme = false) {
-        CreateAccountModal (onDismiss = {}, showBottomSheet = true)
+        CreateAccountModal (
+            onDismiss = {},
+            showBottomSheet = true,
+            navController = NavController(LocalContext.current)
+        )
     }
 }
