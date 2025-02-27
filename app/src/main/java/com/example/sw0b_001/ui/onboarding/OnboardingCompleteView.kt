@@ -99,7 +99,7 @@ fun OnboardingCompleteView(
 
             // Continue Button
             Button(
-                onClick = { TODO("Go to homepage") },
+                onClick = onContinue,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
             ) {
