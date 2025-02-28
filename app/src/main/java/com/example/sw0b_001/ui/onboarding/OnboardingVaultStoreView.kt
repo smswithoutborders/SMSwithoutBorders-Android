@@ -80,7 +80,7 @@ fun OnboardingVaultStoreView(
 
             // Vault Store Illustration
             Image(
-                painter = painterResource(id = R.drawable.relay_sms_vault_store),
+                painter = painterResource(id = R.drawable.vault_illus),
                 contentDescription = "Vault Store Illustration",
                 modifier = Modifier.size(250.dp)
             )

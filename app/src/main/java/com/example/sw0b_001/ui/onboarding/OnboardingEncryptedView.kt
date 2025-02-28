@@ -80,7 +80,7 @@ fun OnboardingEncryptedView(
 
             // Encrypted Illustration
             Image(
-                painter = painterResource(id = R.drawable.relay_sms_encrypted),
+                painter = painterResource(id = R.drawable.encrypted_messages_illus),
                 contentDescription = "Onboarding Encrypted Illustration",
                 modifier = Modifier.size(250.dp)
             )

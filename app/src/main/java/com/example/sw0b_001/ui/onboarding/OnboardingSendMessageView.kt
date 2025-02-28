@@ -85,7 +85,7 @@ fun OnboardingSendMessageView(
 
             // Illustration
             Image(
-                painter = painterResource(id = R.drawable.relay_sms_send_message),
+                painter = painterResource(id = R.drawable.try_sending_message_illus),
                 contentDescription = "Onboarding Send Illustration",
                 modifier = Modifier.size(250.dp)
             )

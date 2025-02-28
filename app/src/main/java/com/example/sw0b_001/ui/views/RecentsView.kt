@@ -237,10 +237,10 @@ fun RecentsView(
                 ) {
                     // Illustration
                     Image(
-                        painter = painterResource(id = R.drawable.relay_sms_send_message),
+                        painter = painterResource(id = R.drawable.empty_message),
                         contentDescription = "Get Started Illustration",
                         modifier = Modifier
-                            .size(300.dp)
+                            .size(250.dp)
                             .padding(bottom = 16.dp)
                     )
 
@@ -265,7 +265,8 @@ fun RecentsView(
 
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(

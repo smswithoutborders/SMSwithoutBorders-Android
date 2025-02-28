@@ -80,7 +80,7 @@ fun OnboardingCompleteView(
 
             // Complete Illustration
             Image(
-                painter = painterResource(id = R.drawable.relay_sms_onboard_complete),
+                painter = painterResource(id = R.drawable.ready_to_begin_illus),
                 contentDescription = "Onboarding Complete Illustration",
                 modifier = Modifier.size(250.dp)
             )
