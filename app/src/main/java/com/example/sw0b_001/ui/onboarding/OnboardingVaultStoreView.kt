@@ -89,7 +89,7 @@ fun OnboardingVaultStoreView(
 
             // Vault Store Text
             Text(
-                text = "The Vault encrypts and securely saves your connection to your online accounts, allowing you to access them while offline.",
+                text = "RelaySMS Vaults securely stores your online accounts, so that you can access them without an internet connection",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface
@@ -106,7 +106,7 @@ fun OnboardingVaultStoreView(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingVaultStorePreview() {
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         OnboardingVaultStoreView (onBack = {}, onSkip = {}, onContinue = {})
     }
 }

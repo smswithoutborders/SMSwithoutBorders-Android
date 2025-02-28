@@ -89,7 +89,7 @@ fun OnboardingCompleteView(
 
             // Complete Text
             Text(
-                text = "You are ready to begin sending messages to your saved platforms",
+                text = "You are ready to begin sending messages from RelaySMS",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface

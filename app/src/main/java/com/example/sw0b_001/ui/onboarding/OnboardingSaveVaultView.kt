@@ -89,7 +89,7 @@ fun OnboardingSaveVaultView(
 
             // Save Vault Text
             Text(
-                text = "You can add new social accounts to your vault",
+                text = "You can add online accounts to your vault",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface

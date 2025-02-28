@@ -259,7 +259,6 @@ enum class OnboardingScreen {
     Welcome,
     VaultStore,
     SaveVault,
-    SendMessage,
     Complete
 }
 
@@ -286,24 +285,10 @@ fun OnboardingNavigation() {
             OnboardingSaveVaultView(
                 onBack = { navController.popBackStack() },
                 onSkip = { navController.navigate(OnboardingScreen.Complete.name) },
-                onContinue = { navController.navigate(OnboardingScreen.SendMessage.name) }
+                onContinue = { navController.navigate(OnboardingScreen.Complete.name) }
             )
         }
-        composable(OnboardingScreen.SendMessage.name) {
-            OnboardingSendMessageView(
-                onBack = { navController.popBackStack() },
-                onSkip = { navController.navigate(OnboardingScreen.Complete.name) },
-                onTrySendingMessage = {
-                    TODO()
-                },
-                onCreateAccount = {
-                    TODO()
-                },
-                onLogin = {
-                    TODO()
-                }
-            )
-        }
+
         composable(OnboardingScreen.Complete.name) {
             OnboardingCompleteView(
                 onBack = { navController.popBackStack() },

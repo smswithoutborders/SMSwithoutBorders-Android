@@ -51,19 +51,37 @@ fun OnboardingWelcome(
                 .padding(innerPadding)
                 .padding(start = 16.dp, end = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Center
         ) {
 
-            // Language Selection Button
+            Text(
+                text = "Welcome to RelaySMS!",
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Welcome Illustration
+            Image(
+                painter = painterResource(id = R.drawable.relay_sms_welcome),
+                contentDescription = "Welcome Illustration",
+                modifier = Modifier.size(250.dp)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
                     onClick = { /* TODO: Handle language selection */ },
                     shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        contentColor = MaterialTheme.colorScheme.onSurface
+                    ),
                     modifier = Modifier.padding(end = 8.dp)
                 ) {
                     Icon(
@@ -82,24 +100,15 @@ fun OnboardingWelcome(
 
             Spacer(modifier = Modifier.height(64.dp))
 
-            // Welcome Illustration
-            Image(
-                painter = painterResource(id = R.drawable.relay_sms_welcome),
-                contentDescription = "Welcome Illustration",
-                modifier = Modifier.size(250.dp)
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
             // Welcome Text
             Text(
-                text = "RelaySMS allows you to send emails and create posts on your social accounts without an internet connection through SMS.",
+                text = "Use SMS to make a post, send emails and messages with no internet connection",
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(128.dp))
 
             // Continue Button
             Column(
@@ -113,7 +122,7 @@ fun OnboardingWelcome(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 ) {
-                    Text(text = "Continue", color = Color.White)
+                    Text(text = "Learn how it works", color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -134,7 +143,7 @@ fun OnboardingWelcome(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingWelcomePreview() {
-    AppTheme(darkTheme = true) {
+    AppTheme(darkTheme = false) {
         OnboardingWelcome(onContinueClicked = {}, onPrivacyPolicyClicked = {})
     }
 }
