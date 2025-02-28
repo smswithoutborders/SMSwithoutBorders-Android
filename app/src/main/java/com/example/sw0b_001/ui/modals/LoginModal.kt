@@ -190,7 +190,7 @@ fun LoginModal(
 
                     Button(
                         onClick = {
-                            navController.navigate(Screen.Recents.route)
+                            navController.navigate(Screen.OTPCode.route)
                         },
                         modifier = Modifier.fillMaxWidth()
                             .align(Alignment.CenterHorizontally)

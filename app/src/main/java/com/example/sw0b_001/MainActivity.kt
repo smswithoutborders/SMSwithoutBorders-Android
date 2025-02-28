@@ -29,6 +29,7 @@ import com.example.sw0b_001.ui.views.AvailablePlatformsView
 import com.example.sw0b_001.ui.views.GatewayClientView
 import com.example.sw0b_001.ui.views.GetStartedView
 import com.example.sw0b_001.ui.views.HomepageView
+import com.example.sw0b_001.ui.views.OtpCodeVerificationView
 import com.example.sw0b_001.ui.views.RecentMessage
 import com.example.sw0b_001.ui.views.RecentsView
 import com.example.sw0b_001.ui.views.SecurityView
@@ -134,6 +135,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(Screen.GetStarted.route) {
                 GetStartedView(navController = navController)
+            }
+            composable(Screen.OTPCode.route) {
+                OtpCodeVerificationView(navController = navController)
             }
 
             // Compose Screens

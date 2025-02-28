@@ -10,6 +10,7 @@ sealed class Screen(val route: String) {
     data object Security : Screen("security")
     data object GetStarted : Screen("get_started")
     data object Homepage : Screen("homepage")
+    data object OTPCode : Screen("otp_code")
 
     // Message Compose Routes
     data object EmailCompose : Screen("email_compose?isDefault={isDefault}") {

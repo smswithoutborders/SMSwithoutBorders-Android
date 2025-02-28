@@ -293,9 +293,15 @@ fun OnboardingNavigation() {
             OnboardingSendMessageView(
                 onBack = { navController.popBackStack() },
                 onSkip = { navController.navigate(OnboardingScreen.Complete.name) },
-                onTrySendingMessage = { /* TODO: Handle try sending message */ },
-                onCreateAccount = { /* TODO: Handle create account */ },
-                onLogin = { /* TODO: Handle login */ }
+                onTrySendingMessage = {
+                    TODO()
+                },
+                onCreateAccount = {
+                    TODO()
+                },
+                onLogin = {
+                    TODO()
+                }
             )
         }
         composable(OnboardingScreen.Complete.name) {
